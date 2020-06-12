@@ -1,36 +1,6 @@
 {
-  //"ReRoutes": [
-  //  {
-  //    "DownstreamPathTemplate": "/api/v1.0/vpbank/get-bank-info",
-  //    "DownstreamScheme": "https",
-  //    "DownstreamHostAndPorts": [
-  //      {
-  //        "Host": "partnertest.f88.vn",
-  //        "Port": 443
-  //      }
-  //    ],
-  //    "UpstreamPathTemplate": "/api/v1.0/vpbank/get-bank-info",
-  //    "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ]
-  //  }
-  //],
-  //"GlobalConfiguration": {
-  //  "BaseUrl": "https://localhost:50734"
-  //}
-  
-    "Routes": [
-      {
-        "DownstreamPathTemplate": "/todos/{id}",
-        "DownstreamScheme": "https",
-        "DownstreamHostAndPorts": [
-          {
-            "Host": "jsonplaceholder.typicode.com",
-            "Port": 443
-          }
-        ],
-        "UpstreamPathTemplate": "/todos/{id}",
-        "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ]
-      },
-      {
+  "Routes": [
+        {
         "DownstreamPathTemplate": "/api/v1.0/vpbank/get-bank-info",
         "DownstreamScheme": "https",
         "DownstreamHostAndPorts": [
@@ -41,10 +11,34 @@
         ],
         "UpstreamPathTemplate": "/api/v1.0/vpbank/get-bank-info",
         "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ]
+      },
+      {
+        "DownstreamPathTemplate": "/api/v1.0/vpbank/tranfer-money",
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "partnertest.f88.vn",
+            "Port": 443
+          }
+        ],
+        "UpstreamPathTemplate": "/api/v1.0/vpbank/tranfer-money",
+        "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ]
+      },
+      {
+        "DownstreamPathTemplate": "/api/v1.0/vpbank/get-status-tranfer-money",
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "partnertest.f88.vn",
+            "Port": 443
+          }
+        ],
+        "UpstreamPathTemplate": "/api/v1.0/vpbank/get-status-tranfer-money",
+        "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ]
       }
     ],
     "GlobalConfiguration": {
       "BaseUrl": "https://localhost:50734"
   }
- 
+
 }
