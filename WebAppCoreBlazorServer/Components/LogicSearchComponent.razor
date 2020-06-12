@@ -1,0 +1,134 @@
+﻿@using Newtonsoft.Json
+@using WebModelCore;
+@using WebModelCore.CodeInfo
+@using WebModelCore.Common
+@using WebAppCoreBlazorServer.Common
+@using WebAppCoreBlazorServer.Service
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.Extensions.Configuration
+@using WebAppCoreBlazorServer.BUS
+@using WebCore.Entities;
+@using Microsoft.Extensions.Caching.Distributed
+@using WebModelCore.LogicCondition
+@inject NavigationManager NavigationManager
+@inject IConfiguration iConfiguration
+
+@inject IDistributedCache distributedCache
+@inject IModuleService moduleService
+
+<div>
+    @{
+        <div class="col-12 row m-1">
+            <div class="col-2 right">
+                <button class="btn btn-info btn-search btn-flat" @onclick="@(() => btnAddGroupCondition())" type="button" id="btnAddCondition"> <i class="fa fa-plus"></i> Add Group Condition</button>
+            </div>
+        </div>
+        foreach (var item in SearchConditionInstances)
+        {
+            <div class="row m-1">
+                <div class="form-group col-8">
+                    <label>Nhóm Thuộc tính</label>
+                    <select name="controlName" id="controlName" class="form-control select2" @bind="@item.SearchConditionInstance.ConditionID">
+                        @foreach (var control in Logic)
+                        {
+                            <option value="@control.CodeValue">@control.CodeValueName</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-2">
+                    <button class="btn btn-info btn-search btn-flat" @onclick="@(() => btnAddCondition())" type="button" id="btnAddCondition"> <i class="fa fa-plus"></i> Add Condition</button>
+                </div>
+                <div class="form-group col-2">
+                    <button class="btn btn-info btn-search btn-flat" @onclick="@(() => btnAddGroupCondition())" type="button" id="btnAddCondition"> <i class="fa fa-plus"></i> Add Group Condition</button>
+                </div>
+            </div>
+            <div class="row m-1">
+                <div class="form-group col-4">
+                    <label>Thuộc tính</label>
+                    <select name="controlName" id="controlName" class="form-control select2" @onchange="@(e => SearchModuleFieldInfoOnchange(e, item))">
+                        @foreach (var control in moduleFieldInfo)
+                        {
+                            <option value="@control.FieldID">@control.GetLanguage(moduleInfoModel.LanguageInfo, moduleInfoModel.ModulesInfo.FirstOrDefault().ModuleName)</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-4">
+                    <label>Điều kiện</label>
+                    <select name="Condition" class="form-control select2" @bind="@item.SearchConditionInstance.ConditionID">
+                        @foreach (var control in item.Conditions)
+                        {
+                            <option value="@control.CodeValue">@control.CodeValueName</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-4">
+                    <label>Giá trị</label>
+                    <input type="text" @bind="@item.SearchConditionInstance.Value" class="form-control" />
+                </div>
+            </div>
+        }
+    }
+
+</div>
+
+
+@code {
+    [Parameter]
+    public string modId { get; set; }
+
+    public List<ModuleFieldInfo> moduleFieldInfo { get; set; }
+    [Parameter]
+    public List<LogicConditionModel> SearchConditionInstances { get; set; } = new List<LogicConditionModel>();
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClickCallback { get; set; }
+    public List<CodeInfo> Conditions { get; set; } = new List<CodeInfo>();
+    public List<CodeInfo> Logic { get; set; } = new List<CodeInfo>();
+    public ModuleInfoViewModel moduleInfoModel { get; set; } = new ModuleInfoViewModel();
+    public async Task SearchModuleFieldInfoOnchange(ChangeEventArgs e, LogicConditionModel logicCondition)
+    {
+        HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
+        #region Load DropdownList ĐK search. các phép And Or
+
+        var field = moduleFieldInfo.Where(x => x.FieldID == e.Value.ToString());
+        if (field != null && field.Any())
+        {
+            var conditionDefCode = await homeBus.LoadAllDefCode("SCDTYPE", field.First().ConditionType.ToString());
+            if (conditionDefCode != null && conditionDefCode.Any())
+            {
+                var conditionValues = await homeBus.LoadAllDefCode(conditionDefCode.First().CodeValueName);
+                if (conditionValues != null && conditionValues.Any())
+                {
+                    logicCondition.Conditions = conditionValues.ToList();
+                }
+            }
+        }
+
+        #endregion
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        moduleFieldInfo = new List<ModuleFieldInfo>();
+        HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
+        moduleInfoModel = await homeBus.GetModule(modId);
+        moduleFieldInfo = moduleInfoModel.FieldsInfo;
+        var conditionLogic = await homeBus.LoadAllDefCode("SQL_LOGIC");
+        if (conditionLogic != null && conditionLogic.Any())
+        {
+            Logic = conditionLogic.ToList();
+        }
+    }
+    public async Task btnAddCondition()
+    {
+
+    }
+    public async Task btnAddGroupCondition()
+    {
+        SearchConditionInstances.Add(new LogicConditionModel(Conditions));
+    }
+
+}
+

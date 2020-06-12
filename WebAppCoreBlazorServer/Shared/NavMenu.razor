@@ -1,0 +1,151 @@
+﻿@using WebCore.Entities
+@using WebModelCore.Menu
+@using WebModelCore
+@using WebAppCoreBlazorServer.Service
+@using Microsoft.Extensions.Caching.Distributed
+@using Microsoft.Extensions.Configuration
+@using WebAppCoreBlazorServer.Common
+@using WebAppCoreBlazorServer.Common.Utils
+@using Newtonsoft.Json
+@inject IMenuService menuService
+@inject NavigationManager NavigationManager
+@inject IConfiguration iConfiguration
+@inject ILanguageService languageService
+@inject IDistributedCache distributedCache
+<div class="sidebar-content">
+    <div class="nav-container">
+        <nav id="main-menu-navigation" class="navigation-main">
+            @{
+                if (ListAllMenu != null)
+                    foreach (var item in ListAllMenu)
+                    {
+                        <div class="nav-item @(item.MenuChild.Any()?"has-sub":"")">
+                            <a href="@(string.IsNullOrEmpty(item.Menu.ModID)?"#":"search/"+ item.Menu.ModID)">
+                                @{
+                                    var icon = item.Menu.GetIconMenu(Languages);
+                                    if (!string.IsNullOrEmpty(icon))
+                                    {
+                                        <i class="fas icon @icon"></i>
+                                    }
+                                }
+                                <span>
+                                    @item.Menu.GetLanguageMenu(Languages)
+                                </span>
+                            </a>
+                            @{
+                                if (item.MenuChild.Any())
+                                {
+                                    <div class="submenu-content">
+                                        @foreach (var subItem in item.MenuChild)
+                                        {
+                                            <a href="search/@subItem.Menu.ModID" class="menu-item">
+                                                @{
+                                                    var subIcon = subItem.Menu.GetIconMenu(Languages);
+                                                }
+                                                @subItem.Menu.GetLanguageMenu(Languages)
+                                            </a>
+                                        }
+
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+            }
+        </nav>
+    </div>
+</div>
+
+@*<div class="top-row pl-4 navbar navbar-dark">
+        <a class="navbar-brand" href="">WebAppCoreBlazorServer</a>
+        <button class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+
+    <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+        <ul class="nav flex-column">
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="counter">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Counter
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="fetchdata">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+                </NavLink>
+            </li>
+        </ul>
+    </div>*@
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+    private List<MenuModel> ListAllMenu { get; set; }
+    private List<LanguageInfo> Languages { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        ListAllMenu = await LoadMenu();
+    }
+    private async Task<List<MenuModel>> LoadMenu()
+    {
+        var menus = new List<MenuModel>();
+        int userId = int.Parse("0");
+        var dataMenu = await LoadDataMenu(userId);
+        if (dataMenu != null)
+        {
+            var leve0 = dataMenu.Where(x => x.OwnerMenuID == "000000");
+            foreach (var item in leve0)
+            {
+                var menuRoot = new MenuModel
+                {
+                    Menu = item
+                };
+                var menuChild = dataMenu.Where(x => x.OwnerMenuID == item.MenuID);
+                if (menuChild.Any())
+                {
+                    menuRoot.MenuChild.AddRange(menuChild.Select(x => new MenuModel { Menu = x }).ToList());
+                }
+                menus.Add(menuRoot);
+            }
+        }
+
+        Languages = await LoadAllIcon();
+        return menus;
+    }
+
+    private async Task<List<MenuItemInfo>> LoadDataMenu(int userId)
+    {
+        string key = ECacheKey.Menu.ToString();
+        var menus = await menuService.GetAllMenu(userId);
+        return menus;
+    }
+
+    private async Task<List<LanguageInfo>> LoadAllIcon()
+    {
+        string key = ECacheKey.AllIcon.ToString();
+        var cachedData = distributedCache.GetString(key);
+        if (cachedData != null)
+        {
+            var menus = JsonConvert.DeserializeObject<List<LanguageInfo>>(cachedData);
+            return menus;
+        }
+        else
+        {
+            var menus = await languageService.GetAllIcon();
+            RedisUtils.SetCacheData(distributedCache, iConfiguration, menus, key);
+            return menus;
+        }
+    }
+}

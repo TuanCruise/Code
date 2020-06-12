@@ -1,0 +1,218 @@
+﻿@using WebCore.Entities
+@using Newtonsoft.Json
+@using WebModelCore
+@using WebModelCore.CodeInfo
+@using WebModelCore.Common
+@using WebAppCoreBlazorServer.Service
+@using Microsoft.Extensions.Configuration
+@using WebAppCoreBlazorServer.BUS
+@using Microsoft.Extensions.Caching.Distributed
+@inject NavigationManager NavigationManager
+@inject IConfiguration iConfiguration
+@inject IDistributedCache distributedCache
+@inject IModuleService moduleService
+@inject IJSRuntime JSRuntime
+@using WebAppCoreBlazorServer.Common
+@{
+
+    if (string.IsNullOrEmpty(field.Value) && !string.IsNullOrEmpty(field.DefaultValue))
+    {
+        field.Value = field.DefaultValue;
+    }
+    if (field.ControlType == EControlType.TB.ToString())
+    {
+        if (!string.IsNullOrEmpty(field.Callback))
+        {
+            @*<input type='text' class="form-control" @onchange="ControlOnchange" id='@field.FieldName' value='@field.Value' placeholder="@field.FieldName.GetLanguageByText(languageInfos)" />*@
+            <InputText @bind-Value="@field.Value" @onchange="ControlOnchange" on class="form-control" placeholder="@field.FieldName.GetLanguageByText(languageInfos)"></InputText>
+            <ValidationMessage For="@(() => field.Value)" />
+        }
+        else
+        {
+            @*<input type='text' class="form-control" @bind="field.Value" id='@field.FieldName' placeholder="@field.FieldName.GetLanguageByText(languageInfos)" />*@
+            <InputText @bind-Value="@field.Value" class="form-control" placeholder="@field.FieldName.GetLanguageByText(languageInfos)"></InputText>
+            <ValidationMessage For="@(() => field.Value)" />
+        }
+    }
+    else if (field.ControlType == EControlType.CB.ToString())
+    {
+        if (!string.IsNullOrEmpty(field.Callback))
+        {
+            <select id="@field.FieldName" @onchange="ControlOnchange" class="form-control">
+                @{
+                    <option value=''>-- Chọn --</option>
+                    if (dataComboBoxs != null)
+                    {
+                        var options = dataComboBoxs.Where(x => x.Name.ToUpper() == field.FieldName.ToUpper());
+                        if (options != null && options.Any())
+                        {
+                            foreach (var item in options.First().CodeInfos)
+                            {
+                                if (field.Value != null)
+                                {
+                                    if (field.Value.ToUpper() == "True".ToUpper())
+                                    {
+                                        field.Value = "Y";
+                                    }
+                                    else if (field.Value.ToUpper() == "FALSE")
+                                    {
+                                        field.Value = "N";
+                                    }
+                                    if (item.CodeValue == field.Value || item.CodeValue == field.DefaultValue)
+                                    {
+                                        <option selected='selected' value='@item.CodeValue'>@item.CodeValueName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value='@item.CodeValue'>@item.CodeValueName</option>
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            </select>
+        }
+        else
+        {
+            <select id="@field.FieldName" @bind="field.Value" class="form-control">
+                @{
+                    <option value=''>-- Chọn --</option>
+                    if (dataComboBoxs != null)
+                    {
+                        var options = dataComboBoxs.Where(x => x.Name.ToUpper() == field.FieldName.ToUpper());
+                        if (options != null && options.Any())
+                        {
+                            foreach (var item in options.First().CodeInfos)
+                            {
+                                if (field.Value != null)
+                                {
+                                    if (field.Value.ToUpper() == "True".ToUpper())
+                                    {
+                                        field.Value = "Y";
+                                    }
+                                    else if (field.Value.ToUpper() == "FALSE")
+                                    {
+                                        field.Value = "N";
+                                    }
+                                    if (item.CodeValue == field.Value || item.CodeValue == field.DefaultValue)
+                                    {
+                                        <option selected='selected' value='@item.CodeValue'>@item.CodeValueName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value='@item.CodeValue'>@item.CodeValueName</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value='@item.CodeValue'>@item.CodeValueName</option>
+                                }
+                            }
+                        }
+                    }
+                }
+            </select>
+        }
+
+    }
+    else if (field.ControlType == EControlType.DT.ToString())
+    {
+        <div class="input-group">
+            <input type='text' class="form-control datepicker" id='@field.FieldName' @bind-value='field.Value' data-date-format="mm/dd/yyyy" />
+            <label class="input-group-text"><i class="ik ik-calendar"></i></label>
+            <ValidationMessage For="@(() => field.Value)" />
+        </div>
+
+    }
+    else if (field.ControlType == EControlType.TAB.ToString())
+    {
+        <TabControl>
+            @{
+                if (field.FieldChilds != null)
+                {
+                    bool firstTab = true;
+                    foreach (var item in field.FieldChilds)
+                    {
+                        @*<TabPage Text="@item.FieldName.GetLanguageByText(languageInfos)">
+                                <WebAppCoreBlazorServer.Pages.Edit modId="@item.ModuleID" modSearchId="03901" />
+                            </TabPage>*@
+                        <TabPage Text="@item.FieldName.GetLanguageByText(languageInfos)">
+                            <div>
+                                <WebAppCoreBlazorServer.Pages.Edit modId="@item.CallModId" modSearchId="" />
+                            </div>
+                        </TabPage>
+
+                    }
+                }
+            }
+        </TabControl>
+
+    }
+    else if (field.ControlType == EControlType.SCL.ToString())
+    {
+        <ScheduleControl></ScheduleControl>
+    }
+}
+
+
+@code {
+    [Parameter]
+    public ModuleFieldInfo field { get; set; }
+    [Parameter]
+    public List<CodeInfoModel> dataComboBoxs { get; set; }
+    [Parameter]
+    public List<LanguageInfo> languageInfos { get; set; }
+    [Parameter]
+    public string subMod { get; set; }
+    [Parameter]
+    public List<dynamic> dataEdit { get; set; }
+    [Parameter]
+    public string modName { get; set; } = "";
+    [Parameter]
+    public string keyEdit { get; set; } = "";
+    [Parameter]
+    public int pageSlide { get; set; } = 0;
+    [Parameter]
+    public List<ModuleFieldInfo> fieldSubmited { get; set; } = null;
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    private async Task ControlOnchange(ChangeEventArgs e)
+    {
+        field.Value = (e.Value ?? "").ToString();
+        HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
+        var codeInfoParrams = new List<CodeInfoParram>();
+        if (!string.IsNullOrEmpty(field.Callback))
+        {
+            var codeInfoParram = new CodeInfoParram
+            {
+                Name = field.FieldName,
+                CtrlType = field.ControlType,
+                ListSource = field.Callback,
+                Parrams = (e.Value ?? "").ToString()
+            };
+            codeInfoParrams.Add(codeInfoParram);
+            var loadCallBacks = await homeBus.LoadDataListSourceControl(codeInfoParrams);
+            foreach (var item in loadCallBacks)
+            {
+                if (!String.IsNullOrEmpty(item.DataCallBack))
+                {
+                    var dataCallBackControls = JsonConvert.DeserializeObject<List<dynamic>>(item.DataCallBack);
+                    foreach (var controlCallBack in dataCallBackControls)
+                    {
+                        var name = ((Newtonsoft.Json.Linq.JProperty)((Newtonsoft.Json.Linq.JContainer)controlCallBack).First).Name;
+                        var value = ((Newtonsoft.Json.Linq.JProperty)((Newtonsoft.Json.Linq.JContainer)controlCallBack).First).Value;
+                        var arr = new string[2];
+                        arr[0] = name;
+                        arr[1] = value == null ? "" : value.ToString();
+                        await JSRuntime.InvokeVoidAsync("SetValueControl", arr);
+                    }
+                }
+            }
+        }
+    }
+    //[Parameter]
+    //public EventCallback<MouseEventArgs> OnClickCallback { get; set; }
+}
+

@@ -1,0 +1,113 @@
+﻿@using Newtonsoft.Json
+@using WebModelCore;
+@using WebModelCore.CodeInfo
+@using WebModelCore.Common
+@using WebAppCoreBlazorServer.Common
+@using WebAppCoreBlazorServer.Service
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.Extensions.Configuration
+@using WebAppCoreBlazorServer.BUS
+@using WebCore.Entities;
+@using Microsoft.Extensions.Caching.Distributed
+@using WebModelCore.LogicCondition
+@inject NavigationManager NavigationManager
+@inject IConfiguration iConfiguration
+
+@inject IDistributedCache distributedCache
+@inject IModuleService moduleService
+@{
+    var fieldSearch = moduleFieldInfo.Where(x => x.FieldGroup == FLDGROUP.SEARCH_CONDITION && x.HideWeb != "Y").ToList();
+    var row = fieldSearch.Count / 6;
+    var rowNotFull = fieldSearch.Count % 6;
+    int rowSearch = row + (rowNotFull > 0 ? 1 : 0);
+}
+    <EditForm Model="@fieldSearch">
+        <div class="card-body">
+            @{
+                for (int i = 0; i < rowSearch; i++)
+                {
+                    <div class="col-md-12 col-xl-12 col-lg-12 row">
+                        @{
+                            int numColumn = 6;
+                            if (i != rowSearch - 1)
+                            {
+                                for (int k = 0; k < numColumn; k++)
+                                {
+                                    var fieldTemp = fieldSearch[i * numColumn + k];
+                                    <div class="form-group left col-lg-2 col-md-2 col-xl-2 not-show-print">
+                                        <WebAppCoreBlazorServer.Components.GenControl field="@fieldTemp" dataComboBoxs="@codeInfoModels" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                                        @*@fieldTemp.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", null, moduleInfoModel.ModulesInfo.ModuleName, "", 0, fieldSubmited))*@
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                for (int k = 0; k < rowNotFull; k++)
+                                {
+                                    var fieldTemp = fieldSearch[i * numColumn + k];
+                                    <div class="form-group left col-lg-2 col-2 not-show-print">
+                                        <WebAppCoreBlazorServer.Components.GenControl field="@fieldTemp" dataComboBoxs="@codeInfoModels" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                                    </div>
+                                }
+                            }
+                        }
+
+                    </div>
+                }
+            }
+        </div>
+    </EditForm>
+
+@code {
+
+    [Parameter]
+    public List<ModuleFieldInfo> moduleFieldInfo { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClickCallback { get; set; }
+    [Parameter]
+    public ModuleInfoModel moduleInfoModel { get; set; }
+    private List<CodeInfoModel> codeInfoModels { get; set; } = new List<CodeInfoModel>();
+    protected override async Task OnInitializedAsync()
+    {
+        //moduleFieldInfo = new List<ModuleFieldInfo>();
+        HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
+        //moduleInfoModel = await homeBus.GetModule(modId);
+        //moduleFieldInfo = moduleInfoModel.FieldsInfo;
+        var cb = moduleFieldInfo.Where(x => !String.IsNullOrEmpty(x.ListSource));
+        if (cb.Any())
+        {
+            var codeInfoParram = cb.Select(x => new CodeInfoParram
+            {
+                CtrlType = x.ControlType,
+                Name = x.FieldName,
+                ListSource = x.ListSource
+            });
+            //var para = string.Join("", sources);
+            var sourceCodeInfo = cb.Where(x => x.ListSource.Contains(":"));//Lấy những thông tin các ListSource từ DefCode
+            codeInfoModels = new List<CodeInfoModel>();
+            if (sourceCodeInfo != null && sourceCodeInfo.Any())
+            {
+                var defCodeAll = await homeBus.LoadAllDefCode();
+                var lstSource = sourceCodeInfo.Select(x => x.ListSource).ToList();
+                var cbDefCode = defCodeAll.Where(x => lstSource.Contains(":" + x.CodeType + "." + x.CodeName));
+                foreach (var item in sourceCodeInfo)
+                {
+                    codeInfoModels.Add(new CodeInfoModel { Name = item.FieldName, CodeInfos = cbDefCode.Where(x => ":" + x.CodeType + "." + x.CodeName == item.ListSource).ToList() });
+                }
+            }
+            var dataCB = (await moduleService.GetCombobox(codeInfoParram.Where(x => !x.ListSource.Contains(":")).ToList()));//Lấy thông tin các Combobox theo Store
+            if (dataCB.Data != null)
+            {
+                codeInfoModels.AddRange(dataCB.Data);
+            }
+
+        }
+    }
+
+
+}
+

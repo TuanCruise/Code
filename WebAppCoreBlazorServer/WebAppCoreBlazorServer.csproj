@@ -1,0 +1,833 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\src\img\.gitignore" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\img\brand-white.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\img\brand.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\img\down-arrow.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\img\logo.svg" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\js\theme.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\js\theme.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\js\vendor\jquery-3.3.1.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\js\vendor\jquery-3.3.1.slim.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\js\vendor\modernizr-2.8.3.min.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\theme.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_alert.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_auth.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_badges.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_buttons.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_calendar.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_cards.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_carousel.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_forms.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_layout.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_main.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_mixins.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_modal.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_navigation.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_range-slider.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_rating.scss" />
+    
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_tables.scss" />
+    <_ContentIncludedByDefault Remove="wwwroot\src\scss\_widgets.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\alerts.js" />
+    <None Include="wwwroot\js\calendar.js" />
+    <None Include="wwwroot\js\carousel.js" />
+    <None Include="wwwroot\js\chart-amcharts.js" />
+    <None Include="wwwroot\js\chart-chartist.js" />
+    <None Include="wwwroot\js\chart-flot.js" />
+    <None Include="wwwroot\js\chart-knob.js" />
+    <None Include="wwwroot\js\charts.js" />
+    <None Include="wwwroot\js\datatables.js" />
+    <None Include="wwwroot\js\form-advanced.js" />
+    <None Include="wwwroot\js\form-components.js" />
+    <None Include="wwwroot\js\form-picker.js" />
+    <None Include="wwwroot\js\forms.js" />
+    <None Include="wwwroot\js\layouts.js" />
+    <None Include="wwwroot\js\range-slider.js" />
+    <None Include="wwwroot\js\rating.js" />
+    <None Include="wwwroot\js\session-time-out.js" />
+    <None Include="wwwroot\js\tables.js" />
+    <None Include="wwwroot\js\taskboard.js" />
+    <None Include="wwwroot\js\widget-chart.js" />
+    <None Include="wwwroot\js\widget-data.js" />
+    <None Include="wwwroot\js\widget-statistic.js" />
+    <None Include="wwwroot\js\widgets.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\css\bootstrap-datepicker.css.map" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\css\bootstrap-datepicker.standalone.css.map" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\css\bootstrap-datepicker3.css.map" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\css\bootstrap-datepicker3.standalone.css.map" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\js\bootstrap-datepicker.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\js\bootstrap-datepicker.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker-en-CA.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.ar-tn.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.ar.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.az.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.bg.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.bm.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.bn.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.br.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.bs.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.ca.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.cs.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.cy.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.da.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.de.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.el.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.en-AU.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.en-CA.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.en-GB.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.en-IE.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.en-NZ.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.en-ZA.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.eo.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.es.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.et.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.eu.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.fa.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.fi.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.fo.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.fr-CH.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.fr.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.gl.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.he.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.hi.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.hr.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.hu.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.hy.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.id.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.is.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.it-CH.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.it.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.ja.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.ka.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.kh.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.kk.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.km.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.ko.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.kr.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.lt.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.lv.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.me.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.mk.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.mn.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.ms.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.nl-BE.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.nl.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.no.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.oc.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.pl.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.pt-BR.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.pt.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.ro.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.rs-latin.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.rs.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.ru.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.si.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.sk.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.sl.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.sq.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.sr-latin.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.sr.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.sv.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.sw.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.ta.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.tg.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.th.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.tk.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.tr.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.uk.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.uz-cyrl.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.uz-latn.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.vi.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.zh-CN.min.js" />
+    <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\locales\bootstrap-datepicker.zh-TW.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.FluentValidation" Version="1.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Serilog" Version="2.9.0" />
+    <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebCore.Common\WebCore.Common.csproj" />
+    <ProjectReference Include="..\WebCore.Entities\WebCore.Entities.csproj" />
+    <ProjectReference Include="..\WebModelCore\WebModelCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\app.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\bootstrap\bootstrap.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\bootstrap\bootstrap.min.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\open-iconic\FONT-LICENSE">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\open-iconic\font\css\open-iconic-bootstrap.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\open-iconic\font\fonts\open-iconic.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\open-iconic\font\fonts\open-iconic.otf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\open-iconic\font\fonts\open-iconic.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\open-iconic\font\fonts\open-iconic.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\open-iconic\font\fonts\open-iconic.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\open-iconic\ICON-LICENSE">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\open-iconic\README.md">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\css\site.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\dist\css\theme.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\dist\css\theme.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\dist\css\theme.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\dist\css\theme.min.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\dist\img\.gitignore">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\dist\img\brand-white.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\dist\img\brand.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\dist\img\down-arrow.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\dist\js\theme.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\dist\js\theme.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\amcharts.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\animate.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\funnel.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\gantt.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\gauge.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\images\dragIconRoundBig.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\images\dragIconRoundBig.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\images\lens.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\images\lens.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\pie.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\radar.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\serial.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\themes\black.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\themes\chalk.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\themes\dark.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\themes\light.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\themes\patterns.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\amcharts\xy.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\ammap3\ammap\ammap.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\ammap3\ammap\ammap.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\ammap3\ammap\ammap_amcharts_extension.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\ammap3\ammap\maps\js\usaLow.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\bootstrap-slider\dist\bootstrap-slider.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\bootstrap-slider\dist\css\bootstrap-slider.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\bootstrap-tagsinput\dist\bootstrap-tagsinput.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\bootstrap-tagsinput\dist\bootstrap-tagsinput.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\bootstrap-tagsinput\dist\bootstrap-tagsinput.min.js.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\bootstrap\dist\css\bootstrap.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\bootstrap\dist\css\bootstrap.min.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\bootstrap\dist\js\bootstrap.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\bootstrap\dist\js\bootstrap.min.js.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\c3\c3.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\c3\c3.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\chartist\dist\chartist.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\chartist\dist\chartist.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\chartist\dist\chartist.min.js.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\d3\dist\d3.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\d3\dist\d3.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\d3\dist\d3.node.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\d3\dist\package.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\datatables.net-bs4\css\dataTables.bootstrap4.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\datatables.net-bs4\js\dataTables.bootstrap4.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\datatables.net-responsive-bs4\css\responsive.bootstrap4.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\datatables.net-responsive-bs4\js\responsive.bootstrap4.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\datatables.net-responsive\js\dataTables.responsive.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\datatables.net\js\jquery.dataTables.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\datedropper\datedropper.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\datedropper\datedropper.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\flot-charts\curvedLines.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\flot-charts\jquery.flot.categories.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\flot-charts\jquery.flot.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\flot-charts\jquery.flot.pie.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\flot-charts\jquery.flot.tooltip.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\css\all.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-brands-400.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-brands-400.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-brands-400.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-brands-400.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-brands-400.woff2">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-regular-400.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-regular-400.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-regular-400.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-regular-400.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-regular-400.woff2">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-solid-900.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-solid-900.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-solid-900.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-solid-900.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fontawesome-free\webfonts\fa-solid-900.woff2">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fullcalendar\dist\fullcalendar.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\fullcalendar\dist\fullcalendar.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\icon-kit\dist\css\iconkit.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\icon-kit\dist\fonts\iconkit.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\icon-kit\dist\fonts\iconkit.otf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\icon-kit\dist\fonts\iconkit.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\icon-kit\dist\fonts\iconkit.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\icon-kit\dist\fonts\iconkit.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\icon-kit\dist\fonts\iconkit.woff2">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\ionicons\dist\css\ionicons.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\ionicons\dist\fonts\ionicons.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\ionicons\dist\fonts\ionicons.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\ionicons\dist\fonts\ionicons.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\ionicons\dist\fonts\ionicons.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\ionicons\dist\fonts\ionicons.woff2">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-bar-rating\dist\jquery.barrating.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-bar-rating\dist\jquery.barrating.min.js.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-bar-rating\dist\themes\bars-1to10.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-bar-rating\dist\themes\bars-horizontal.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-bar-rating\dist\themes\bars-movie.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-bar-rating\dist\themes\bars-pill.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-bar-rating\dist\themes\bars-reversed.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-bar-rating\dist\themes\bars-square.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-bar-rating\dist\themes\bootstrap-stars.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-bar-rating\dist\themes\css-stars.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-bar-rating\dist\themes\fontawesome-stars-o.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-bar-rating\dist\themes\fontawesome-stars.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-knob\dist\jquery.knob.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-minicolors\jquery.minicolors.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-minicolors\jquery.minicolors.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-minicolors\jquery.minicolors.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-toast-plugin\dist\jquery.toast.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery-toast-plugin\dist\jquery.toast.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jquery.repeater\jquery.repeater.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jvectormap\jquery-jvectormap.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\jvectormap\jquery-jvectormap.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\mohithg-switchery\dist\switchery.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\mohithg-switchery\dist\switchery.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\moment\moment.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\nestable\jquery.nestable.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\owl.carousel\dist\assets\ajax-loader.gif">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\owl.carousel\dist\assets\owl.carousel.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\owl.carousel\dist\assets\owl.theme.default.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\owl.carousel\dist\assets\owl.video.play.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\owl.carousel\dist\owl.carousel.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\perfect-scrollbar\css\perfect-scrollbar.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\perfect-scrollbar\dist\perfect-scrollbar.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\popper.js\dist\umd\popper.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\popper.js\dist\umd\popper.min.js.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\screenfull\dist\screenfull.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\select2\dist\css\select2.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\select2\dist\js\select2.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\summernote\.editorconfig">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\summernote\.eslintrc">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\summernote\dist\font\summernote.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\summernote\dist\font\summernote.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\summernote\dist\font\summernote.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\summernote\dist\summernote-bs4.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\summernote\dist\summernote-bs4.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\sweetalert\dist\sweetalert.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\tempusdominus-bootstrap-4\build\css\tempusdominus-bootstrap-4.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\tempusdominus-bootstrap-4\build\js\tempusdominus-bootstrap-4.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\weather-icons\css\weather-icons.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\weather-icons\font\weathericons-regular-webfont.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\weather-icons\font\weathericons-regular-webfont.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\weather-icons\font\weathericons-regular-webfont.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\weather-icons\font\weathericons-regular-webfont.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\plugins\weather-icons\font\WeatherIcons-Regular.otf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\sample-data\weather.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
