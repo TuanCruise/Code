@@ -8,14 +8,9 @@ namespace WebAppCoreBlazorServer.Services
 {
     public interface IUserService
     {
-        public interface IUserService
-        {
-            public Task<User> LoginAsync(User user);
-            public Task<User> RegisterUserAsync(User user);
-            public Task<User> GetUserByAccessTokenAsync(string accessToken);
-            
-        }
-
-        Task<User> GetUserByAccessTokenAsync(object accessToken);
+        public Task<User> LoginAsync(User user);
+        public Task<User> RegisterUserAsync(User user);
+        public Task<User> GetUserByAccessTokenAsync(string accessToken);
+       
     }
 }

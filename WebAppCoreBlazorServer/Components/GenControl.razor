@@ -14,7 +14,6 @@
 @inject IJSRuntime JSRuntime
 @using WebAppCoreBlazorServer.Common
 @{
-
     if (string.IsNullOrEmpty(field.Value) && !string.IsNullOrEmpty(field.DefaultValue))
     {
         field.Value = field.DefaultValue;
@@ -24,13 +23,13 @@
         if (!string.IsNullOrEmpty(field.Callback))
         {
             @*<input type='text' class="form-control" @onchange="ControlOnchange" id='@field.FieldName' value='@field.Value' placeholder="@field.FieldName.GetLanguageByText(languageInfos)" />*@
-            <InputText @bind-Value="@field.Value" @onchange="ControlOnchange" on class="form-control" placeholder="@field.FieldName.GetLanguageByText(languageInfos)"></InputText>
+            <InputText @bind-Value="@field.Value" @onchange="ControlOnchange" id='@field.FieldName' class="form-control" placeholder="@field.FieldName.GetLanguageByText(languageInfos)"></InputText>
             <ValidationMessage For="@(() => field.Value)" />
         }
         else
         {
             @*<input type='text' class="form-control" @bind="field.Value" id='@field.FieldName' placeholder="@field.FieldName.GetLanguageByText(languageInfos)" />*@
-            <InputText @bind-Value="@field.Value" class="form-control" placeholder="@field.FieldName.GetLanguageByText(languageInfos)"></InputText>
+            <InputText @bind-Value="@field.Value" class="form-control" id='@field.FieldName' placeholder="@field.FieldName.GetLanguageByText(languageInfos)"></InputText>
             <ValidationMessage For="@(() => field.Value)" />
         }
     }
@@ -118,12 +117,17 @@
     }
     else if (field.ControlType == EControlType.DT.ToString())
     {
-        <div class="input-group">
-            <input type='text' class="form-control datepicker" id='@field.FieldName' @bind-value='field.Value' data-date-format="mm/dd/yyyy" />
-            <label class="input-group-text"><i class="ik ik-calendar"></i></label>
-            <ValidationMessage For="@(() => field.Value)" />
-        </div>
+        @*<div class="input-group">
+                <InputText class="form-control datepicker" id='@field.FieldName' @onchange="ControlOnchange" @bind-Value='@field.Value' data-date-format="mm/dd/yyyy"></InputText>
+                <label class="input-group-text"><i class="ik ik-calendar"></i></label>
+                <ValidationMessage For="@(() => field.Value)" />
+            </div>*@
 
+        <div class="input-group">
+            <InputDate class="form-control" id='@field.FieldName' @bind-Value='@field.ValueDate' data-date-format="@(String.IsNullOrEmpty(field.FieldFormat)?"dd-MM-yyyy":field.FieldFormat)"></InputDate>
+            <label class="input-group-text"><i class="ik ik-calendar"></i></label>
+            <ValidationMessage For="@(() => field.ValueDate)" />
+        </div>
     }
     else if (field.ControlType == EControlType.TAB.ToString())
     {
@@ -178,6 +182,22 @@
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
+    private DotNetObjectReference<ModuleFieldInfo> objRef;
+    protected override Task OnInitializedAsync()
+    {
+        objRef = DotNetObjectReference.Create(field);
+        return base.OnInitializedAsync();
+    }
+    [JSInvokable()]
+    public Task invokeFromJS()
+    {
+
+        //field.Value = DateTime.Now.ToString("dd/MM/yyyy");
+        //field.Value = "New value";
+        //StateHasChanged();
+        //return CompletedTask;
+        return null;
+    }
     private async Task ControlOnchange(ChangeEventArgs e)
     {
         field.Value = (e.Value ?? "").ToString();

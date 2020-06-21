@@ -225,11 +225,27 @@
     //CallDatePicker();
 }
 function CallDatePicker() {
-    $(".datepicker").datepicker({ format: 'dd/mm/yyyy'});
+    $(".datepicker").datepicker({
+        format: 'dd/mm/yyyy',
+    });
+    $(".datepicker").change(function () {
+        ChangeValueFromJs(this)
+    });
 }
 function SetValueControl(id, value) {
     $("#" + id).val(value);
 }
 function SetTitle(title) {
     document.title = title;
+}
+function ChangeValueFromJs(wrapper) {
+    debugger;
+    DotNet.invokeMethodAsync("JavaScriptInterop", 'invokeFromJS')
+        .then(data => {
+            alert(data)
+        }) 
+    //return wrapper.invokeMethodAsync("invokeFromJS")
+    //    .then(_ => {
+    //        console.log('state has changed');
+    //    });
 }

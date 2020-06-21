@@ -1,17 +1,23 @@
-﻿@using WebCore.Entities
-@using Newtonsoft.Json
-@using WebModelCore
+﻿@using Newtonsoft.Json
+@using WebModelCore;
 @using WebModelCore.CodeInfo
 @using WebModelCore.Common
+@using WebAppCoreBlazorServer.Common
 @using WebAppCoreBlazorServer.Service
+@using Microsoft.AspNetCore.Mvc.Rendering
 @using Microsoft.Extensions.Configuration
 @using WebAppCoreBlazorServer.BUS
+@using WebCore.Entities;
 @using Microsoft.Extensions.Caching.Distributed
+@using WebModelCore.LogicCondition
+@inject NavigationManager NavManager
+@inject IModalService Modal
+@inject IJSRuntime JSRuntime;
 @inject NavigationManager NavigationManager
 @inject IConfiguration iConfiguration
+
 @inject IDistributedCache distributedCache
 @inject IModuleService moduleService
-@inject IJSRuntime JSRuntime
 @using WebAppCoreBlazorServer.Common
 @{
     <div id="calendar" class="fc fc-unthemed fc-ltr">
@@ -410,5 +416,51 @@
     }
     //[Parameter]
     //public EventCallback<MouseEventArgs> OnClickCallback { get; set; }
+
+    #region Call modal khi ấn Event
+    public async Task CallMod(string callModId, string modSearchId)
+    {
+        HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
+        var mod = await homeBus.GetModule(callModId);
+        if (mod != null && mod.ModulesInfo.Any())
+        {
+            if (mod.ModulesInfo.First().UIType == EUITYPE.P.ToString())
+            {
+                ModalParameters parameters = new ModalParameters();
+                //{modId}/{modSearchId}
+                parameters.Add("modId", callModId);
+                parameters.Add("modSearchId", modSearchId);
+                //Modal.Show<Pages.Edit>(moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo), parameters);
+            }
+            else
+            {
+                NavManager.NavigateTo(String.Format("/Edit/{0}/{1}", callModId, modSearchId));
+            }
+        }
+    }
+    public async Task CallMod(string callModId, string modSearchId, string fieldNameEdit, string parram, string pedit)
+    {
+        HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
+        var mod = await homeBus.GetModule(callModId);
+        if (mod != null && mod.ModulesInfo.Any())
+        {
+            if (mod.ModulesInfo.First().UIType == EUITYPE.P.ToString())
+            {
+                ModalParameters parameters = new ModalParameters();
+                //{modId}/{modSearchId}
+                parameters.Add("modId", callModId);
+                parameters.Add("modSearchId", modSearchId);
+                parameters.Add("fieldNameEdit", fieldNameEdit);
+                parameters.Add("parram", parram);
+                parameters.Add("pedit", pedit);
+               // Modal.Show<Pages.Edit>(moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo), parameters);
+            }
+            else
+            {
+                NavManager.NavigateTo(String.Format("/Edit/{0}/{1}/{2}/{3}/{4}", callModId, modSearchId, fieldNameEdit, parram, pedit));
+            }
+        }
+    }
+    #endregion
 }
 

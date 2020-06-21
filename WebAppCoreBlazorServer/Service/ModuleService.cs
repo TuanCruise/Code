@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using WebCore.Entities;
+using WebCore;
 using WebModelCore;
 using WebModelCore.CodeInfo;
 using WebModelCore.Common;
+using WebModelCore.LogicCondition;
 
 namespace WebAppCoreBlazorServer.Service
 {
@@ -55,8 +58,25 @@ namespace WebAppCoreBlazorServer.Service
                 var url = "Module/LoadQueryModule";
                 var data = await PostApi(url, parram);
                 var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
+                DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
                 var moduledData = JsonConvert.DeserializeObject<List<dynamic>>(moduleds.Data);
                 return moduledData;
+            }
+            catch (Exception ex)
+            {
+                //Common.ErrorLog.WriteLog("LoadQueryModule", ex.ToString());
+                return null;
+            }
+        }
+        public async Task<DataTable> LoadQueryModuleDataTable(ParramModuleQuery parram)
+        {
+            try
+            {
+                var url = "Module/LoadQueryModule";
+                var data = await PostApi(url, parram);
+                var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
+                DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
+                return dt;
             }
             catch (Exception ex)
             {
@@ -92,6 +112,7 @@ namespace WebAppCoreBlazorServer.Service
             }
             catch (Exception ex)
             {
+
                 return null;
             }
         }
@@ -100,11 +121,6 @@ namespace WebAppCoreBlazorServer.Service
             try
             {
                 var url = string.Format("Module/SaveEditModule?modId={0}&store={1}&keyEdit={2}", modId, store, keyEdit);
-
-                // Parse json here
-                //var json = JsonConvert.SerializeObject(fieldEdits);
-                //var datajson = new StringContent(json, Encoding.UTF8, "application/json");
-                //File.WriteAllText(@"D:\\DataTest.json", json);
                 var data = await PostApi(url, fieldEdits);
                 var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
                 return moduleds;
@@ -291,6 +307,38 @@ namespace WebAppCoreBlazorServer.Service
                 return null;
             }
         }
+        /// <summary>
+        /// Lấy tất cả thông tin bảng deftask
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<DefTasks>> GetAllDefTasks()
+        {
+            try
+            {
+                var url = string.Format("Module/GetAllDefTask");
+                var data = await LoadGetApi(url);
+                var moduleds = JsonConvert.DeserializeObject<RestOutput<List<DefTasks>>>(data);
+                return moduleds.Data;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<List<ModWorkflow>> GetAllModWorkFolow()
+        {
+            try
+            {
+                var url = string.Format("Module/GetAllModWorkflow");
+                var data = await LoadGetApi(url);
+                var moduleds = JsonConvert.DeserializeObject<RestOutput<List<ModWorkflow>>>(data);
+                return moduleds.Data;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         public async Task<List<dynamic>> SearchModSearch(SearchModSearch searchModSearch)
         {
             try
@@ -318,6 +366,7 @@ namespace WebAppCoreBlazorServer.Service
         Task<List<SearchModuleInfo>> LoadModSearchByModId(string modId);
         Task<List<ExecProcModuleInfo>> LoadExcuteModule(string modId);
         Task<List<dynamic>> LoadQueryModule(ParramModuleQuery parram);
+        Task<DataTable> LoadQueryModuleDataTable(ParramModuleQuery parram);
         Task<List<dynamic>> LoadQueryModule(ParramModuleQueryDynamicQuery logic);
         /// <summary>
         /// Lấy thông tin dữ liệu cần để đưa lên view cho phần Edit và View
@@ -340,6 +389,8 @@ namespace WebAppCoreBlazorServer.Service
         Task<List<dynamic>> ExcuteStore2DataTable(ParramModuleQuery query);
         Task<RestOutput<string>> ChangeModel(string barcode);
         Task<List<CodeInfo>> GetAllDefCode();
+        Task<List<DefTasks>> GetAllDefTasks();
+        Task<List<ModWorkflow>> GetAllModWorkFolow();
         Task<List<dynamic>> SearchModSearch(SearchModSearch searchModSearch);
     }
 }

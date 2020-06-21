@@ -1,20 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentValidation;
+using Blazored.Modal;
+using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebAppCoreBlazorServer.Common;
-using WebAppCoreBlazorServer.Data;
 using WebAppCoreBlazorServer.Service;
-using WebCore.Entities;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using System.Net.Http;
+using Microsoft.AspNetCore.Components.Authorization;
+using WebAppCoreBlazorServer.Data;
 
 namespace WebAppCoreBlazorServer
 {
@@ -33,6 +30,11 @@ namespace WebAppCoreBlazorServer
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddServerSideBlazor(o => o.DetailedErrors = true);
+            services.AddBlazoredModal();
+            services.AddAuthentication(
+               CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie();
             //services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IModuleService, ModuleService>();
@@ -40,8 +42,18 @@ namespace WebAppCoreBlazorServer
             services.AddSingleton<IMenuService, MenuService>();
             services.AddSingleton<ILanguageService, LanguageService>();
             services.AddSingleton<ILogService, LogService>();
+            services.AddScoped<ISessionStorageService, SessionStorageService>();
+            services.AddHttpContextAccessor();
+            services.AddScoped<HttpContextAccessor>();
+            services.AddHttpClient();
+            services.AddScoped<HttpClient>();
+            services.AddSingleton<HttpClient>();
+
             //services.AddTransient<IValidator<Person>, PersonValidator>();
-            services.AddTransient<IValidator<ModuleFieldInfo>,Common.FluentValidation>();
+            //services.AddTransient<IValidator<ModuleFieldInfo>,Common.FluentValidation>();
+            services.AddBlazoredSessionStorage();
+            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+
             services.AddDistributedRedisCache(options => // config redis cache server
             {
                 options.Configuration = Configuration["ConfigApp:RedisConnection"];
@@ -64,11 +76,13 @@ namespace WebAppCoreBlazorServer
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
+            app.UseEndpoints(endpoints => {
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });

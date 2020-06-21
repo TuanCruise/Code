@@ -1,5 +1,11 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime JSRuntime
+@using WebAppCoreBlazorServer.Components
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider 
+@using WebAppCoreBlazorServer.Data
+@using WebAppCoreBlazorServer.Pages
+<Blazored.Modal.BlazoredModal />
 
 <div class="wrapper col-12">
     <header class="header-top" header-theme="light">
@@ -101,10 +107,19 @@
                 <button id="sidebarClose" class="nav-close"><i class="ik ik-x"></i></button>
             </div>
             <NavMenu />
-            
+
         </div>
         <div class="main-content">
             @Body
+            <AuthorizeView>
+                <Authorized>
+                    <button><a href="/" class="col-3" @onclick="(()=> Logout())">Logout</a></button>
+                </Authorized>
+                <NotAuthorized>
+                    <button><a href="/register" class="col-3">Register</a></button>
+                    <button><a href="/login" class="col-3">Login</a></button>
+                </NotAuthorized>
+            </AuthorizeView>
         </div>
 
         <aside class="right-sidebar">
@@ -339,13 +354,18 @@
 </div>
 
 @code {
-    protected override async Task  OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             await JSRuntime.InvokeVoidAsync("Onload");
             await JSRuntime.InvokeVoidAsync("CallDatePicker");
         }
+    }
+    public void Logout()
+    {
+         ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsLoggedOut();
+        NavigationManager.NavigateTo("");
     }
 
 }

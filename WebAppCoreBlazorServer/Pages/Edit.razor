@@ -18,14 +18,14 @@
 @inject IDistributedCache distributedCache
 @inject IModuleService moduleService
 
-<EditForm EditContext="@editContext" OnValidSubmit="@Save">
+<EditForm EditContext="@editContext">
     <Blazored.FluentValidation.FluentValidationValidator DisableAssemblyScanning="@true" />
-    <ValidationSummary />
-    @{ 
-        if (ErrorValidate !=null && ErrorValidate.Any())
+    @*<ValidationSummary />*@
+    @{
+        if (ErrorValidate != null && ErrorValidate.Any())
         {
             <div class="text-danger">
-                @{ 
+                @{
                     foreach (var item in ErrorValidate)
                     {
                         <div class="col-6">
@@ -272,6 +272,7 @@
     </div>
 }
 
+
 @*@if (moduleInfo != null && moduleInfo.IsRealTime == "Y")
     {
         <script src="~/lib/signalr/dist/browser/signalr.js"></script>
@@ -354,7 +355,7 @@
             //Set title
             var arr = new string[1];
             arr[0] = moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo); ;
-            Task.Run(()=> JSRuntime.InvokeVoidAsync("SetTitle", arr));
+            Task.Run(() => JSRuntime.InvokeVoidAsync("SetTitle", arr));
             //Hết SetTitle
             foreach (var field in moduleFieldInfo)
             {
@@ -425,170 +426,15 @@
             }
 
         }
-        if(ErrorValidate.Any())
+        if (ErrorValidate.Any())
         {
 
             return;
         }
         HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
-        //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
-        //{
-        //    return RedirectToAction("Login", "Home");
-        //}
-        //var modId = "";
-        //if (model["ModId"].Any())
-        //{
-        //    modId = (model["ModId"]).First().ToString();
-        //}
-
-        //var subModId = "";
-        //if (model["SubModId"].Any())
-        //{
-        //    subModId = (model["SubModId"]).First().ToString();
-        //}
-
-        //var keyEdit = "";
-        //if (model["KeyEdit"].Any())
-        //{
-        //    keyEdit = (model["KeyEdit"]).First().ToString();
-        //}
-        //if (string.IsNullOrEmpty(modId))
-        //{
-        //    return RedirectToAction("Index", "Home");
-        //}
-        //var fieldNameEdit = "";
-        //if (model["FieldNameEdit"].Any())
-        //{
-        //    fieldNameEdit = (model["FieldNameEdit"]).First().ToString();
-        //}
-
-        //var modInfo = await GetModule(modId);
-        //var modSearchId = model["ModSearchId"].ToString();
-
-        //var fieldEdits = CommonFunction.GetModuleFields(moduleInfoModel.FieldsInfo, modId, FLDGROUP.COMMON);
-        //foreach (var item in fieldEdits)
-        //{//Set lại giá trị null cho field
-        //    item.Value = "";
-        //}
-        //var fieldParram = CommonFunction.GetModuleFields(moduleInfoModel.FieldsInfo, modId, FLDGROUP.PARAMETER);
-        //foreach (var item in fieldParram)
-        //{
-        //    if (!fieldEdits.Where(x => x.FieldName.ToUpper() == item.FieldName.ToUpper()).Any())
-        //    {
-        //        item.Value = "";
-        //        fieldEdits.Add(item);
-        //    }
-        //}
 
         string validate = "";
 
-        //foreach (var field in fieldEdits)
-        //{
-        //    if (field.FieldName.ToUpper() == keyEdit.ToUpper())
-        //    {
-        //        continue;
-        //    }
-        //    if (!string.IsNullOrEmpty(keyEdit))
-        //    {
-        //        var keyEditObj = JsonConvert.DeserializeObject<List<ButtonParamInfo>>(keyEdit);
-        //        if (keyEditObj.Where(x => x.ColumnName.ToUpper() == field.FieldName.ToUpper()).Count() > 0)
-        //        {
-        //            continue;
-        //        }
-        //    }
-
-        //    //var checkKey = false;
-        //    //foreach (var item in model.Keys)
-        //    //{
-        //    //    var fldArr = "";
-        //    //    if (item.IndexOf("[") >= 0)
-        //    //    {
-        //    //        fldArr = item.Substring(0, item.IndexOf("["));
-        //    //    }
-
-        //    //    if ((item.ToUpper() == field.FieldName.ToUpper() || fldArr.ToUpper() == field.FieldName.ToUpper()) && ((field.HideWeb ?? "") != "Y" && field.FieldGroup != FLDGROUP.PARAMETER))
-        //    //    {
-        //    //        checkKey = true;
-        //    //        if (string.IsNullOrEmpty(fldArr))
-        //    //        {
-        //    //            field.Value = model[item].ToString().Trim();
-        //    //        }
-        //    //        else
-        //    //        {
-        //    //            if (!string.IsNullOrEmpty(field.Value))
-        //    //            {
-        //    //                field.Value = field.Value.Trim(',') + ",";
-        //    //            }
-        //    //            field.Value += model[item].ToString().Trim() + ",";
-        //    //        }
-        //    //        var valid = field.ValidateFieldInfo();
-        //    //        if (!string.IsNullOrEmpty(valid))
-        //    //        {//Nếu validate trường dữ liệu có lỗi.
-        //    //            var invalidArr = valid.ToStringArray('.');
-        //    //            var fieldName = field.FieldName;
-        //    //            validate += string.Join(",", invalidArr.Select(x => fieldName + " " + x));
-        //    //        }
-        //    //    }
-        //    //}
-        //    //if (!checkKey)
-        //    //{
-        //    //    field.Value = "";
-        //    //}
-        //}
-        //if (!string.IsNullOrEmpty(validate))
-        //{
-        //    await LoadViewBagEdit(modId, modSearchId, subModId, fieldNameEdit, keyEdit, true, 0);
-        //    return View("Edit", validate);
-
-        //}
-        //if (model.Files != null)
-        //{
-        //    var fileFields = model.Files.Select(x => x.Name).Distinct().ToList();
-        //    foreach (var filefield in fileFields)
-        //    {
-        //        var fieldEdit = fieldEdits.Where(x => x.FieldName.ToUpper() == filefield.ToUpper());
-        //        string nameFile = "";
-        //        var files = model.Files.Where(x => x.Name == filefield);
-        //        //foreach (var file in files)
-        //        //{
-        //        //    var uploads = Path.Combine(_hostingEnvironment.WebRootPath, String.Format("Uploads/{0}", modId));
-        //        //    var filePath = Path.Combine(uploads, file.FileName);
-        //        //    if (!Directory.Exists(uploads))
-        //        //    {
-        //        //        Directory.CreateDirectory(uploads);
-        //        //    }
-        //        //    using (var fileStream = new FileStream(filePath, FileMode.Create))
-        //        //    {
-        //        //        file.CopyTo(fileStream);
-        //        //        nameFile += String.Format("{0}/{1},", modId, file.FileName);
-        //        //    }
-        //        //    if (Path.GetExtension(filePath).ToUpper() == ".PDF")
-        //        //    {
-        //        //        PdfHelper pdfHelper = new PdfHelper();
-        //        //        string fileNameReplace = "";
-        //        //        if (modId == ConstMod.ModEditPdf)
-        //        //        {
-        //        //            var isEdit = model["EDIT_PAGE_FILE"].ToString();
-        //        //            if (isEdit.ToUpper() == "Y")
-        //        //            {
-        //        //                fileNameReplace = file.FileName;
-        //        //                nameFile = "";
-        //        //            }
-        //        //        }
-        //        //        // pdfHelper.ExtractJpeg(filePath, fileNameReplace);
-        //        //    }
-        //        //}
-        //        var fieldInfo = new ModuleFieldInfo();
-        //        if (fieldEdit.Any())
-        //        {
-        //            fieldInfo = fieldEdit.First();
-        //            fieldInfo.Value = nameFile.Trim(',');
-        //        }
-        //    }
-
-        //}
-
-        //homeBus.AssignParamField(keyEdit, fieldEdits);
         var modMaintain = await homeBus.LoadMaintainModuleInfo(modId);
         var store = "";
         if (string.IsNullOrEmpty(keyEdit))
@@ -604,36 +450,17 @@
         if (excute.Data != "success")
         {
             var err = excute.Data.GetError();
-            //var errText = await GetErrText(err);
-            //var langText = await GetTextLang(errText);
-            //await LoadViewBagEdit(modId, modSearchId, subModId, fieldNameEdit, keyEdit, true, 0);
-            //return View("Edit", langText);
         }
-        //try
-        //{
-        //    var note = JsonConvert.SerializeObject(fieldEdits.Select(x => string.Format("{0} = {1}", x.FieldName, x.Value)).ToList());
-        //    await _logService.WriteLog(modId, (string.IsNullOrEmpty(keyEdit) ? ELogType.Insert.ToString() : ELogType.Update.ToString()), "ACTION_LOG", note.ToString(), _accessor.HttpContext.Connection.RemoteIpAddress.ToString());
-        //}
-        //catch (Exception e)
-        //{
-
-        //}
-        //if (modId == ConstMod.ModChangeModel)//Nếu Mod là mod cần reload lại Tham số Sysvar
-        //{
-        //    await ReLoadSysVar();
-        //}
-        //if (string.IsNullOrEmpty(modSearchId))
-        //{
-        //    return RedirectToAction("Edit", "Home", new { modId = modId, success = 1 });
-        //}
-        //return RedirectToAction("Index", "Home", new { modId = modSearchId });
     }
+    [CascadingParameter] Blazored.Modal.BlazoredModalInstance BlazoredModal { get; set; }
 
-
+    void Close() => BlazoredModal.Close(Blazored.Modal.Services.ModalResult.Ok(true));
+    void Cancel() => BlazoredModal.Cancel();
 }
 @code {
     void SubmitValidForm()
     {
         Console.WriteLine("Form Submitted Successfully!");
     }
+
 }

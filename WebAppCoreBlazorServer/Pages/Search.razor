@@ -11,10 +11,12 @@
 @using WebCore.Entities;
 @using Microsoft.Extensions.Caching.Distributed
 @using WebModelCore.LogicCondition
+@using WebModelCore.ModelCheckBox
+@inject NavigationManager NavManager
+@inject IModalService Modal
 @inject IJSRuntime JSRuntime;
 @inject NavigationManager NavigationManager
 @inject IConfiguration iConfiguration
-
 @inject IDistributedCache distributedCache
 @inject IModuleService moduleService
 <input type="hidden" id="txtModId" name="ModId" value="@modId" />
@@ -67,52 +69,47 @@
                                 var btnToolBar = btnInfos.Where(x => x.ShowOnToolbar == "Y");
                                 foreach (var item in btnToolBar)
                                 {
-                                    if (item.ButtonName.ToUpper() != EDefModBtn.BTN_VIEW.ToString().ToUpper() && item.ButtonName.ToUpper() != EDefModBtn.BTN_EDIT.ToString().ToUpper())
-                                    {
-                                        <div class="float-right m-1">
-                                            @if (checkBtnDels.Any())
+                                    // Chỉ căn cứ vào toolbar=Y để load button
+                                    //if (item.ButtonName.ToUpper() != EDefModBtn.BTN_VIEW.ToString().ToUpper() && item.ButtonName.ToUpper() != EDefModBtn.BTN_EDIT.ToString().ToUpper())
+                                    //{
+                                    <div class="float-right m-1">
+                                        @if (checkBtnDels.Any())
+                                        {
+                                            <input type="hidden" value="@checkBtnDels.First().CallSubModule" id="txtSubModDel" />
+                                            <input type="hidden" value="@checkBtnDels.First().CallModuleID" id="txtModDel" />
+                                        }
+
+                                        @{
+                                            if (item.ButtonName.Contains(EDefModBtn.BTN_ADD.ToString().ToUpper()) && checkBtnEdits.Count() > 0 && (groupMods.Where(x => x.ModId == checkBtnEdits.First().CallModuleID).Count() > 0 || true))
                                             {
-                                                <input type="hidden" value="@checkBtnDels.First().CallSubModule" id="txtSubModDel" />
-                                                <input type="hidden" value="@checkBtnDels.First().CallModuleID" id="txtModDel" />
+                                                <button class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" @onclick="@(()=>CallMod(item.CallModuleID,modId))"><i class="fa fa-plus"></i>@item.ButtonName</button>
                                             }
-
-                                            @{
-                                                if (item.ButtonName.Contains(EDefModBtn.BTN_ADD.ToString().ToUpper()) && checkBtnEdits.Count() > 0 && (groupMods.Where(x => x.ModId == checkBtnEdits.First().CallModuleID).Count() > 0 || true))
+                                            @*else if (item.ButtonName.ToUpper() == EDefModBtn.BTN_DELETE.ToString().ToUpper() && groupMods.Where(x => x.ModId == checkBtnDels.First().CallModuleID).Count() > 0)
                                                 {
-
-                                                    <a class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" href="Edit/@item.CallModuleID/@modId"><i class="fa fa-plus"></i>@item.ButtonName</a>
-
-                                                    @* <a class="btn-sm btn-warning" href="edit/@checkBtnEdits.First().CallModuleID/@modId/@String.Join(",",parramEdit.Select(x=>x.FieldName))/@JsonConvert.SerializeObject(parramEdit)/1">
-                                                            <span class="ik ik-edit" aria-hidden="true"></span>
-                                                        </a>*@
-                                                    //<a href="@Url.Action("Edit","Home",new {modSearchId=modId, modId=checkBtnEdits.First().CallModuleID,subModId=checkBtnEdits.First().CallSubModule,parram=ViewBag.ParramMods})"><button class="btn btn-default btn-primary" name=" @item.ButtonName"><i class="fa fa-plus" title="Thêm"></i> @item.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)</button></a>
-                                                }
-                                                @*else if (item.ButtonName.ToUpper() == EDefModBtn.BTN_DELETE.ToString().ToUpper() && groupMods.Where(x => x.ModId == checkBtnDels.First().CallModuleID).Count() > 0)
-                                                    {
-                                                        <button class="btn btn-default" id="btn@(item.ButtonName)" name="@item.ButtonName"><i class="fa fa-trash" title="Xóa"></i> @item.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)</button>
-                                                        <input type="hidden" value="@checkBtnDels.First().CallSubModule" id="txtSubModDel" />
-                                                        <input type="hidden" value="@checkBtnDels.First().CallModuleID" id="txtModDel" />
-                                                    }*@
-                                                else if (item.ButtonName.ToUpper() == EDefModBtn.BTN_EXPORT.ToString().ToUpper())
+                                                    <button class="btn btn-default" id="btn@(item.ButtonName)" name="@item.ButtonName"><i class="fa fa-trash" title="Xóa"></i> @item.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)</button>
+                                                    <input type="hidden" value="@checkBtnDels.First().CallSubModule" id="txtSubModDel" />
+                                                    <input type="hidden" value="@checkBtnDels.First().CallModuleID" id="txtModDel" />
+                                                }*@
+                                            else if (item.ButtonName.ToUpper() == EDefModBtn.BTN_EXPORT.ToString().ToUpper())
+                                            {
+                                                <button class="btn btn-default" id="btn@(item.ButtonName)" name="@item.ButtonName" onclick="$('#btnExport').click()"><i class="fa fa-file-excel" title="Xuất Excel"></i>Xuất Excel</button>
+                                            }
+                                            else if (item.ButtonName.ToUpper() == EDefModBtn.BTN_PRINT.ToString().ToUpper())
+                                            {
+                                                <button class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" @onclick="@(()=>CallMod(item.CallModuleID,modId))"><i class="fa fa-plus"></i>@item.ButtonName</button>
+                                            }
+                                            else if (groupMods.Where(x => x.ModId == item.CallModuleID).Count() > 0 || true)
+                                            {
+                                                if (item.ButtonName.ToUpper() != EDefModBtn.BTN_DELETE.ToString().ToUpper())
                                                 {
-                                                    <button class="btn btn-default" id="btn@(item.ButtonName)" name="@item.ButtonName" onclick="$('#btnExport').click()"><i class="fa fa-file-excel" title="Xuất Excel"></i>Xuất Excel</button>
-                                                }
-                                                else if (item.ButtonName.ToUpper() == EDefModBtn.BTN_PRINT.ToString().ToUpper())
-                                                {
-                                                    <button class="btn btn-default btn-print" id="btn@(item.ButtonName)" name="@item.ButtonName"><i class="fa fa-print" title="IN"></i>In</button>
-                                                }
-                                                else if (groupMods.Where(x => x.ModId == item.CallModuleID).Count() > 0 || true)
-                                                {
-                                                    if (item.ButtonName.ToUpper() != EDefModBtn.BTN_DELETE.ToString().ToUpper())
-                                                    {
-                                                        <a class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" href="Edit/@item.CallModuleID/@modId"><i class="fa fa-plus"></i>@item.ButtonName</a>
+                                                    <button class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" @onclick="@(()=>CallMod(item.CallModuleID,modId))"><i class="fa fa-plus"></i>@item.ButtonName</button>
 
-                                                        //<a href="@Url.Action("Index","Home",new {modId=item.CallModuleID} )" class="btn btn-default" id="btn@(item.ButtonName)" name="@item.ButtonName"> @item.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)</a>
-                                                    }
+                                                    //<a href="@Url.Action("Index","Home",new {modId=item.CallModuleID} )" class="btn btn-default" id="btn@(item.ButtonName)" name="@item.ButtonName"> @item.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)</a>
                                                 }
                                             }
-                                        </div>
-                                    }
+                                        }
+                                    </div>
+                                    // }
                                 }
                             }
                         </div>
@@ -128,7 +125,7 @@
                             @{
                                 if (modSearch != null && modSearch.ShowCheckBox == "Y")
                                 {
-                                @*<th><InputCheckbox  @bind-Value="CheckAll"/></th>*@
+                                <th><input type="checkbox" @bind="CheckAll" /></th>
                             }
                             var fieldGrid = moduleFieldInfo.Where(x => x.FieldGroup == FLDGROUP.SEARCH_COLUMN).ToList();
                             foreach (var item in fieldGrid)
@@ -201,79 +198,97 @@
                                                 modeCallEdit = checkBtnViews.First().CallModuleID;
                                             }
                                             <tr>
+                                                @{
+                                                    if (modSearch != null && modSearch.ShowCheckBox == "Y")
+                                                    {
+
+                                                        var checkBox = new CheckBoxModel { Value = false, KeyValue = item };
+                                                        var checkCheckBox = CheckBoxModels.Where(x => x.KeyValue == item);
+                                                        if (checkCheckBox.Any())
+                                                        {
+                                                            checkBox = checkCheckBox.First();
+                                                        }
+                                                        else
+                                                        {
+                                                            CheckBoxModels.Add(checkBox);
+                                                        }
+                                                        <td><input type="checkbox" @bind="checkBox.Value" /></td>
+                                                    }
+                                                }
                                                 @foreach (var col in fieldGrid)
                                                 {
                                                     if (col.HideWeb == "Y")
                                                     {
                                                         continue;
                                                     }
-                                                <td>
-                                                    @{
-                                                        @*if (modSearch != null && modSearch.ShowCheckBox == "Y")
-                                                        {
-                                                            <InputCheckbox @bind-Value="@col.IsCheck" @onclick="() => CheckManual(col)" />
-                                                        }*@
-                                                        foreach (var column in dataRows)
-                                                        {
-                                                            var columnName = ((Newtonsoft.Json.Linq.JProperty)column).Name;
-                                                            if (modeCallEdit == "02519" && columnName.ToUpper() == "GroupId".ToUpper())
-                                                            {
-                                                                groupId = int.Parse(((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value.ToString());
-                                                            }
-                                                            if (columnName.ToUpper() == col.FieldName.ToUpper())
-                                                            {
-                                                                if (!string.IsNullOrEmpty(col.ListSource))
+                                                    <td>
+
+                                                        @{
+                                                            @*if (modSearch != null && modSearch.ShowCheckBox == "Y")
                                                                 {
-                                                                    if (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value != null)
+                                                                    <InputCheckbox @bind-Value="@col.IsCheck" @onclick="() => CheckManual(col)" />
+                                                                }*@
+                                                            foreach (var column in dataRows)
+                                                            {
+                                                                var columnName = ((Newtonsoft.Json.Linq.JProperty)column).Name;
+                                                                if (modeCallEdit == "02519" && columnName.ToUpper() == "GroupId".ToUpper())
+                                                                {
+                                                                    groupId = int.Parse(((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value.ToString());
+                                                                }
+                                                                if (columnName.ToUpper() == col.FieldName.ToUpper())
+                                                                {
+                                                                    if (!string.IsNullOrEmpty(col.ListSource))
                                                                     {
-                                                                        col.FieldID = ((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value.ToString();
-                                                                        var text = col.GetValueGridControl(codeInfos);
+                                                                        if (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value != null)
+                                                                        {
+                                                                            col.FieldID = ((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value.ToString();
+                                                                            var text = col.GetValueGridControl(codeInfos);
+                                                                            <span field="@col.FieldName" title="@text">@(text.Length > 50 ? text.Substring(0, 50) + "..." : text)</span>
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        var text = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value ?? "").ToString();
                                                                         <span field="@col.FieldName" title="@text">@(text.Length > 50 ? text.Substring(0, 50) + "..." : text)</span>
                                                                     }
+                                                                    checkAll++;
                                                                 }
-                                                                else
+                                                                foreach (var prrView in parramView)
                                                                 {
-                                                                    var text = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value ?? "").ToString();
-                                                                    <span field="@col.FieldName" title="@text">@(text.Length > 50 ? text.Substring(0, 50) + "..." : text)</span>
+                                                                    if (prrView.ColumnName.ToUpper() == columnName.ToUpper())
+                                                                    {
+                                                                        prrView.Value = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value ?? "").ToString();
+                                                                    }
                                                                 }
-                                                                checkAll++;
-                                                            }
-                                                            foreach (var prrView in parramView)
-                                                            {
-                                                                if (prrView.ColumnName.ToUpper() == columnName.ToUpper())
+                                                                foreach (var prrEdit in parramEdit)
                                                                 {
-                                                                    prrView.Value = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value ?? "").ToString();
+                                                                    if (prrEdit.ColumnName.ToUpper() == columnName.ToUpper())
+                                                                    {
+                                                                        prrEdit.Value = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value ?? "").ToString();
+                                                                    }
                                                                 }
-                                                            }
-                                                            foreach (var prrEdit in parramEdit)
-                                                            {
-                                                                if (prrEdit.ColumnName.ToUpper() == columnName.ToUpper())
+                                                                foreach (var prrDel in parramDel)
                                                                 {
-                                                                    prrEdit.Value = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value ?? "").ToString();
+                                                                    if (prrDel.ColumnName.ToUpper() == columnName.ToUpper())
+                                                                    {
+                                                                        prrDel.Value = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value ?? "").ToString();
+                                                                    }
                                                                 }
-                                                            }
-                                                            foreach (var prrDel in parramDel)
-                                                            {
-                                                                if (prrDel.ColumnName.ToUpper() == columnName.ToUpper())
+                                                                foreach (var prrAssign in parramAssignUser)
                                                                 {
-                                                                    prrDel.Value = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value ?? "").ToString();
+                                                                    if (prrAssign.ColumnName.ToUpper() == columnName.ToUpper())
+                                                                    {
+                                                                        prrAssign.Value = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value ?? "").ToString();
+                                                                    }
                                                                 }
-                                                            }
-                                                            foreach (var prrAssign in parramAssignUser)
-                                                            {
-                                                                if (prrAssign.ColumnName.ToUpper() == columnName.ToUpper())
+                                                                if (columnName.ToUpper() == "TotalRow".ToUpper())
                                                                 {
-                                                                    prrAssign.Value = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value ?? "").ToString();
+                                                                    totalRow = int.Parse(((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value.ToString());
                                                                 }
-                                                            }
-                                                            if (columnName.ToUpper() == "TotalRow".ToUpper())
-                                                            {
-                                                                totalRow = int.Parse(((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value.ToString());
                                                             }
                                                         }
-                                                        }
-                                                        </td>
-                                                    }
+                                                    </td>
+                                                }
                                                 @if (checkColAction.Any())
                                                 {
                                                     <td>
@@ -289,9 +304,10 @@
                                                                         <li>
                                                                             @if (checkBtnView)
                                                                             {
-                                                                                <a class="" href="edit/@checkBtnViews.First().CallModuleID/@modId/@String.Join(",",parramView.Select(x=>x.FieldName))/@JsonConvert.SerializeObject(parramView)/0">
-                                                                                    <span class="ik ik-eye btn-info" aria-hidden="true"></span>  @btnInColAction.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)
-                                                                                </a>
+                                                                                <button class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" @onclick="@(()=>CallMod(checkBtnViews.First().CallModuleID,modId,String.Join(",",parramView.Select(x=>x.FieldName)),JsonConvert.SerializeObject(parramView),"0"))"><i class="ik ik-eye btn-info"></i>@item.ButtonName</button>
+                                                                                @*<a class="" href="edit/@checkBtnViews.First().CallModuleID/@modId/@String.Join(",",parramView.Select(x=>x.FieldName))/@JsonConvert.SerializeObject(parramView)/0">
+                                                                                        <span class="ik ik-eye btn-info" aria-hidden="true"></span>  @btnInColAction.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)
+                                                                                    </a>*@
                                                                             }
                                                                         </li>
                                                                     }
@@ -300,9 +316,10 @@
                                                                         <li>
                                                                             @if (checkBtnEdit && groupMods.Where(x => x.ModId == checkBtnEdits.First().CallModuleID).Count() > 0 && (checkBtnEdits.Count() > 0 && checkBtnEdits.First().CallModuleID != "02519"))
                                                                             {
-                                                                                <a class="" href="edit/@checkBtnEdits.First().CallModuleID/@modId/@String.Join(",",parramEdit.Select(x=>x.FieldName))/@JsonConvert.SerializeObject(parramEdit)/1">
-                                                                                    <span class="ik ik-edit btn-warning" aria-hidden="true"></span> @btnInColAction.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)
-                                                                                </a>
+                                                                                <button class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" @onclick="@(()=>CallMod(checkBtnEdits.First().CallModuleID,modId,String.Join(",",parramView.Select(x=>x.FieldName)),JsonConvert.SerializeObject(parramView),"1"))"><i class="ik ik-edit btn-info"></i>@item.ButtonName</button>
+                                                                                @*<button class="" href="edit/@checkBtnEdits.First().CallModuleID/@modId/@String.Join(",",parramEdit.Select(x=>x.FieldName))/@JsonConvert.SerializeObject(parramEdit)/1">
+                                                                                        <span class="ik ik-edit btn-warning" aria-hidden="true"></span> @btnInColAction.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)
+                                                                                    </button>*@
                                                                             }
                                                                         </li>
                                                                     }
@@ -376,6 +393,7 @@
         public string parramMods { get; set; } = "";
         public string Title { get; set; } = "";
         private string Schema { get; set; } = "audit";
+        public List<CheckBoxModel> CheckBoxModels { get; set; }
         public ModuleInfoModel moduleInfoModel { get; set; } = new ModuleInfoModel();
         public ModuleInfoModel ModuleInfo { get; set; } = new ModuleInfoModel();
         public List<ModuleFieldInfo> moduleFieldInfo { get; set; } = new List<ModuleFieldInfo>();
@@ -426,6 +444,7 @@
                 //    return RedirectToAction("Login", "Home");
                 //    NavigationManager.NavigateTo("PageToRedirect");
                 //}
+                CheckBoxModels = new List<CheckBoxModel>();
                 lstControl = new List<ModuleFieldInfo>();
                 moduleFieldInfo = new List<ModuleFieldInfo>();
                 HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
@@ -437,9 +456,8 @@
                 moduleInfoModel = homeBus.ConvertFromViewModel(data);
                 //Set title
                 var arr = new string[1];
-                arr[0] = moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo); ;
-                //await JSRuntime.InvokeVoidAsync("SetTitle", arr);
-
+                arr[0] = moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo);
+                await JSRuntime.InvokeVoidAsync("SetTitle", arr);
                 //Hết SetTitle
                 Title = moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(await homeBus.LoadAllBtnLanguage());
                 var cb = moduleInfoModel.FieldsInfo.Where(x => !String.IsNullOrEmpty(x.ListSource));
@@ -574,7 +592,7 @@
             catch (Exception ex)
             {
 
-                //throw ex;
+                //return View("Search", modId);
             }
         }
 
@@ -729,7 +747,22 @@
                 }
             }
         }
-        private bool CheckAll { get; set; }
+        private bool _CheckAll { get; set; }
+        private bool CheckAll
+        {
+            get
+            {
+                return _CheckAll;
+            }
+            set
+            {
+                _CheckAll = value;
+                foreach (var item in CheckBoxModels)
+                {
+                    item.Value = _CheckAll;
+                }
+            }
+        }
         private void CheckAllCheckBox()
         {
             foreach (var item in moduleFieldInfo)
@@ -748,6 +781,91 @@
             {
                 field.IsCheck = false;
                 CheckAll = false;
+            }
+        }
+        public async Task CallMod(string callModId, string modSearchId)
+        {
+            HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
+            var mod = await homeBus.GetModule(callModId);
+            if (mod != null && mod.ModulesInfo.Any())
+            {
+                if (mod.ModulesInfo.First().UIType == EUITYPE.P.ToString())
+                {
+                    ModalParameters parameters = new ModalParameters();
+                    //{modId}/{modSearchId}
+                    parameters.Add("modId", callModId);
+                    parameters.Add("modSearchId", modSearchId);
+                    Modal.Show<Pages.Edit>(moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo), parameters);
+                }
+                else
+                {
+                    NavManager.NavigateTo(String.Format("/Edit/{0}/{1}", callModId, modSearchId));
+                }
+            }
+        }
+        public async Task CallMod(string callModId, string modSearchId, List<ButtonParamInfo> parram)
+        {
+            HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
+            var mod = await homeBus.GetModule(callModId);
+            var checkCheckBoxChecked = CheckBoxModels.Where(x => x.Value);
+            if (checkCheckBoxChecked.Count() != 1)
+            {
+                //JSRuntime.InvokeAsync
+                return;
+            }
+            foreach (var item in parram)
+            {
+                var value = checkCheckBoxChecked.First().KeyValue;
+                var dataRows = ((Newtonsoft.Json.Linq.JContainer)value);
+                foreach (var column in dataRows)
+                {
+                    var columnName = ((Newtonsoft.Json.Linq.JProperty)column).Name;
+                    if (columnName.ToUpper() == item.FieldName.ToUpper())
+                    {
+                        item.Value = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value ?? "").ToString();
+                    }
+                }
+            }
+            if (mod != null && mod.ModulesInfo.Any())
+            {
+                if (mod.ModulesInfo.First().UIType == EUITYPE.P.ToString())
+                {
+                    ModalParameters parameters = new ModalParameters();
+                    //{modId}/{modSearchId}
+                    parameters.Add("modId", callModId);
+                    parameters.Add("modSearchId", modSearchId);
+                    parameters.Add("fieldNameEdit", "");
+                    parameters.Add("parram", JsonConvert.SerializeObject(parram));
+                    parameters.Add("pedit", "1");
+                    Modal.Show<Pages.Edit>(moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo), parameters);
+                }
+                else
+                {
+                    NavManager.NavigateTo(String.Format("/Edit/{0}/{1}/{2}/{3}/{4}", callModId, modSearchId, "", JsonConvert.SerializeObject(parram), "1"));
+                }
+            }
+        }
+        public async Task CallMod(string callModId, string modSearchId, string fieldNameEdit, string parram, string pedit)
+        {
+            HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
+            var mod = await homeBus.GetModule(callModId);
+            if (mod != null && mod.ModulesInfo.Any())
+            {
+                if (mod.ModulesInfo.First().UIType == EUITYPE.P.ToString())
+                {
+                    ModalParameters parameters = new ModalParameters();
+                    //{modId}/{modSearchId}
+                    parameters.Add("modId", callModId);
+                    parameters.Add("modSearchId", modSearchId);
+                    parameters.Add("fieldNameEdit", fieldNameEdit);
+                    parameters.Add("parram", parram);
+                    parameters.Add("pedit", pedit);
+                    Modal.Show<Pages.Edit>(moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo), parameters);
+                }
+                else
+                {
+                    NavManager.NavigateTo(String.Format("/Edit/{0}/{1}/{2}/{3}/{4}", callModId, modSearchId, fieldNameEdit, parram, pedit));
+                }
             }
         }
     }

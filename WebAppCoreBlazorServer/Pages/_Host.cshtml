@@ -29,12 +29,14 @@
     <link rel="stylesheet" href="plugins/c3/c3.min.css">
     <link rel="stylesheet" href="plugins/owl.carousel/dist/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="plugins/owl.carousel/dist/assets/owl.theme.default.min.css">
+    <link href="~/plugins/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="dist/css/theme.min.css">
+    <link href="~/_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
 
 </head>
 <body>
     <app>
-        <component type="typeof(App)" render-mode="ServerPrerendered" />
+        @(await Html.RenderComponentAsync<App>(RenderMode.Server))
     </app>
 
     <div id="blazor-error-ui">
@@ -69,6 +71,7 @@
     <script src="plugins/c3/c3.min.js"></script>
     <script src="~/plugins/bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.js"></script>
     <script src="dist/js/theme.js"></script>
+    <script src="~/plugins/fullcalendar/dist/fullcalendar.min.js"></script>
     <script src="~/js/calendar.js"></script>
     @*<script src="exampleJsInterop.js"></script>*@
 </body>

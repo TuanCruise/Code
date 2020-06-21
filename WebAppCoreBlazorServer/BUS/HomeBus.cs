@@ -390,7 +390,7 @@ namespace WebAppCoreBlazorServer.BUS
         /// <param name="fields"></param>
         public void AssignParamField(List<ButtonParamInfo> parram, List<ModuleFieldInfo> fields)
         {
-            if (parram==null || !parram.Any())
+            if (parram == null || !parram.Any())
             {
                 return;
             }
@@ -480,6 +480,115 @@ namespace WebAppCoreBlazorServer.BUS
             }
             return text;
         }
+        /// <summary>
+        /// Load Tất cả defTask vào cache
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<DefTasks>> LoadAllDefTasks()
+        {
+            try
+            {
+                string key = ECacheKey.DefTasks.ToString();
+                var cachedData = _distributedCache.GetString(key);
+                if (cachedData != null)
+                {
+                    var defTasks = JsonConvert.DeserializeObject<List<DefTasks>>(cachedData);
+                    return defTasks;
+                }
+                else
+                {
+                    var defTasks = await _moduleService.GetAllDefTasks();
+                    RedisUtils.SetCacheData(_distributedCache, _Configuration, defTasks, key);
+                    return defTasks;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+        /// <summary>
+        /// Lấy thông tin deftask theo modId
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<DefTasks>> LoadDefTasksByModId(string modId)
+        {
+            try
+            {
+                string key = ECacheKey.DefTasks.ToString();
+                var defTasks = new List<DefTasks>();
+                var cachedData = _distributedCache.GetString(key);
+                if (cachedData == null)
+                {
+                    var defTaskAll = await LoadAllDefTasks();
+                    return defTaskAll.Where(x => x.Modid == modId).ToList();
+                }
+                else
+                {
+                    var defTaskAll = JsonConvert.DeserializeObject<List<DefTasks>>(cachedData);
+                    return defTaskAll.Where(x => x.Modid == modId).ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
 
+        /// <summary>
+        /// Lấy thông tin ModWorkFollow theo modId
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<ModWorkflow>> LoadModWorkFollowByModId(string modId)
+        {
+            try
+            {
+                string key = ECacheKey.ModWorkFlow.ToString();
+                var defTasks = new List<ModWorkflow>();
+                var cachedData = _distributedCache.GetString(key);
+                if (cachedData == null)
+                {
+                    var modWorkflows = await GetAllModWorkFolow();
+                    return modWorkflows.Where(x => x.Modid == modId).ToList();
+                }
+                else
+                {
+                    var modWorkflows = JsonConvert.DeserializeObject<List<ModWorkflow>>(cachedData);
+                    return modWorkflows.Where(x => x.Modid == modId).ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Load Tất cả defTask vào cache
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<ModWorkflow>> GetAllModWorkFolow()
+        {
+            try
+            {
+                string key = ECacheKey.ModWorkFlow.ToString();
+                var cachedData = _distributedCache.GetString(key);
+                if (cachedData != null)
+                {
+                    var defTasks = JsonConvert.DeserializeObject<List<ModWorkflow>>(cachedData);
+                    return defTasks;
+                }
+                else
+                {
+                    var defTasks = await _moduleService.GetAllModWorkFolow();
+                    RedisUtils.SetCacheData(_distributedCache, _Configuration, defTasks, key);
+                    return defTasks;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

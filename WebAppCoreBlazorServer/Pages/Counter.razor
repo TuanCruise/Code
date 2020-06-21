@@ -1,16 +1,27 @@
 ﻿@page "/counter"
+@inject IModalService Modal
 
-<h1>Counter</h1>
+<h1>Blazored Modal Sample</h1>
 
-<p>Current count: @currentCount</p>
+<hr class="mb-5" />
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<p>
+    This is an example of using Blazored Modal in its most simplistic form.
+</p>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("Modal.Show<Confirm>(\"Welcome to Blazored Modal\", options);")
+            </code>
+        </p>
+    </div>
+</div>
+
+<button @onclick="ShowModal" class="btn btn-primary">Show Modal</button>
 
 @code {
-    private int currentCount = 0;
+    void ShowModal() => Modal.Show<Confirm>("Welcome to Blazored Modal");
 
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
 }

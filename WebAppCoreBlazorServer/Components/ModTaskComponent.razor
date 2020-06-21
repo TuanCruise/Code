@@ -1,0 +1,99 @@
+@using WebCore.Entities
+@using WebModelCore.DefTask
+@using WebAppCoreBlazorServer.BUS
+@using WebCore.Entities
+@using WebModelCore.Menu
+@using WebModelCore
+@using WebAppCoreBlazorServer.Service
+@using Microsoft.Extensions.Caching.Distributed
+@using Microsoft.Extensions.Configuration
+@using WebAppCoreBlazorServer.Common
+@using WebAppCoreBlazorServer.Common.Utils
+@inject IModuleService moduleService
+
+@inject NavigationManager NavigationManager
+@inject IConfiguration iConfiguration
+@inject ILanguageService languageService
+@inject IDistributedCache distributedCache
+<div class="sidebar-content">
+    <div class="nav-container">
+        <nav id="main-menu-navigation" class="navigation-main">
+            @{
+                if (DefTasks != null)
+                    foreach (var item in DefTasks)
+                    {
+                        @*<div class="nav-item @(item.MenuChild.Any()?"has-sub":"")">
+                            <a href="@(string.IsNullOrEmpty(item.Menu.ModID)?"#":"search/"+ item.Menu.ModID)">
+                                @{
+                                    var icon = item.Menu.GetIconMenu(Languages);
+                                    if (!string.IsNullOrEmpty(icon))
+                                    {
+                                        <i class="fas icon @icon"></i>
+                                    }
+                                }
+                                <span>
+                                    @item.Menu.GetLanguageMenu(Languages)
+                                </span>
+                            </a>
+                            @{
+                                if (item.MenuChild.Any())
+                                {
+                                    <div class="submenu-content">
+                                        @foreach (var subItem in item.MenuChild)
+                                        {
+                                            <a href="search/@subItem.Menu.ModID" class="menu-item">
+                                                @{
+                                                    var subIcon = subItem.Menu.GetIconMenu(Languages);
+                                                }
+                                                @subItem.Menu.GetLanguageMenu(Languages)
+                                            </a>
+                                        }
+
+                                    </div>
+                                }
+                            }
+                        </div>*@
+                    }
+            }
+        </nav>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public string ModId { get; set; }
+    public List<DefTaskModel> DefTasks { get; set; }
+    private async Task<List<DefTaskModel>> LoadDefTasks()
+    {
+        HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
+
+        var defTasks = new List<DefTaskModel>();
+        int userId = int.Parse("0");
+        var dataMenu = await homeBus.LoadAllDefTasks();
+        if (dataMenu != null)
+        {
+            var leve0 = dataMenu.Where(x => x.ParentId == "000000" ||string.IsNullOrEmpty(x.ParentId));
+            foreach (var item in leve0)
+            {
+                var defTaskRoot = new DefTaskModel
+                {
+                    DefTasks = item
+                };
+                var defTasksChild = dataMenu.Where(x => x.ParentId == item.TaskName);
+                if (defTasksChild.Any())
+                {
+                    //defTaskRoot.DefTasksChild.AddRange(defTasksChild.Select(x => new DefTaskModel { DefTasks = x }).ToList());
+                }
+                defTasks.Add(defTaskRoot);
+            }
+        }
+
+        //Languages = await LoadAllIcon();
+        return defTasks;
+    }
+    protected override void OnInitialized()
+    {
+        //base.OnInitialized();
+
+    }
+}
+
