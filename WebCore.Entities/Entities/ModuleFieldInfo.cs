@@ -141,12 +141,29 @@ namespace WebCore.Entities
                 _Value = value;
             }
         }
+
+        [DataMember, Column(Name = "ValueDate")]
+        public DateTime? ValueDate {
+            get
+            {
+                return _ValueDate;
+            }
+            set
+            {
+                if (ControlType == "DT")
+                {
+                    _Value = value == null ? "" : value.Value.ToString(FieldFormat);
+                }
+                _ValueDate = value;
+            }
+        }
         /// <summary>
         /// Cột này chỉ để bind dữ liệu khi User check vào checkbox. ko có trong DB
         /// </summary>
         [DataMember, Column(Name = "CheckBox")]
         public bool IsCheck { get; set; }
         private string _Value { get; set; }
+        private DateTime? _ValueDate { get; set; }
         [DataMember]
         public List<ModuleFieldInfo> FieldChilds { get; set; }
 

@@ -6,4 +6,13 @@ namespace WebModelCore
     {
         SCDTYPE
     }
+    public enum EUITYPE
+    {
+        [Description("POPUP")]
+        P,
+        [Description("NOWINDOW")]
+        N,
+        [Description("TABPAGE")]
+        T
+    }
 }

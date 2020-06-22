@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
-
-namespace WebModelCore {
-    public enum ECacheKey {
+﻿namespace WebModelCore
+{
+    public enum ECacheKey
+    {
         /// <summary>
         /// Thông tin info module
         /// </summary>
@@ -16,5 +16,7 @@ namespace WebModelCore {
         Menu,
         AllIcon,
         DefCode,
+        DefTasks,
+        ModWorkFlow,
     }
 }
