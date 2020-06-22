@@ -15,4 +15,8 @@
     <ProjectReference Include="..\WebCore.Entities\WebCore.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ModelCheckBox\" />
+  </ItemGroup>
+
 </Project>
