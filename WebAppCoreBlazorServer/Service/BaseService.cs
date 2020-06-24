@@ -2,14 +2,18 @@
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
+using WB.SYSTEM;
+using WebCore.Entities;
 
 namespace WebAppCoreBlazorServer.Service {
     public class BaseService {
@@ -93,5 +97,167 @@ namespace WebAppCoreBlazorServer.Service {
             }
             return null;
         }
+
+        //Dongpv: fix co
+        public async Task<string> Process(string json)
+        {
+            try
+            {
+                //FIX
+                _remoteServiceBaseUrl = $"http://localhost:65104";
+                var uri = _remoteServiceBaseUrl;
+                //var uri = _remoteServiceBaseUrl + url;
+                using (var client = new HttpClient())
+                {
+                    var data = new StringContent(json, Encoding.UTF8, "application/json");
+                    var content = "";
+                    try
+                    {
+                        //var data = await client.GetAsync(uri);
+                        //var data = await client.PostAsync(uri);
+                        //content = await data.Content.ReadAsStringAsync();
+                        var responseMessage = await client.PostAsync(_remoteServiceBaseUrl, data);
+                        responseMessage.EnsureSuccessStatusCode();
+
+                        var result = await responseMessage.Content.ReadAsStringAsync();
+
+                        if (responseMessage.StatusCode == HttpStatusCode.OK)
+                        {
+                            content = result;
+                        }
+
+                    }
+                    catch (Exception e1)
+                    {
+
+                        System.Diagnostics.Debug.WriteLine("hieu=" + e1.ToString());
+                    }
+                    return content;
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return null;
+        }
+
+        //Dongpv
+        public async Task<string> SaveData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits)
+        {
+            try
+            {
+                //var json = JsonConvert.SerializeObject(obj);    
+                //var  json = JsonConvert.DeserializeObject<string>(apiResponse);
+                //ArrayList Body = new ArrayList(); Body.Add("pv_UserId"); Body.Add(userId);
+                //1. Convert obj to arraylist
+                ArrayList Body = new ArrayList();
+                foreach (ModuleFieldInfo moduleFieldInfo in fieldEdits)
+                {
+                    Body.Add(moduleFieldInfo.FieldName); Body.Add(moduleFieldInfo.Value);
+                }
+                //FIX TO TEST
+                Body.Add("FULLNAME"); Body.Add("PHAM VAN DONG");
+                Body.Add("IDNO"); Body.Add("123456789");
+
+                var order = new {
+                    UserID = "0000",
+                    IP = "00000",
+                    BranchID = "000",
+                    ModuleID = modId,
+                    ObjectName = enity,
+                    MsgType = Constants.MSG_MNT_TYPE,
+                    MsgAction = Constants.MSG_ADD_ACTION,
+                    Body = Body
+                };
+
+                var json = JsonConvert.SerializeObject(order);
+
+                var data = await Process(json);
+                var moduleds = JsonConvert.DeserializeObject<string>(data);
+                return moduleds;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<string> DeleteData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits)
+        {
+            try
+            {
+                //var json = JsonConvert.SerializeObject(obj);    
+                //var  json = JsonConvert.DeserializeObject<string>(apiResponse);
+                //ArrayList Body = new ArrayList(); Body.Add("pv_UserId"); Body.Add(userId);
+                //1. Convert obj to arraylist
+                ArrayList Body = new ArrayList();
+                foreach (ModuleFieldInfo moduleFieldInfo in fieldEdits)
+                {
+                    Body.Add(moduleFieldInfo.FieldName); Body.Add(moduleFieldInfo.Value);
+                }
+
+                var order = new {
+                    UserID = "0000",
+                    IP = "00000",
+                    BranchID = "000",
+                    ModuleID = modId,
+                    ObjectName = enity,
+                    MsgType = Constants.MSG_MNT_TYPE,
+                    MsgAction = Constants.MSG_DELETE_ACTION,
+                    Body = Body
+                };
+
+                var json = JsonConvert.SerializeObject(order);
+
+                var data = await Process(json);
+                var moduleds = JsonConvert.DeserializeObject<string>(data);
+                return moduleds;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<string> UpdateData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits)
+        {
+            try
+            {
+                //var json = JsonConvert.SerializeObject(obj);    
+                //var  json = JsonConvert.DeserializeObject<string>(apiResponse);
+                //ArrayList Body = new ArrayList(); Body.Add("pv_UserId"); Body.Add(userId);
+                //1. Convert obj to arraylist
+                ArrayList Body = new ArrayList();
+                foreach (ModuleFieldInfo moduleFieldInfo in fieldEdits)
+                {
+                    Body.Add(moduleFieldInfo.FieldName); Body.Add(moduleFieldInfo.Value);
+                }
+
+                var order = new {
+                    UserID = "0000",
+                    IP = "00000",
+                    BranchID = "000",
+                    ModuleID = modId,
+                    ObjectName = enity,
+                    MsgType = Constants.MSG_MNT_TYPE,
+                    MsgAction = Constants.MSG_ADD_ACTION,
+                    Body = Body
+                };
+
+                var json = JsonConvert.SerializeObject(order);
+
+                var data = await Process(json);
+                var moduleds = JsonConvert.DeserializeObject<string>(data);
+                return moduleds;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        //Dongpv
+
     }
 }
