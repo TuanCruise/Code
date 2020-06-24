@@ -1,0 +1,60 @@
+﻿@using GridBlazor.Resources
+@using GridShared.Columns
+
+@typeparam T
+
+@if (Grid != null && ItemsToDisplay.Any() && IsVisible)
+{
+    if (Grid.Settings.SortSettings.SortValues.Count > Values.Count)
+    {
+        int itemsCount = 0;
+        foreach (object columnValue in _columnValues)
+        {
+            var values = new List<Tuple<string, object>>();
+            values.AddRange(Values);
+            values.Add(new Tuple<string, object>(_columnName, columnValue));
+            var itemsToDisplay = Grid.GetItemsToDisplay(values, ItemsToDisplay);
+            int count = Grid.Columns.Count();
+            if (HasSubGrid)
+            {
+                count++;
+            }
+            if (RequiredTotalsColumn)
+            {
+                count++;
+            }
+            GridGroupRowsComponent<T> child;
+            string columnValueStr = columnValue == null ? "" : columnValue.ToString();
+            if (_children.TryGetValue(columnValueStr, out child))
+            {
+                int capturedI = RowId + itemsCount;
+                <tr class="grid-group-row">
+                    <td colspan="@count">
+                        @for (int i = 0; i < Values.Count; i++)
+                        {
+                            <span class="grid-group-tab"></span>
+                        }
+                        <span class="@(child.IsVisible ? "grid-group grid-group-caret-down" : "grid-group grid-group-caret")" @onclick="() => HandleGrouping(columnValueStr)" @onclick:stopPropagation>&nbsp;</span>
+                        <span>@_column?.Title: @_column?.GetFormatedValue(columnValue)</span>
+                    </td>
+                </tr>
+                <CascadingValue Value=@GridComponent Name="GridComponent">
+                    <GridGroupRowsComponent @ref="child" T="@T" Grid="@Grid" Values="@values" HasSubGrid="@HasSubGrid" RequiredTotalsColumn="@RequiredTotalsColumn" ItemsToDisplay="@itemsToDisplay" IsVisible="@child.IsVisible" RowId="@capturedI"></GridGroupRowsComponent>
+                </CascadingValue>
+                itemsCount += itemsToDisplay.Count();
+            }
+        }
+    }
+    else
+    {
+        int i = 0;
+        foreach (object item in Grid.GetItemsToDisplay(Values, ItemsToDisplay))
+        {
+            int capturedI = i;
+            <CascadingValue Value=@GridComponent Name="GridComponent">
+                <GridRowComponent T="@T" Grid="@Grid" HasSubGrid="@HasSubGrid" RequiredTotalsColumn="@RequiredTotalsColumn" Item="@item" GridPosition="@capturedI"></GridRowComponent>
+            </CascadingValue>
+            i++;
+        }
+    }
+}

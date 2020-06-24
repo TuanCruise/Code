@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>8.0</LangVersion>
+    <Version>2.15.3</Version>
+    <Title>GridShared</Title>
+    <Description>Support library for GridBlazor and GridMvcCore component libraries</Description>
+    <Summary>Support library for GridBlazor and GridMvcCore component libraries</Summary>
+    <Authors>Gustau Navarro</Authors>
+    <PackageTags>grid blazor mvc</PackageTags>
+    <PackageProjectUrl>https://github.com/gustavnavar/Grid.Blazor</PackageProjectUrl>
+    <PackageLicenseExpression>LGPL-2.1-only</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="System.Text.Json" Version="4.7.2" />
+  </ItemGroup>
+
+</Project>

@@ -22,14 +22,14 @@
     {
         if (!string.IsNullOrEmpty(field.Callback))
         {
-            @*<input type='text' class="form-control" @onchange="ControlOnchange" id='@field.FieldName' value='@field.Value' placeholder="@field.FieldName.GetLanguageByText(languageInfos)" />*@
-            <InputText @bind-Value="@field.Value" @onchange="ControlOnchange" id='@field.FieldName' class="form-control" placeholder="@field.FieldName.GetLanguageByText(languageInfos)"></InputText>
+            @*<input type='text' class="form-control" @onchange="ControlOnchange" id='@field.FieldName' value='@field.Value' placeholder="@field.FieldName.GetLanguage(languageInfos,modName)" />*@
+            <InputText @bind-Value="@field.Value" @onchange="ControlOnchange" id='@field.FieldName' class="form-control" placeholder="@field.FieldName.GetLanguage(languageInfos,modName)"></InputText>
             <ValidationMessage For="@(() => field.Value)" />
         }
         else
         {
-            @*<input type='text' class="form-control" @bind="field.Value" id='@field.FieldName' placeholder="@field.FieldName.GetLanguageByText(languageInfos)" />*@
-            <InputText @bind-Value="@field.Value" class="form-control" id='@field.FieldName' placeholder="@field.FieldName.GetLanguageByText(languageInfos)"></InputText>
+            @*<input type='text' class="form-control" @bind="field.Value" id='@field.FieldName' placeholder="@field.FieldName.GetLanguage(languageInfos,modName)" />*@
+            <InputText @bind-Value="@field.Value" class="form-control" id='@field.FieldName' placeholder="@field.FieldName.GetLanguage(languageInfos,modName)"></InputText>
             <ValidationMessage For="@(() => field.Value)" />
         }
     }
@@ -138,10 +138,10 @@
                     bool firstTab = true;
                     foreach (var item in field.FieldChilds)
                     {
-                        @*<TabPage Text="@item.FieldName.GetLanguageByText(languageInfos)">
+                        @*<TabPage Text="@item.FieldName.GetLanguage(languageInfos,modName)">
                                 <WebAppCoreBlazorServer.Pages.Edit modId="@item.ModuleID" modSearchId="03901" />
                             </TabPage>*@
-                        <TabPage Text="@item.FieldName.GetLanguageByText(languageInfos)">
+                        <TabPage Text="@item.FieldName.GetLanguage(languageInfos,modName)">
                             <div>
                                 <WebAppCoreBlazorServer.Pages.Edit modId="@item.CallModId" modSearchId="" />
                             </div>

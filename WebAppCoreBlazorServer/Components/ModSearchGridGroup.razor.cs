@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Dynamic;
+using System.Linq;
+using System.Threading.Tasks;
+using GridBlazor;
+using Microsoft.AspNetCore.Components;
+using WebAppCoreBlazorServer.Pages;
+using WebCore.Entities;
+using WebModelCore;
+using WebModelCore.CodeInfo;
+
+namespace WebAppCoreBlazorServer.Components
+{
+    public partial class ModSearchGridGroup
+    {
+        [Parameter]
+        public SearchModuleInfo modSearch { get; set; }
+        [Parameter]
+        public List<CodeInfoModel> codeInfos { get; set; } = new List<CodeInfoModel>();
+        public IEnumerable<ButtonInfo> checkColAction { get; set; }
+        [Parameter]
+        public List<ButtonInfo> btnInfos { get; set; } = new List<ButtonInfo>();
+        [Parameter]
+        public List<dynamic> DataSearch { get; set; } = new List<dynamic>();
+        public int totalRow { get; set; }
+        public string modId { get; set; }
+        [Parameter]
+        public Search Search { get; set; }
+        [Parameter]
+        public List<ModuleFieldInfo> ModuleFieldInfos{ get; set; }
+        [Parameter]
+        public ModuleInfoModel ModuleInfoModel { get; set; }
+        protected override Task OnInitializedAsync()
+        {
+            return base.OnInitializedAsync();
+        }
+        private static dynamic Projection(object a, IEnumerable<string> props)
+        {
+            if (a == null)
+            {
+                return null;
+            }
+            IDictionary<string, object> res = new ExpandoObject();
+            var type = a.GetType();
+            foreach (var pair in props.Select(n => new {Name = n,Property = type.GetProperty(n)}))
+            {
+                res[pair.Name] = pair.Property.GetValue(a, new object[0]);
+            }
+            return res;
+        }
+    }
+}

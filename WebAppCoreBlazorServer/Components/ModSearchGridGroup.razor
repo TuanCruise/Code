@@ -1,0 +1,272 @@
+﻿@using System.Data;
+@using Newtonsoft.Json
+@using WebModelCore;
+@using WebModelCore.CodeInfo
+@using WebModelCore.Common
+@using WebAppCoreBlazorServer.Common
+@using WebAppCoreBlazorServer.Service
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.Extensions.Configuration
+@using WebAppCoreBlazorServer.BUS
+@using WebCore.Entities;
+@using Microsoft.Extensions.Caching.Distributed
+@using WebModelCore.LogicCondition
+@using WebModelCore.ModelCheckBox
+@inject NavigationManager NavManager
+@inject IModalService Modal
+@inject IJSRuntime JSRuntime;
+@inject NavigationManager NavigationManager
+@inject IConfiguration iConfiguration
+@inject IDistributedCache distributedCache
+@inject IModuleService moduleService
+<div class="row col-xl-12 col-md-12 col-lg-12 margin-top-10">
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-responsive-md table-responsive-lg table-striped">
+            <thead class="h-head">
+                @{
+                    checkColAction = btnInfos.Where(x => x.ShowOnToolbar == "N");
+                    @*if (modSearch != null && modSearch.ShowCheckBox == "Y")
+                            {
+                            <th><input type="checkbox" @bind="CheckAll" /></th>
+                        }*@
+                    var fieldGrid = ModuleFieldInfos.Where(x => x.FieldGroup == FLDGROUP.SEARCH_COLUMN).ToList();
+                    foreach (var item in fieldGrid)
+                    {
+                        if (item.HideWeb == "Y")
+                        {
+                            continue;
+                        }
+                    <th>@item.FieldName.GetLanguage(ModuleInfoModel.LanguageInfo, ModuleInfoModel.ModulesInfo.ModuleName)</th>
+                }
+
+                if (checkColAction.Any())
+                {
+                    <th>Hành động</th>
+                }
+                }
+                </thead>
+                <tbody id="tbody">
+                    @{
+                        var data = DataSearch;
+                        //if (parramEdit.Any() && data != null)
+                        //{
+                        //    foreach (var item in parramEdit)
+                        //    {
+
+                        //        foreach (var dataSearch in data)
+                        //        {
+                        //            var dataRows = ((Newtonsoft.Json.Linq.JContainer)dataSearch);
+                        //            foreach (var datarow in dataRows)
+                        //            {
+                        //                var columnName = ((Newtonsoft.Json.Linq.JProperty)datarow).Name;
+                        //                if (columnName.ToUpper() == item.FieldName.ToUpper())
+                        //                {
+                        //                    if (datarow != null && ((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)datarow).Value) != null)
+                        //                    {
+                        //                        item.Value = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)datarow).Value).Value ?? "").ToString();
+                        //                    }
+                        //                }
+                        //            }
+                        //        }
+                        //    }
+                        //}
+                        if (data == null)
+                        {
+                            <tr>
+                                <td colspan="@(fieldGrid.Count()+ (checkColAction.Any()?1:0) + ((modSearch!=null && modSearch.ShowCheckBox=="Y")?1:0))">Không có dữ liệu</td>
+                            </tr>
+                        }
+                        else if (!data.Any())
+                        {
+                            <tr>
+                                <td colspan="@(fieldGrid.Count()+(checkColAction.Any()?1:0) + ((modSearch!=null && modSearch.ShowCheckBox=="Y")?1:0))">Không có dữ liệu</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+                @{
+                    if (data.Any())
+                    {
+                        var fldGroup = ModuleFieldInfos.Where(x => x.GroupOnSearch == "Y").OrderBy(x => x.FieldID).Select(x => x.FieldName);
+                        DataTable tableGroup = new DataTable();
+                        foreach (var item in fldGroup)
+                        {
+                            tableGroup.Columns.Add(item.ToLower(), typeof(string));
+                        }
+                        foreach (var item in data)
+                        {
+                            var row = tableGroup.NewRow();
+                            string checkRow = "";
+                            int index = 0;
+                            foreach (var col in fldGroup)
+                            {
+                                row[col.ToLower()] = item[col.ToLower()];
+                                if (index == fldGroup.Count() - 1)
+                                {
+                                    checkRow += col.ToLower() + "='" + item[col.ToLower()] + "' ";
+                                }
+                                else
+                                {
+                                    checkRow += col.ToLower() + "='" + item[col.ToLower()] + "' AND ";
+                                }
+
+                                index++;
+                            }
+                            if (!tableGroup.Select(checkRow).Any())
+                            {
+                                tableGroup.Rows.Add(row);
+                            }
+
+                        }
+                        var sttGroup = 0;
+                        foreach (DataRow itemGroup in tableGroup.Rows)
+                        {
+                            var stt = 0;
+                            var dataGroupByFields = data;
+                            foreach (var groupData in fldGroup)
+                            {
+                                dataGroupByFields = dataGroupByFields.Where(x => x[groupData.ToLower()] == itemGroup[groupData.ToLower()]).ToList();
+                                if (stt == 0)
+                                {
+                                    <tbody>
+                                        <tr class="clickable" data-toggle="collapse" data-target="#group-of-rows-@(sttGroup)-@(stt+1)" aria-expanded="false" aria-controls="group-of-rows-1">
+                                            <td colspan="@(fieldGrid.Count()+ (checkColAction.Any()?1:0) + ((modSearch!=null && modSearch.ShowCheckBox=="Y")?1:0)) "><i class="fa fa-plus"></i> @(groupData) </td>
+                                        </tr>
+                                    </tbody>
+                                }
+                                else if (stt != fldGroup.Count() - 1)
+                                {
+                                    <tbody id="group-of-rows-@(sttGroup)-@(stt)">
+                                        <tr class="clickable" data-toggle="collapse" data-target="#group-of-rows-@(sttGroup)-@(stt+1)" aria-expanded="false" aria-controls="group-of-rows-1">
+                                            <td colspan="@(fieldGrid.Count()+ (checkColAction.Any()?1:0) + ((modSearch!=null && modSearch.ShowCheckBox=="Y")?1:0)) "><i class="fa fa-plus"></i> @(groupData) </td>
+                                        </tr>
+                                    </tbody>
+                                }
+                                else
+                                {
+                                    <tbody id="group-of-rows-@(sttGroup)-@(stt)">
+                                        <tr class="clickable" data-toggle="collapse" data-target="#group-of-rows-@(sttGroup)1000" aria-expanded="false" aria-controls="group-of-rows-1">
+                                            <td colspan="@(fieldGrid.Count()+ (checkColAction.Any()?1:0) + ((modSearch!=null && modSearch.ShowCheckBox=="Y")?1:0)) "><i class="fa fa-plus"></i> @(groupData) </td>
+                                        </tr>
+                                    </tbody>
+                                }
+                                stt++;
+                            }
+                            <tbody id="group-of-rows-@(sttGroup)1000" class="collapse show">
+                                @{
+                                    foreach (var item in dataGroupByFields)
+                                    {
+                                        var dataRows = ((Newtonsoft.Json.Linq.JContainer)item);
+
+                                        var valueEdit = "";
+                                        var valueDelete = "";
+                                        var checkAll = 1;
+                                        var dataModQc = "";
+                                        var attrsetId = 0;
+                                        var barcode = "";
+                                        var groupId = 0;
+                                        var modeCallEdit = "";
+                                        <tr  aria-expanded="false">
+                                            @{
+                                                @*if (modSearch != null && modSearch.ShowCheckBox == "Y")
+                                                    {
+
+                                                        var checkBox = new CheckBoxModel { Value = false, KeyValue = item };
+                                                        var checkCheckBox = CheckBoxModels.Where(x => x.KeyValue == item);
+                                                        if (checkCheckBox.Any())
+                                                        {
+                                                            checkBox = checkCheckBox.First();
+                                                        }
+                                                        else
+                                                        {
+                                                            CheckBoxModels.Add(checkBox);
+                                                        }
+                                                        <td><input type="checkbox" @bind="checkBox.Value" /></td>
+                                                    }*@
+                                            }
+                                            @foreach (var col in fieldGrid)
+                                            {
+                                                if (col.HideWeb == "Y")
+                                                {
+                                                    continue;
+                                                }
+                                                <td>
+
+                                                    @{
+                                                        @*if (modSearch != null && modSearch.ShowCheckBox == "Y")
+                                                            {
+                                                                <InputCheckbox @bind-Value="@col.IsCheck" @onclick="() => CheckManual(col)" />
+                                                            }*@
+                                                        foreach (var column in dataRows)
+                                                        {
+                                                            var columnName = ((Newtonsoft.Json.Linq.JProperty)column).Name;
+                                                            if (modeCallEdit == "02519" && columnName.ToUpper() == "GroupId".ToUpper())
+                                                            {
+                                                                groupId = int.Parse(((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value.ToString());
+                                                            }
+                                                            if (columnName.ToUpper() == col.FieldName.ToUpper())
+                                                            {
+                                                                if (!string.IsNullOrEmpty(col.ListSource))
+                                                                {
+                                                                    if (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value != null)
+                                                                    {
+                                                                        col.Value = ((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value.ToString();
+                                                                        var text = col.GetValueGridControl(codeInfos);
+                                                                        <span field="@col.FieldName" title="@text">@(text.Length > 50 ? text.Substring(0, 50) + "..." : text)</span>
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    var text = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value ?? "").ToString();
+                                                                    <span field="@col.FieldName" title="@text">@(text.Length > 50 ? text.Substring(0, 50) + "..." : text)</span>
+                                                                }
+                                                                checkAll++;
+                                                            }
+                                                            if (columnName.ToUpper() == "TotalRow".ToUpper())
+                                                            {
+                                                                totalRow = int.Parse(((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value.ToString());
+                                                            }
+                                                        }
+                                                    }
+                                                </td>
+                                            }
+                                            @if (btnInfos.Where(x => x.ShowOnToolbar == "N").Any())
+                                            {
+                                                <td>
+                                                    <div class="btn-group margin-left-15">
+                                                        <button type="button" class="btn btn-sm white-background dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true" aria-expanded="false">
+                                                            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu pull-left" role="menu">
+                                                            @foreach (var btnInColAction in checkColAction)
+                                                            {
+                                                                var parBtn = ModuleInfoModel.ButtonParamsInfo == null ? new List<ButtonParamInfo>() : ModuleInfoModel.ButtonParamsInfo.Where(x => x.ButtonName == btnInColAction.ButtonName).ToList();
+                                                                foreach (var par in parBtn)
+                                                                {
+                                                                    par.Value = item[par.FieldName.ToLower()];
+                                                                }
+                                                                if (parBtn.Any())
+                                                                {
+                                                                    <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.CallMod(btnInColAction.CallModuleID,modId,String.Join(",",parBtn.Select(x=>x.FieldName)),JsonConvert.SerializeObject(parBtn),"1"))"><i class="ik ik-edit btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.CallMod(btnInColAction.CallModuleID,modId))"><i class="ik ik-edit btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                                }
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                            sttGroup++;
+                        }
+                    }
+                }
+            </table>
+        </div>
+    </div>

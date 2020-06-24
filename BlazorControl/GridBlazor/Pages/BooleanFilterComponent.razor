@@ -1,0 +1,41 @@
+﻿@using GridBlazor.Resources
+
+@typeparam T
+
+@if (Visible)
+{
+    <div class="dropdown dropdown-menu grid-dropdown opened" style="display:block;@(_offset > 0 ? "margin-left:-" + _offset.ToString() + "px;" : "")" @ref="boolFilter" @onkeyup="FilterKeyup" @onclick:stopPropagation @onkeyup:stopPropagation tabindex="-1">
+        <div class="grid-dropdown-arrow" style="@(_offset > 0 ? "margin-left:" + _offset.ToString() + "px" : "")"></div>
+        <div class="grid-dropdown-inner">
+            <div class="grid-popup-widget">
+                <div class="grid-filter-body">
+                    <label><b>@Strings.FilterValueLabel:</b></label>
+                    <ul class="menu-list">
+                        <li>
+                            <a class="grid-filter-choose@(_filterValue != null && _filterValue.ToLower() == "true" ? " choose-selected" : "")" data-value="true" href="javascript:void(0);" @onclick="ApplyTrueButtonClicked">
+                                @Strings.BoolTrueLabel
+                            </a>
+                        </li>
+                        <li>
+                            <a class="grid-filter-choose@(_filterValue != null && _filterValue.ToLower() == "false" ? " choose-selected" : "")" data-value="false" href="javascript:void(0);" @onclick="ApplyFalseButtonClicked">
+                                @Strings.BoolFalseLabel
+                            </a>
+                        </li>
+                    </ul>
+                </div>  
+            </div>
+            <div class="grid-popup-additional">
+                @if (_clearVisible)
+                {
+                    <ul class="menu-list">
+                        <li>
+                            <a class="grid-filter-clear" href="javascript:void(0);" @onclick="ClearButtonClicked">
+                                @Strings.ClearFilterLabel
+                            </a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+}

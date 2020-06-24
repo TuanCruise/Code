@@ -1,0 +1,133 @@
+﻿@using GridBlazor.Columns
+@using GridBlazor.Resources
+@using GridShared
+@using GridShared.Columns
+
+@typeparam T
+
+<h1>@Strings.Delete</h1>
+
+<p id="error" style="color:red;">@Error</p>
+<div class="form-horizontal">
+    @foreach (var column in GridComponent.Grid.Columns)
+    {
+        if (((ICGridColumn)column).SubGrids == null && column.ComponentType == null
+            && column.CreateComponentType == null && column.ReadComponentType == null
+            && column.UpdateComponentType == null && column.DeleteComponentType == null)
+        {
+            if (column.FieldName == null)
+            {
+                continue;
+            }
+
+            (Type type, object value) = ((IGridColumn<T>)column).GetTypeAndValue(Item);
+            <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.DELETE)?"display:none;":"")">
+                @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
+                {
+                    <div class="col-md-2">
+                        <FormTooltipComponent Column="@column"></FormTooltipComponent>
+                    </div>
+                }
+                else
+                {
+                    <label for="@column.FieldName" class="col-form-label col-md-2">@column.Title</label>
+                }
+                <div class="@(type == typeof(bool)?"col-md-1":"col-md-5")">
+                    @if (((IGridColumn<T>)column).IsSelectField.IsSelectKey)
+                    {
+                        string text = ((IGridColumn<T>)column).GetFormatedValue(((IGridColumn<T>)column).IsSelectField.Expression, Item);
+                        <input id="@column.FieldName" class="form-control" readonly="readonly" value="@text" />
+                    }
+                    else if (type == typeof(bool))
+                    {
+                        if (value != null && (bool)value == true)
+                        {
+                            <input id="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" checked="checked" value="true" />
+                        }
+                        else
+                        {
+                            <input id="@column.FieldName" type="checkbox" class="form-control" disabled="disabled" readonly="readonly" value="false" />
+                        }
+                    }
+                    else if (type == typeof(string))
+                    {
+                        if (((IGridColumn<T>)column).InputType == InputType.TextArea)
+                        {
+                            <textarea id="@column.FieldName" class="form-control" rows="5" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                        }
+                        else
+                        {
+                            <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                        }
+                    }
+                    else if (type == typeof(DateTime))
+                    {
+                        string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
+                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                    }
+                    else if (type == typeof(DateTimeOffset))
+                    {
+                        string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "date" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
+                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                    }
+                    else if (type == typeof(TimeSpan))
+                    {
+                        string typeAttr = ((IGridColumn<T>)column).InputType == InputType.None ? "time" : ((IGridColumn<T>)column).InputType.ToTypeAttr();
+                        <input id="@column.FieldName" type="@typeAttr" class="form-control" readonly="readonly" value="@(((ICGridColumn)column).GetFormatedDateTime(value, typeAttr))" />
+                    }
+                    else
+                    {
+                        <input id="@column.FieldName" class="form-control" readonly="readonly" value="@column.GetFormatedValue(value)" />
+                    }
+                </div>
+            </div>
+        }
+        else if ((((ICGridColumn)column).SubGrids != null || column.DeleteComponentType != null) 
+            && string.IsNullOrWhiteSpace(column.TabGroup))
+        {
+            <div class="form-group row" style="@(column.CrudHidden.HasFlag(CrudHidden.DELETE)?"display:none;":"")">
+                @if (!string.IsNullOrWhiteSpace(column.TooltipValue))
+                {
+                    <div class="col-md-2">
+                        <FormTooltipComponent Column="@column"></FormTooltipComponent>
+                    </div>
+                }
+                else
+                {
+                    <label class="col-form-label col-md-2">@column.Title</label>
+                }
+                <div class="col-md-10">
+                    <div class="card panel panel-default">
+                        <div class="card-body panel-body">@_renderFragments.Get(column.Name)</div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    @if (_tabGroups != null)
+    {
+        foreach (var tabGruop in _tabGroups)
+        {
+            var tabLabels = GridComponent.Grid.Columns
+                .Where(r => r.TabGroup != null && r.TabGroup.Equals(tabGruop) && _renderFragments.Keys.Any(s => s.Equals(r.Name)))
+                .Select(r => new SelectItem(r.Name, r.Title));
+            <div class="form-group row">
+                <div class="col-md-offset-2 offset-md-2 col-md-10">
+                    <div class="card panel panel-default">
+                        <div class="card-body panel-body">
+                            <GridTabComponent TabLabels="@tabLabels" TabContent="@_renderFragments" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    <div class="form-group row">
+        <div class="col-md-5">
+            <button type="button" class="btn btn-primary btn-md" @onclick="() => DeleteItem()">@Strings.Delete</button>
+            <button type="button" class="btn btn-primary btn-md" @onclick="() => BackButtonClicked()">@Strings.Back</button>
+        </div>
+    </div>
+</div>

@@ -465,4 +465,5 @@ namespace WebAppCoreBlazorServer.Common
             return true;
         }
     }
+
 }
