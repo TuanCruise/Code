@@ -127,6 +127,9 @@ namespace WebCore.Entities
         public string ParentId { get; set; }
         [DataMember, Column(Name = "CALLMODID")]
         public string CallModId { get; set; }
+        [DataMember, Column(Name = "ENTITY")]
+        public string Entity { get; set; }
+
         /// <summary>
         /// Cột này chỉ để bind dữ liệu khi control nhập. ko có trong DB
         /// </summary>
