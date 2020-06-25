@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>Host.BusinessFacade</AssemblyName>
+    <RootNamespace>Host.BusinessBase</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Host.BusinessBase\Host.BusinessBase.csproj" />
+    <ProjectReference Include="..\Host.DataBaseAccessService\Host.DataBaseAccessService.csproj" />
+    <ProjectReference Include="..\Message\Message.csproj" />
+    <ProjectReference Include="..\SystemLibrary\SystemLibrary.csproj" />
+  </ItemGroup>
+
+</Project>

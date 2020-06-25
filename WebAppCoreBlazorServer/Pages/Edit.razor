@@ -415,22 +415,22 @@
     public async Task Save()
     {
         ErrorValidate = new List<string>();
-        foreach (var item in moduleFieldInfo)
-        {
-            FluentValidation validator = new FluentValidation();
+        //foreach (var item in moduleFieldInfo)
+        //{
+        //    FluentValidation validator = new FluentValidation();
 
-            var rsErr = validator.Validate(item);
-            if (!rsErr.IsValid)
-            {
-                ErrorValidate.AddRange(rsErr.Errors.Select(x => x.ErrorMessage));
-            }
+        //    var rsErr = validator.Validate(item);
+        //    if (!rsErr.IsValid)
+        //    {
+        //        ErrorValidate.AddRange(rsErr.Errors.Select(x => x.ErrorMessage));
+        //    }
 
-        }
-        if (ErrorValidate.Any())
-        {
+        //}
+        //if (ErrorValidate.Any())
+        //{
 
-            return;
-        }
+        //    return;
+        //}
         HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
 
         string validate = "";
@@ -446,7 +446,10 @@
             store = modMaintain.EditUpdateStore;
         }
         //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, fieldEdits));
-        var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, moduleFieldInfo));
+        //Dongpv: fix
+        //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, moduleFieldInfo));
+        var excute = (await moduleService.SaveData(modId, store, keyEdit, moduleFieldInfo));
+
         if (excute.Data != "success")
         {
             var err = excute.Data.GetError();

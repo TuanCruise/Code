@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WB.SYSTEM;
 using WebCore.Entities;
+using WebModelCore;
 
 namespace WebAppCoreBlazorServer.Service {
     public class BaseService {
@@ -68,6 +69,60 @@ namespace WebAppCoreBlazorServer.Service {
             }
             return string.Empty;
         }
+
+        //Dongpv:15/06/2020
+        public async Task<string> LoadData(string userId)
+        {
+            try
+            {
+
+                _remoteServiceBaseUrl = $"http://localhost:65104";
+                using (var client = new HttpClient())
+                {
+                    ArrayList Body = new ArrayList(); Body.Add("pv_UserId"); Body.Add(userId);
+                    var order = new {
+                        ObjectName = "SYSTEM_PROCS_SP_DEF_MENU_SEL_ALL",
+                        MsgType = "2",
+                        MsgAction = "0",
+                        Body = Body
+                    };
+
+                    var json = JsonConvert.SerializeObject(order);
+                    var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var uri = _remoteServiceBaseUrl;
+                    var content = "";
+                    try
+                    {
+                        //var data = await client.GetAsync(uri);
+                        //var data = await client.PostAsync(uri);
+                        //content = await data.Content.ReadAsStringAsync();
+                        var responseMessage = await client.PostAsync(_remoteServiceBaseUrl, data);
+                        responseMessage.EnsureSuccessStatusCode();
+
+                        var result = await responseMessage.Content.ReadAsStringAsync();
+
+                        if (responseMessage.StatusCode == HttpStatusCode.OK)
+                        {
+                            content = result;
+                        }
+
+                    }
+                    catch (Exception e1)
+                    {
+
+                        System.Diagnostics.Debug.WriteLine("hieu=" + e1.ToString());
+                    }
+                    return content;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return string.Empty;
+        }
+
         public async Task<string> PostApi(string url, object o)
         {
             try {
@@ -144,7 +199,7 @@ namespace WebAppCoreBlazorServer.Service {
         }
 
         //Dongpv
-        public async Task<string> SaveData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits)
+        public async Task<RestOutput<string>> SaveData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits)
         {
             try
             {
@@ -152,14 +207,15 @@ namespace WebAppCoreBlazorServer.Service {
                 //var  json = JsonConvert.DeserializeObject<string>(apiResponse);
                 //ArrayList Body = new ArrayList(); Body.Add("pv_UserId"); Body.Add(userId);
                 //1. Convert obj to arraylist
-                ArrayList Body = new ArrayList();
+                ArrayList Body = new ArrayList();                
                 foreach (ModuleFieldInfo moduleFieldInfo in fieldEdits)
                 {
-                    Body.Add(moduleFieldInfo.FieldName); Body.Add(moduleFieldInfo.Value);
-                }
-                //FIX TO TEST
-                Body.Add("FULLNAME"); Body.Add("PHAM VAN DONG");
-                Body.Add("IDNO"); Body.Add("123456789");
+                    if (moduleFieldInfo.Value != null)
+                    {
+                        Body.Add(moduleFieldInfo.FieldName); Body.Add(moduleFieldInfo.Value);
+                        enity = moduleFieldInfo.Entity;
+                    }
+                }                
 
                 var order = new {
                     UserID = "0000",
@@ -175,7 +231,7 @@ namespace WebAppCoreBlazorServer.Service {
                 var json = JsonConvert.SerializeObject(order);
 
                 var data = await Process(json);
-                var moduleds = JsonConvert.DeserializeObject<string>(data);
+                var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
                 return moduleds;
             }
             catch (Exception ex)
@@ -184,7 +240,8 @@ namespace WebAppCoreBlazorServer.Service {
             }
         }
 
-        public async Task<string> DeleteData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits)
+
+        public async Task<RestOutput<string>> DeleteData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits)
         {
             try
             {
@@ -212,7 +269,7 @@ namespace WebAppCoreBlazorServer.Service {
                 var json = JsonConvert.SerializeObject(order);
 
                 var data = await Process(json);
-                var moduleds = JsonConvert.DeserializeObject<string>(data);
+                var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
                 return moduleds;
             }
             catch (Exception ex)
@@ -221,7 +278,7 @@ namespace WebAppCoreBlazorServer.Service {
             }
         }
 
-        public async Task<string> UpdateData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits)
+        public async Task<RestOutput<string>> UpdateData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits)
         {
             try
             {
@@ -249,7 +306,7 @@ namespace WebAppCoreBlazorServer.Service {
                 var json = JsonConvert.SerializeObject(order);
 
                 var data = await Process(json);
-                var moduleds = JsonConvert.DeserializeObject<string>(data);
+                var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
                 return moduleds;
             }
             catch (Exception ex)

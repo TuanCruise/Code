@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>Host.BusinessObject</AssemblyName>
+    <RootNamespace>Host.BusinessObject</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Host.BusinessBase\Host.BusinessBase.csproj" />
+    <ProjectReference Include="..\Host.DataBaseAccessService\Host.DataBaseAccessService.csproj" />
+  </ItemGroup>
+
+</Project>

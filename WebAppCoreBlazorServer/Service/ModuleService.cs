@@ -392,5 +392,11 @@ namespace WebAppCoreBlazorServer.Service
         Task<List<DefTasks>> GetAllDefTasks();
         Task<List<ModWorkflow>> GetAllModWorkFolow();
         Task<List<dynamic>> SearchModSearch(SearchModSearch searchModSearch);
+        //Dongpv:24/06/2020
+        Task<RestOutput<string>> SaveData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits);
+        Task<RestOutput<string>> UpdateData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits);
+        Task<RestOutput<string>> DeleteData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits);
+        //Dongpv:24/06/2020
+
     }
 }
