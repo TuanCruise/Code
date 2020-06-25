@@ -1,0 +1,1808 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="http://tempuri.org/Errors.xsd">
+  <EBANK>
+    <ErrorCode>EB00000</ErrorCode>
+    <EBankCode>EB00000</EBankCode>
+    <ErrorMsg_en>System error</ErrorMsg_en>
+    <ErrorMsg_vn>Dịch vụ tạm thời gián đoạn</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00030</ErrorCode>
+    <EBankCode>EB00030</EBankCode>
+    <ErrorMsg_en>Your verification code is: </ErrorMsg_en>
+    <ErrorMsg_vn>Ma xac thuc cua quy khach la: </ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00031</ErrorCode>
+    <EBankCode>EB00031</EBankCode>
+    <ErrorMsg_en>Invalid Operation mehtod </ErrorMsg_en>
+    <ErrorMsg_vn>Phương thức điều hành không hợp lệ </ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00043</ErrorCode>
+    <EBankCode>EB00043</EBankCode>
+    <ErrorMsg_en>No data</ErrorMsg_en>
+    <ErrorMsg_vn>Không có dữ liệu </ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00044</ErrorCode>
+    <EBankCode>EB00044</EBankCode>
+    <ErrorMsg_en>You have not saved transaction template</ErrorMsg_en>
+    <ErrorMsg_vn>Quý khách chưa lưu mẫu giao dịch</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00102</ErrorCode>
+    <EBankCode>EB00102</EBankCode>
+    <ErrorTrace>EBANK</ErrorTrace>
+    <ErrorMsg_en>Debit account currency is VND</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản trích nợ phải là VND</ErrorMsg_vn>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00103</ErrorCode>
+    <EBankCode>EB00103</EBankCode>
+    <ErrorTrace>EBANK</ErrorTrace>
+    <ErrorMsg_en>Invalid transaction</ErrorMsg_en>
+    <ErrorMsg_vn>Giao dịch không hợp lệ</ErrorMsg_vn>
+  </EBANK>
+  <!--ACCOUNT DD-->
+  <EBANK>
+    <ErrorCode>DD00101</ErrorCode>
+    <EBankCode>DD00101</EBankCode>
+    <ErrorMsg_en>has been effected successfully. Thank you for banking with us.</ErrorMsg_en>
+    <ErrorMsg_vn>da duoc thuc hien thanh cong. Cam on quy khach.</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>DD00102</ErrorCode>
+    <EBankCode>DD00102</EBankCode>
+    <ErrorMsg_en>has been sent to the Bank. Thank you for banking with us.</ErrorMsg_en>
+    <ErrorMsg_vn>da duoc gui den Ngan hang. Cam on quy khach.</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>DD00103</ErrorCode>
+    <EBankCode>DD00103</EBankCode>
+    <ErrorMsg_en> for </ErrorMsg_en>
+    <ErrorMsg_vn>. So tien </ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <!--END ACCOUNT DD-->
+  <EBANK>
+    <ErrorCode>AU0001</ErrorCode>
+    <EBankCode>AU0001</EBankCode>
+    <ErrorMsg_en>User does not exist</ErrorMsg_en>
+    <ErrorMsg_vn>Mã người dùng không tồn tại</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>AU0002</ErrorCode>
+    <EBankCode>AU0002</EBankCode>
+    <ErrorMsg_en>Invalid Parameter</ErrorMsg_en>
+    <ErrorMsg_vn>Lỗi xác thực OTP (Tham số hợp lệ)</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>AU0003</ErrorCode>
+    <EBankCode>AU0003</EBankCode>
+    <ErrorMsg_en>Invalid Response</ErrorMsg_en>
+    <ErrorMsg_vn>Lỗi xác thực OTP (Invalid reponse)</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>AU0004</ErrorCode>
+    <EBankCode>AU0004</EBankCode>
+    <ErrorMsg_en>Authenticate failed due user is locked</ErrorMsg_en>
+    <ErrorMsg_vn>Lỗi xác thực OTP (Người dùng đã bị khóa)</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>AU0005</ErrorCode>
+    <EBankCode>AU0005</EBankCode>
+    <ErrorMsg_en>User no challenge</ErrorMsg_en>
+    <ErrorMsg_vn>Lỗi xác thực OTP (User no challenge)</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>AU0006</ErrorCode>
+    <EBankCode>AU0006</EBankCode>
+    <ErrorMsg_en>User is locked</ErrorMsg_en>
+    <ErrorMsg_vn>Lỗi xác thực OTP (Người dùng đã bị khóa)</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>DD00001</ErrorCode>
+    <EBankCode>DD00001</EBankCode>
+    <ErrorMsg_en>DD account does not exist</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản DD không tồn tại</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00006</ErrorCode>
+    <EBankCode>EB00006</EBankCode>
+    <ErrorMsg_en>User name is unavailable</ErrorMsg_en>
+    <ErrorMsg_vn>Tên đăng nhập không tồn tại</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00022</ErrorCode>
+    <EBankCode>EB00022</EBankCode>
+    <ErrorMsg_en>User name exists</ErrorMsg_en>
+    <ErrorMsg_vn>Tên đăng nhập đã tồn tại</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00023</ErrorCode>
+    <EBankCode>EB00023</EBankCode>
+    <ErrorMsg_en>Serial token numer is unavailable</ErrorMsg_en>
+    <ErrorMsg_vn>Số Serial token đã được sử dụng</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00024</ErrorCode>
+    <EBankCode>EB00024</EBankCode>
+    <ErrorMsg_en>Customer ID is not available</ErrorMsg_en>
+    <ErrorMsg_vn>Mã khách hàng đã được sử dụng</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00025</ErrorCode>
+    <EBankCode>EB00025</EBankCode>
+    <ErrorMsg_en>Customer accounts are in invalid status</ErrorMsg_en>
+    <ErrorMsg_vn>Tình trạng các tài khoản khách hàng không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00026</ErrorCode>
+    <EBankCode>EB00026</EBankCode>
+    <ErrorMsg_en>OTP Serial does not exist</ErrorMsg_en>
+    <ErrorMsg_vn>Số serial Token chưa tồn tại trong hệ thống</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00027</ErrorCode>
+    <EBankCode>EB00027</EBankCode>
+    <ErrorMsg_en>There are unsigned transactions. Can not update</ErrorMsg_en>
+    <ErrorMsg_vn>Tồn tại giao dịch đang chờ ký của khách hàng trong hệ thống</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00028</ErrorCode>
+    <EBankCode>EB00028</EBankCode>
+    <ErrorMsg_en>OTP Serial is existing in system</ErrorMsg_en>
+    <ErrorMsg_vn>Số OTP Serial đã tồn tại trong hệ thống</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00029</ErrorCode>
+    <EBankCode>EB00029</EBankCode>
+    <ErrorMsg_en>This Customer ID has been opened Internet Banking in another branch</ErrorMsg_en>
+    <ErrorMsg_vn>Mã khách hàng đã được mở hợp đồng Internet Banking ở chi nhánh khác</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00033</ErrorCode>
+    <EBankCode>EB00033</EBankCode>
+    <ErrorMsg_en>The credit account was not in list of restrict accounts</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản này không thuộc tài khoản hạn chế</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00034</ErrorCode>
+    <EBankCode>EB00034</EBankCode>
+    <ErrorMsg_en>Credit account currency is VND only</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản ghi có phải là tài khoản VND</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00035</ErrorCode>
+    <EBankCode>EB00035</EBankCode>
+    <ErrorMsg_en>Debit account currency is VND only</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản ghi nợ phải là tài khoản VND</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00036</ErrorCode>
+    <EBankCode>EB00036</EBankCode>
+    <ErrorMsg_en>Account does not exist</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản không tồn tại</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00039</ErrorCode>
+    <EBankCode>EB00039</EBankCode>
+    <ErrorMsg_en>The credit account name was included in list of restrict accounts</ErrorMsg_en>
+    <ErrorMsg_vn>Tên tài khoản ghi có không đúng với tên tài khoản đã đăng ký</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00040</ErrorCode>
+    <EBankCode>EB00040</EBankCode>
+    <ErrorMsg_en>The system can not inquiry beneficiary's name. Transaction is errror, please try again later!</ErrorMsg_en>
+    <ErrorMsg_vn>Không truy vấn được tên người hưởng. Giao dịch lỗi, quý khách vui lòng thực hiện lại giao dịch!</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+
+  <EBANK>
+    <ErrorCode>RT00001</ErrorCode>
+    <EBankCode>RT00001</EBankCode>
+    <ErrorMsg_en>Can not connect to Ebank server</ErrorMsg_en>
+    <ErrorMsg_vn>Không kết nối được máy chủ Ebank</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+
+  <EBANK>
+    <ErrorCode>SRV00003</ErrorCode>
+    <EBankCode>SRV00003</EBankCode>
+    <ErrorMsg_en>Can not connect to Smartbank server (Lỗi COM)</ErrorMsg_en>
+    <ErrorMsg_vn>Không kết nối được máy chủ Smartbank</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00026</ErrorCode>
+    <EBankCode>SRV00026</EBankCode>
+    <ErrorMsg_en>Can not connect to server</ErrorMsg_en>
+    <ErrorMsg_vn>Không kết nối được máy chủ</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00100</ErrorCode>
+    <EBankCode>EB00100</EBankCode>
+    <ErrorMsg_en>Debit account currency is VND or USD</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản trích nợ phải là VND hoặc USD</ErrorMsg_vn>
+    <ErrorTrace>EBANK</ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>EB00101</ErrorCode>
+    <EBankCode>EB00101</EBankCode>
+    <ErrorTrace>EBANK</ErrorTrace>
+    <ErrorMsg_en>Credit account and debit account must be different</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản ghi có phải khác tài khoản trích nợ!</ErrorMsg_vn>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>C00072</ErrorCode>
+    <EBankCode>C00072</EBankCode>
+    <ErrorMsg_en>Can not get list of source accounts</ErrorMsg_en>
+    <ErrorMsg_vn>Không lấy được danh sách tài khoản nguồn</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00030</ErrorCode>
+    <EBankCode>SRV00030</EBankCode>
+    <ErrorMsg_en>Amount is not negative</ErrorMsg_en>
+    <ErrorMsg_vn>Số tiền không được phép là số âm</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00031</ErrorCode>
+    <EBankCode>SRV00031</EBankCode>
+    <ErrorMsg_en>Session expired, please login again!</ErrorMsg_en>
+    <ErrorMsg_vn>Thời gian truy cập đã hết! Quý khách vui lòng đăng nhập lại!</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00032</ErrorCode>
+    <EBankCode>SRV00032</EBankCode>
+    <ErrorMsg_en>There are no the bank statements</ErrorMsg_en>
+    <ErrorMsg_vn>Qúy khách không có thông tin nào về lịch sử giao dịch trong khoảng thời gian đã chọn</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00033</ErrorCode>
+    <EBankCode>SRV00033</EBankCode>
+    <ErrorMsg_en>Transaction detail does not contains specials characters</ErrorMsg_en>
+    <ErrorMsg_vn>Nội dung không được chứa ký tự đặc biệt hoặc Tiếng Việt có dấu</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00034</ErrorCode>
+    <EBankCode>SRV00034</EBankCode>
+    <ErrorMsg_en>Branch name does not contains specials characters</ErrorMsg_en>
+    <ErrorMsg_vn>Tên chi nhánh không được chứa ký tự đặc biệt hoặc Tiếng Việt có dấu</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00035</ErrorCode>
+    <EBankCode>SRV00035</EBankCode>
+    <ErrorMsg_en>Beneficiary name does not contains specials characters</ErrorMsg_en>
+    <ErrorMsg_vn>Tên người hưởng không được chứa ký tự đặc biệt hoặc Tiếng Việt có dấu</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00036</ErrorCode>
+    <EBankCode>SRV00036</EBankCode>
+    <ErrorMsg_en>For the security reason, your account is blocked.</ErrorMsg_en>
+    <ErrorMsg_vn>Tai khoan cua Quy khach tam thoi bi khoa.</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00037</ErrorCode>
+    <EBankCode>SRV00037</EBankCode>
+    <ErrorMsg_en>Invalid password. Please, try again!</ErrorMsg_en>
+    <ErrorMsg_vn>Quý khách nhập sai mật khẩu. Vui lòng nhập lại!</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00038</ErrorCode>
+    <EBankCode>SRV00038</EBankCode>
+    <ErrorMsg_en>Invalid username. Please, try again!</ErrorMsg_en>
+    <ErrorMsg_vn>Quý khách nhập sai tên đăng nhập. Vui lòng nhập lại!</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00039</ErrorCode>
+    <EBankCode>SRV00039</EBankCode>
+    <ErrorMsg_en>Invalid verification code from OTP, try again!</ErrorMsg_en>
+    <ErrorMsg_vn>Mã xác thực nhập từ OTP không đúng, vui lòng nhập lại!</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00040</ErrorCode>
+    <EBankCode>SRV00040</EBankCode>
+    <ErrorMsg_en>Your account has not been activated!</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản của Quý khách chưa được kích hoạt sử dụng!</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00041</ErrorCode>
+    <EBankCode>SRV00041</EBankCode>
+    <ErrorMsg_en>Invalid your account!</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản của Quý khách không hợp lệ!</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00042</ErrorCode>
+    <EBankCode>SRV00042</EBankCode>
+    <ErrorMsg_en>The account balance is insufficient!</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản không đủ số dư!</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00043</ErrorCode>
+    <EBankCode>SRV00043</EBankCode>
+    <ErrorMsg_en>Invalid your phone number</ErrorMsg_en>
+    <ErrorMsg_vn>Số điện thoại của quý khách không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00044</ErrorCode>
+    <EBankCode>SRV00044</EBankCode>
+    <ErrorMsg_en>Invalid debit account status.</ErrorMsg_en>
+    <ErrorMsg_vn>Trạng thái tài khoản trích nợ không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00045</ErrorCode>
+    <EBankCode>SRV00045</EBankCode>
+    <ErrorMsg_en>Invalid credit account status</ErrorMsg_en>
+    <ErrorMsg_vn>Trạng thái tài khoản ghi có không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00046</ErrorCode>
+    <EBankCode>SRV00046</EBankCode>
+    <ErrorMsg_en>Transaction amount must be less than the limit allowed.</ErrorMsg_en>
+    <ErrorMsg_vn>Số tiền giao dịch phải nhỏ hơn hạn mức cho phép.</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00047</ErrorCode>
+    <EBankCode>SRV00047</EBankCode>
+    <ErrorMsg_en>Transaction amount in a day must be less than the limit allowed.</ErrorMsg_en>
+    <ErrorMsg_vn>Số tiền giao dịch trong một ngày phải nhỏ hơn hạn mức cho phép.</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00048</ErrorCode>
+    <EBankCode>SRV00048</EBankCode>
+    <ErrorMsg_en>Credit account currency is VND only</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản ghi có phải là tài khoản VND</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <EBANK>
+    <ErrorCode>SRV00049</ErrorCode>
+    <EBankCode>SRV00049</EBankCode>
+    <ErrorMsg_en>Over user limit for account. Please check again!</ErrorMsg_en>
+    <ErrorMsg_vn>Vượt quá hạn mức người dùng với tài khoản, xin vui lòng kiểm tra lại!</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <!-- ERR VNPAY-->
+  <EBANK>
+    <ErrorCode>VNP00094</ErrorCode>
+    <EBankCode>VNP00094</EBankCode>
+    <ErrorMsg_en>Request time out, please try againt later.</ErrorMsg_en>
+    <ErrorMsg_vn>Yêu cầu tạm thời gián đoạn, vui lòng thử lại sau.</ErrorMsg_vn>
+    <ErrorTrace></ErrorTrace>
+  </EBANK>
+  <!--END ERR VNPAY-->
+  <!-- Loi Smartbank-->
+  <EBANK>
+    <ErrorCode>101</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid account</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản giao dịch không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-201</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Checking transaction is error</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-202</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Require override DD transaction</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-203</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Customers are allowed to transfer just among Non Resident accounts</ErrorMsg_en>
+    <ErrorMsg_vn>Chỉ được phép chuyển khoản giữa khách hàng không cư trú và khách hàng không cư trú</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-206</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Configuration of transaction error</ErrorMsg_en>
+    <ErrorMsg_vn>Cấu hình giao dịch lỗi</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-207</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Account does not exist</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản không tồn tại.</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-208</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid account status</ErrorMsg_en>
+    <ErrorMsg_vn>Trạng thái tài khoản không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+
+  <EBANK>
+    <ErrorCode>-210</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Account type does not exist</ErrorMsg_en>
+    <ErrorMsg_vn>Loại tài khoản không tồn tại</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-211</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Transaction History Not Found</ErrorMsg_en>
+    <ErrorMsg_vn>Không tìm thấy lịch sử giao dịch</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-212</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Account does not exist</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản không tồn tại.</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-213</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>No transaction exists</ErrorMsg_en>
+    <ErrorMsg_vn>Giao dịch không tồn tại</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-214</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid transaction amount</ErrorMsg_en>
+    <ErrorMsg_vn>Tổng số tiền trong giao dịch không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-215</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid account number</ErrorMsg_en>
+    <ErrorMsg_vn>Số tài khoản không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-216</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid currency</ErrorMsg_en>
+    <ErrorMsg_vn>Mã tiền tệ không dúng</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-217</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The amount is different to the amount in the float</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-218</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Float is not paid</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-219</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid cheque status</ErrorMsg_en>
+    <ErrorMsg_vn>Trạng thái séc không đúng</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-223</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Undefined error</ErrorMsg_en>
+    <ErrorMsg_vn>Lỗi không xác định</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-224</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Error: Add into transaction history</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-225</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Error: update demand deposit account</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-226</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Searching account error</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-227</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Error: get product type of demande deposit</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-228</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Product type was deleted</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-229</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Error: Delete product type</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-230</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Error: Add a new product type</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-231</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Error: update product type</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-232</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Can not get product type list</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-233</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The account balance is insufficient</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản không đủ số dư.</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-235</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid customer code</ErrorMsg_en>
+    <ErrorMsg_vn>Mã khách hàng không đúng</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-244</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Product type was in use</ErrorMsg_en>
+    <ErrorMsg_vn>Loại hình tài khoản đang đươcc sử dụng</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-246</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Can not delete DD account</ErrorMsg_en>
+    <ErrorMsg_vn>Không thể xóa tài khoản thanh toán</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-247</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>DD account is trading, can not delete</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản thanh toán này đang giao dịch, không thể xóa</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-248</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Account pays commission, can not delete</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-249</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Account relates to FD account</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản này liên quan đến 1 tài khoản tiền gửi khác</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-250</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid cheque number</ErrorMsg_en>
+    <ErrorMsg_vn>Số séc không dúng</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-251</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The cheque is in use</ErrorMsg_en>
+    <ErrorMsg_vn>Séc đang được sử dụng</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-252</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Duplicate bill number</ErrorMsg_en>
+    <ErrorMsg_vn>Trùng số hóa đơn</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-253</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The account already exists</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản đã tồn tại</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-254</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Account is not overdraft. Invalid transaction</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản này không được thấu chi, giao dịch không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-255</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>DD OD Exist</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản thấu chi đã tồn tại</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-257</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>DD OD in use</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản thấu chi này đang được sử dụng</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-258</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Pass book No not found</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-260</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Passbook printed line must be greater or equal than 0</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-261</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>CR rate must be between 0 and 100</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-264</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Duplicate OD Code</ErrorMsg_en>
+    <ErrorMsg_vn>Trùng mã số thấu chi</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-265</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid range of cheque leaves</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-266</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Range of cheque leaves are in more than one cheque book</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-267</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The status of atleast one cheque leaves is not normal</ErrorMsg_en>
+    <ErrorMsg_vn>Trạng thái của ít nhất một tờ séc là không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-268</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>This Account is used for auto transaction in FD</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản này được dùng trong giao dịch tự động với tài khoản tiền gửi</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-269</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>This Account is used for auto transaction in LOAN</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản này được dùng trong giao dịch tự động với tài khoản tiền vay</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-270</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Duplicate cheque number for collection</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-271</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Cheque not found or cheque status is incorrect!</ErrorMsg_en>
+    <ErrorMsg_vn>Số séc không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-272</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Cheque not found!</ErrorMsg_en>
+    <ErrorMsg_vn>Không tìm thấy sổ séc</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-273</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid passbook status</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-274</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid passbook serial number</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-275</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Passbook already exist</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-276</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Duplicate serial number</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-277</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>FDC: This cheque or passbook belong to other teller</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-278</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid cheque status</ErrorMsg_en>
+    <ErrorMsg_vn>Trạng thái séc không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-279</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid number of page of cheque book</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-280</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Passbook not found in inventory</ErrorMsg_en>
+    <ErrorMsg_vn>Số tiết kiệm không được tìm thấy</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-281</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid Loan account status.</ErrorMsg_en>
+    <ErrorMsg_vn>Trạng thái tài khoản vay không hợpp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-282</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Loan account has been expired. You can not make transaction.</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản vay đã hết hạn. Bạn không thể thực hiện giao dịch</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-283</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Reference number already exist</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-285</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid account type</ErrorMsg_en>
+    <ErrorMsg_vn>Loại tài khoản không đúng</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-286</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Transaction not allow for CA Plus account</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản thanh toán ưu đãi không thực hiện được giao dịch này</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-287</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Passbook must be issued</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-288</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Transaction already existed</ErrorMsg_en>
+    <ErrorMsg_vn>Giao dịch đã tồn tại</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-290</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid earmark amount</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-291</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Not enough right to inquiry</ErrorMsg_en>
+    <ErrorMsg_vn>Không đủ quyền để tra cứu</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-292</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Do not allow to view account of staff information</ErrorMsg_en>
+    <ErrorMsg_vn>Không thể xem được thông tin tài khoản của nhân viên</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-293</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The OD status of this account is invalid</ErrorMsg_en>
+    <ErrorMsg_vn>Trạng thái thấu chi của tài khoản không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-294</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The OD balance can not exceed the new limit</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-295</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The OD new limit can not exceed the operative limit</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-296</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>DD rate error</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-297</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>DD rate code already exists</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-298</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>DD rate code not found</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-299</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>DD rate code in used</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-301</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Checking transaction is error</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-302</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The transaction requires overrided</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-303</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Error initiation module</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-304</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The account status is not allowed</ErrorMsg_en>
+    <ErrorMsg_vn>Trạng thái tài khoản không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-305</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Minimum balance does not Reached</ErrorMsg_en>
+	<ErrorMsg_vn>Số tiền gửi không đủ số dư tối thiểu</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-306</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Error configuration</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-307</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>No account found</ErrorMsg_en>
+    <ErrorMsg_vn>Không tìm thấy số tài khoản này</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-308</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Error: update data</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-309</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The FD product type already exists</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-310</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Product type does not exist</ErrorMsg_en>
+	<ErrorMsg_vn>Loại sản phẩm chưa tồn tại</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-311</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Transaction history does not exist</ErrorMsg_en>
+    <ErrorMsg_vn>Không tìm thấy lịch sử giao dịch</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-312</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Account does not exist</ErrorMsg_en>
+    <ErrorMsg_vn>Số tài khoản không tồn tại</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-313</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Transaction does not exist</ErrorMsg_en>
+    <ErrorMsg_vn>Số giao dịch không tồn tại</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-314</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Premature Withdrawal Not Allowed</ErrorMsg_en>
+    <ErrorMsg_vn>Không được phép rút trước hạn</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-315</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Error: Delete account type</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-316</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Account type was deleted</ErrorMsg_en>
+    <ErrorMsg_vn>Loại tài khoản đã bị xóa</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-317</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Account type is canceled</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-318</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Error: Recreate new account</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-319</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Error: Modify status</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-320</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Account type is ignored</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-321</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid date</ErrorMsg_en>
+    <ErrorMsg_vn>Ngày tháng không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-322</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid account number</ErrorMsg_en>
+    <ErrorMsg_vn>Số tài khoản không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-323</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Can not recognize this currency</ErrorMsg_en>
+    <ErrorMsg_vn>Mã tiền tệ không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-324</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Error: update rate</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-325</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Saving book number already exists</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-326</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The fund is insufficient</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-329</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Customer code does not exist</ErrorMsg_en>
+    <ErrorMsg_vn>Mã khách hàng không tồn tại</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-330</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid account type</ErrorMsg_en>
+    <ErrorMsg_vn>Loại tài khoản không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-331</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The FD type already exists</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-335</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>FD product is in use.</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-347</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Account has transaction</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản này đang có giao dịch</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-348</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The account already exists</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản này đã tồn tại</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-349</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The account withdrawn all of interest</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-350</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Not allowed withdraw interest early in this product type</ErrorMsg_en>
+    <ErrorMsg_vn>Không cho phép rút lãi sớm đối với loại tài khoản này</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-351</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid serial number or status of receipt</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-352</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid receipt serial number</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-353</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>FD Receipt does not exist</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-354</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>FD Receipt is not opened in this month. Cannot change Product type.</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-355</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Term of old product type differ from term of new product type</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-356</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Payable account is not allowed</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-360</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>FD Base rate error</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-361</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>FD Base rate code already exists</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-362</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>FD Base rate code not found</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-363</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>FD Base rate code in used</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-705</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid amount</ErrorMsg_en>
+    <ErrorMsg_vn>Số tiền không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-706</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Configuration of transaction error</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-707</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Your payment exceed outstanding principal</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-709</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>It is over application limit, loan limit of the customer</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-710</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid the first date of principal payment</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-711</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Syntax error</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-712</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Can not add a new base interest rate</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-713</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Can not update base interest rate</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-714</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Can not get the information of this base interest rate</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-715</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Duplicate base interest rate</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-716</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid expired date</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-717</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Interest rate code is available for opening loan account, can not delete it</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-718</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Interest rate code is available for definition loan product type, can not delete it</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-719</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid new duration</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-720</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Product code not found</ErrorMsg_en>
+    <ErrorMsg_vn>Không tìm thấy mã loại hình tài khoản</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-721</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The product type already exists</ErrorMsg_en>
+    <ErrorMsg_vn>Loại hình tài khoản đã tồn tại</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-722</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Base interest rate does not exist</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-723</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Interest rate code is available for definition AA number, can not delete it!</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-724</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Installment loan can not be used with revolving application</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-726</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Product type was in use</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-727</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Economical profession not found</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-729</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Overdraft account is already used</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản thấu chi này đang được sử dụng</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-730</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Can not add a new loan officer</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-731</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Loan officer in use. Can not delete</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-732</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Officer ID is invalid</ErrorMsg_en>
+    <ErrorMsg_vn>Mã nhân viên không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-739</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Currency of Loan account and DD account must be same</ErrorMsg_en>
+    <ErrorMsg_vn>Loại tiền tệ của tài khoản vay và tài khoản thanh toán phải giống nhau</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-740</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Loan application add failed</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-741</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The application is not approved</ErrorMsg_en>
+    <ErrorMsg_vn>Hồ sơ này chưa được duyệt</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-742</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Loan application code does not updated yet</ErrorMsg_en>
+    <ErrorMsg_vn>Hồ sơvay này chưa được cập nhật</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-743</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Can not open LNAPPL table</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-744</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Can not update loan application</ErrorMsg_en>
+    <ErrorMsg_vn>Không thể cập nhật hồ sơ vay</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-745</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The application is in use</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-746</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Can not delete loan application</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-760</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Loan account code does not exist</ErrorMsg_en>
+    <ErrorMsg_vn>Mã tài khoản vay không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-761</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Open new account fail</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-762</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid loan account status</ErrorMsg_en>
+    <ErrorMsg_vn>Trạng thái tài khoản vay không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-763</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Receivable percent differs from account data</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-764</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Do not allow deduction interest from state bank</ErrorMsg_en>
+    <ErrorMsg_vn>Không cho phép hỗ trợ lãi suất từ ngân hàng nhà nước</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-765</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Loan account is not traded yet</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-766</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Refund amount > advance paid amount</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-768</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>This transaction is only allowed to execute with the pay in instalment loan</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-769</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The account has overdue debit</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-771</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Duplicate Loan account</ErrorMsg_en>
+    <ErrorMsg_vn>Trùng số tài khoản vay</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-772</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Account in used</ErrorMsg_en>
+    <ErrorMsg_vn>Tài khoản này đang được sử dụng</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-773</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid opened date</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-774</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Not allowed to close account if the principal debit is not paid</ErrorMsg_en>
+    <ErrorMsg_vn>Không cho phép đóng tài khoản nếu như gốc chưa được trả đủ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-775</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Not allowed to close account if the interest debit is not paid</ErrorMsg_en>
+    <ErrorMsg_vn>Không cho phép đóng tài khoản nếu như lãi chưa được trả đủ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-776</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Not allowed to close account if the interest is not refunded</ErrorMsg_en>
+    <ErrorMsg_vn>Không cho phép đóng tài khoản nếu như gốc chưa được thu hồi</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-777</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Not allowed to closerollover account if interest receivable is not zero</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-778</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Loan type in the product type and the application are different</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-779</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Not allowed to close account if the fee is not paid</ErrorMsg_en>
+    <ErrorMsg_vn>Không cho phép đóng tài khoản nếu như các khoản phí chưa được trả đủ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-781</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The drawdowned amount is different to the approved amount</ErrorMsg_en>
+    <ErrorMsg_vn>Số tiền giải ngân khác với số tiền được duyệt trong hồ sơ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-782</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid drawdown date</ErrorMsg_en>
+    <ErrorMsg_vn>Ngày giải ngân không hợp lệ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-783</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>New expiry date is greater than settle date</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-784</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Reroll non-RC loan account is not allowed</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-785</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Drawdown more than 1 time is not allowed for this type of loan</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-786</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Dont need to rollover (account is not expired yet)</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-787</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Different customer</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-790</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>State Bank only support deduction interest for account with VND currency</ErrorMsg_en>
+    <ErrorMsg_vn>Ngân hàng nhà nước chỉ hỗ trợ lãi suất với tài khoản tiền VNĐ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-791</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Schedule used</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-792</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Payment schedule not found</ErrorMsg_en>
+    <ErrorMsg_vn>Không tìm thấy lịch trả nợ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-793</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Loan transferred overdue</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-794</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The transferred amount is different to the amount in the schedule payment debit</ErrorMsg_en>
+    <ErrorMsg_vn>Số tiền chuyển khoản khác với số tiền trong lịch trả nợ</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-795</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>This transaction is not allowed to execute with the pay in instalment loan</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-796</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Paying amount bigger than drawn amount</ErrorMsg_en>
+    <ErrorMsg_vn />
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-797</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Not allowed to drawdown to overdraft account</ErrorMsg_en>
+    <ErrorMsg_vn>Không cho phép giải ngân vào tài khoản thấu chi</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-798</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Undefined error</ErrorMsg_en>
+    <ErrorMsg_vn>Lỗi không xác định</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-799</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>It is over accured interest</ErrorMsg_en>
+    <ErrorMsg_vn>Vượt quá lãi cộng dồn</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-11</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>The right is not enough</ErrorMsg_en>
+    <ErrorMsg_vn>Quý khách không đủ quyền thực hiện giao dịch.</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-1903</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Systen is error, please try again later.</ErrorMsg_en>
+    <ErrorMsg_vn>Dịch vụ tạm thời gián đoạn, quý khách vui lòng thực hiện lại giao dịch.</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>54</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Can not connect to beneficiary bank.</ErrorMsg_en>
+    <ErrorMsg_vn>Không kết nối được tới Ngân hàng người hưởng.</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <!--ERROR SYSTEM FROM SMB-->
+  <EBANK>
+    <ErrorCode>-2146828283</ErrorCode>
+    <EBankCode>-2146828283</EBankCode>
+    <ErrorMsg_en>Can not connect to CoreBank.</ErrorMsg_en>
+    <ErrorMsg_vn>Dịch vụ tạm thời gián đoạn.Quý khách vui lòng thực hiện lại trong ít phút.</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+  <EBANK>
+    <ErrorCode>-2147467259</ErrorCode>
+    <EBankCode>-2147467259</EBankCode>
+    <ErrorMsg_en>System error.</ErrorMsg_en>
+    <ErrorMsg_vn>Dịch vụ tạm thời gián đoạn.Quý khách vui lòng thực hiện lại trong ít phút.</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+
+  <EBANK>
+    <ErrorCode>-1001</ErrorCode>
+    <EBankCode>-1001</EBankCode>
+    <ErrorMsg_en>System error.</ErrorMsg_en>
+    <ErrorMsg_vn>Dịch vụ tạm thời gián đoạn.</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+
+  <!--END ERROR SYSTEM FROM SMB-->
+  <EBANK>
+    <ErrorCode>-9999</ErrorCode>
+    <EBankCode />
+    <ErrorMsg_en>Invalid transaction.</ErrorMsg_en>
+    <ErrorMsg_vn>Giao dịch không hoàn thành.</ErrorMsg_vn>
+    <ErrorTrace />
+  </EBANK>
+
+</root>
