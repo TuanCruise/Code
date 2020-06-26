@@ -366,6 +366,10 @@ namespace WebAppCoreBlazorServer.Service
         Task<List<SearchModuleInfo>> LoadModSearchByModId(string modId);
         Task<List<ExecProcModuleInfo>> LoadExcuteModule(string modId);
         Task<List<dynamic>> LoadQueryModule(ParramModuleQuery parram);
+        //Dongpv
+        Task<DataTable> getQuery(ParramModuleQuery parram);
+        //Task<List<DataTable>> getQuery(ParramModuleQuery parram);
+
         Task<DataTable> LoadQueryModuleDataTable(ParramModuleQuery parram);
         Task<List<dynamic>> LoadQueryModule(ParramModuleQueryDynamicQuery logic);
         /// <summary>

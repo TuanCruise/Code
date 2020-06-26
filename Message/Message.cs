@@ -65,7 +65,7 @@ namespace WB.MESSAGE
 		public object getValue(string name)
 		{
 			for (int i = 0; i < Body.Count - 1; i += 2)
-				if (Body[i].ToString().ToUpper() == name.ToUpper()) return Body[i + 1];
+				if (Body[i].ToString().ToUpper().Trim() == name.ToUpper()) return Body[i + 1];
 			return null;
 		}
 

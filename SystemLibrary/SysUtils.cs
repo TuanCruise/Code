@@ -14,6 +14,9 @@ using System.Web;
 //using NUnit.Framework;
 //using System.Web.UI;
 using System.Globalization;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace WB.SYSTEM
 {
@@ -275,7 +278,10 @@ namespace WB.SYSTEM
             try
             {
                 if (objValue != null)
+                {
+                    strValue = strValue.Replace("\"","");
                     strValue = Convert.ToString(objValue).Trim();
+                }
                 return strValue;
             }
             catch
@@ -3837,6 +3843,86 @@ namespace WB.SYSTEM
                 strResult = config.AppSettings.Settings[Key].Value;
 
                 return strResult;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public static DataTable Json2Table(string jsonString)
+        {
+            DataTable myTable = new DataTable();
+
+            try
+            {
+                
+                jsonString = jsonString.TrimStart('['); 
+                jsonString = jsonString.TrimEnd(']');
+                string[] jsonParts = jsonString.Split("],[");
+
+                int i = 0;
+                int j = 0;
+                string row = jsonParts[0];
+                string[] col = row.Split("\",\"");
+
+                for (i = 0; i < col.GetLength(0); i++)
+                {
+                    myTable.Columns.Add(col[i].ToString().Replace("\"",""));
+                }
+
+                for (i = 1; i < jsonParts.GetLength(0); i++)
+                {                    
+                    col = jsonParts[i].Split("\",\"");
+
+                    DataRow aRow = myTable.NewRow();
+
+                    for (j = 0; j < col.GetLength(0); j++)
+                    {
+                        aRow[j] = CString(col[j]);
+                    }
+
+                    myTable.Rows.Add(aRow);
+                }
+
+                return myTable;
+
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static DataTable Json2Table2(string json)
+        {
+            try
+            {
+                var jsonLinq = JObject.Parse(json);
+                JObject obj = JObject.Parse(json);
+                //JArray arrBody = (JArray)obj["Body"];
+
+                // Find the first array using Linq
+                var srcArray = jsonLinq.Descendants().Where(d => d is JArray).First();
+                var trgArray = new JArray();
+                foreach (JObject row in srcArray.Children<JObject>())
+                {
+                    var cleanRow = new JObject();
+                    foreach (JProperty column in row.Properties())
+                    {
+                        // Only include JValue types
+                        if (column.Value is JValue)
+                        {
+                            cleanRow.Add(column.Name, column.Value);
+                        }
+                    }
+
+                    trgArray.Add(cleanRow);
+                }
+
+                return JsonConvert.DeserializeObject<DataTable>(trgArray.ToString());
+
             }
             catch (Exception ex)
             {

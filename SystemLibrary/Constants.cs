@@ -37,12 +37,14 @@ namespace WB.SYSTEM
         public static int MSG_POST_ACTION = 4;
         public static int MSG_APPROVE_ACTION = 5;
         public static int MSG_REJECT_ACTION = 6;
+        public static int MSG_SEARCH = 8;
 
 
         //LIST OBJECT NAME:
         public static string OBJ_MNT_ROLE_PERMISSION = "ROLEPERMISSION";
         public static string OBJ_MNT_USER = "USERPROFILE";
         public static string OBJ_MNT_CUSTOMER = "CUSTOMER";
+        public static string OBJ_SEARCH = "OBJ_SEARCH";
 
 
         public static string ERROR_TYPE_EBANK = "EBANK";

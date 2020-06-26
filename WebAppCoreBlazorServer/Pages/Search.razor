@@ -182,7 +182,10 @@
     public string FieldSelected { get; set; }
     public int currPage { get; set; }
     public int totalRow { get; set; }
+
     public List<dynamic> DataSearch { get; set; } = new List<dynamic>();
+    //Dongpv
+    //public System.Data.DataTable DataSearch { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -457,7 +460,10 @@
 
             //CurrPage = currPage;
             //FieldSubmited = fieldEdits;
+            //Dongpv
             var dataGrid = await moduleService.LoadQueryModule(new ParramModuleQuery { Store = query });
+            //var dataGrid = await moduleService.getQuery(new ParramModuleQuery { Store = query });
+
             //var dataGrid = await moduleService.LoadQueryModule(new ParramModuleQueryDynamicQuery { LogicConditionModels= SearchConditionInstances,SearchModuleInfo= modSearch });
             //if (!string.IsNullOrEmpty(export))
             //{

@@ -19,4 +19,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Https" Version="2.2.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Host.BusinessFacade\Host.BusinessFacade.csproj" />
+    <ProjectReference Include="..\Message\Message.csproj" />
+    <ProjectReference Include="..\SystemLibrary\SystemLibrary.csproj" />
+  </ItemGroup>
 </Project>

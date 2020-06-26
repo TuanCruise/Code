@@ -26,20 +26,7 @@ namespace Host.BusinessFacade
             get { return _dbManager; }
             set { _dbManager = value; }
         }
-        private DBManager _dbManagerRead;
-
-        public DBManager dbManagerRead
-        {
-            get { return _dbManagerRead; }
-            set { _dbManagerRead = value; }
-        }
-
-        private DBManager _dbManagerWrite;
-        public DBManager dbManagerWrite
-        {
-            get { return _dbManagerWrite; }
-            set { _dbManagerWrite = value; }
-        }
+       
 
         public MiscellaneousFacade()
         {
@@ -55,19 +42,15 @@ namespace Host.BusinessFacade
 
         public void Process(ref Message msg)
         {
-            dbManager = new DBManager();
-            dbManagerRead = new DBManager();
-            dbManagerWrite = new DBManager();
+            dbManager = new DBManager();            
 
             try
             {
                 dbManager.Open();
-                dbManagerRead.Open();
-                dbManagerWrite.Open();
 
-                if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_MNT_CUSTOMER)
+                if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_SEARCH)
                 {
-
+                    GetSearch(ref msg);
                 }
                 else
                 {
@@ -84,6 +67,161 @@ namespace Host.BusinessFacade
             }
             finally
             {
+            }
+        }
+
+        private void GetSearch(ref Message msg)
+        {
+            int effRows = 0;
+            IDataReader rd;
+            
+            try
+            {
+                //Get columns to search
+                string valType = msg.getValue("SearchObject").ToString();
+                string cond = msg.getValue("Condition").ToString();
+                int intPage = Convert.ToInt16(msg.getValue("Page").ToString());
+                string strSQL = "";
+                strSQL = "select tag,[order]  from language where entity='" + valType.ToUpper().Trim() + "' and search='Y' order by seq ";
+                rd = dbManager.ExecuteReader(strSQL, CommandType.Text);
+                strSQL = "select ";
+                //strSQL="select ";
+                string strOrder = "";
+                while (rd.Read())
+                {
+                    if (rd.GetValue(0).ToString().ToUpper().Trim() == "CUSTOMERNAME")
+                    {
+                        strSQL += "b.FULLNAME " + rd.GetValue(0).ToString().Trim() + ",";
+                        if (rd.GetValue(1).ToString().ToUpper() == "Y")
+                        {
+                            strOrder += "b.FULLNAME " + ",";
+                        }
+                    }
+                    else if (rd.GetValue(0).ToString().ToUpper().Trim() == "TELLERNAME")
+                    {
+                        strSQL += "userprofile.FULLNAME " + rd.GetValue(0).ToString().Trim() + ",";
+                        if (rd.GetValue(1).ToString().ToUpper().ToUpper() == "Y")
+                        {
+                            strOrder += "userprofile.FULLNAME " + ",";
+                        }
+                    }
+                    else
+                    {
+                        strSQL += "a." + rd.GetValue(0).ToString().ToUpper().Trim() + ",";
+                        if (rd.GetValue(1).ToString().ToUpper() == "Y")
+                        {
+                            strOrder += "a." + rd.GetValue(0).ToString().ToUpper().Trim() + ",";
+                        }
+                    }
+                }
+
+                rd.Close();
+                rd.Dispose();
+
+                if (strSQL == "select ")
+                {
+                    strSQL = "select * ";
+                }
+
+                strSQL = strSQL.Substring(0, strSQL.Length - 1) + " from " + valType.ToUpper() + " a ";
+                string strCIFJoin = ",LNAPPLICATION,LNACCOUNT,FDACCOUNT,SCACCOUNT,CLACCOUNT,FNACCOUNT,MMACCOUNT,AAFACILITY";
+
+                string strTellerJoin = ",TXNJOURNAL";
+                string strTellerHistJoin = ",TXNHIST";
+                if (strCIFJoin.IndexOf(valType.ToUpper()) != -1)
+                {
+                    strSQL += ", customer b ";
+                    //cond = cond.Replace("FULLNAME", "b.FULLNAME");
+                    cond = cond.Replace("CUSTOMERNAME", "b.FULLNAME");
+
+                    cond = cond.Replace("CIFID", "a.CIFID");
+                    cond = cond.Replace("REMARK", "a.REMARK");
+                    cond = cond.Replace("UDF1", "a.UDF1");
+                    cond = cond.Replace("UDF2", "a.UDF2");
+                    cond = cond.Replace("UDF3", "a.UDF3");
+                    cond = cond.Replace("UDF4", "a.UDF4");
+                    cond = cond.Replace("UDF5", "a.UDF5");
+                    strSQL += cond + " and a.cifid=b.cifid ";
+                }
+                else if (strTellerJoin.IndexOf(valType.ToUpper()) != -1 || strTellerHistJoin.IndexOf(valType.ToUpper()) != -1)
+                {
+                    strSQL += ", userprofile  ";
+                    cond = cond.Replace("FULLNAME", "a.FULLNAME");
+                    cond = cond.Replace("TELLERNAME", "userprofile.FULLNAME");
+
+                    strSQL += cond + " and trim(a.tellerid)=trim(userprofile.userid) ";
+                }
+                else
+                {
+                    strSQL += cond;
+                }
+                if (strOrder != "")
+                {
+                    strOrder = strOrder.Substring(0, strOrder.Length - 1);
+                    strSQL += " order by " + strOrder;
+
+                }
+                if (valType.ToUpper() == "EXRATE")
+                {
+                    strSQL = "select distinct rateseq,lastdate,remark from exrate order by rateseq desc";
+                }
+
+                //Return search result 
+                int fromRow = intPage * WB.SYSTEM.Constants.MAX_ROW;
+                int toRow = (intPage + 1) * WB.SYSTEM.Constants.MAX_ROW - 1;
+                ArrayList arrValue = new ArrayList();
+                rd = dbManager.ExecuteReader(strSQL, CommandType.Text);
+                bool firstRow = true;
+                int currRow = 0;
+
+                if (rd != null && rd.FieldCount > 0)
+                {
+                    ArrayList arrHeader = new ArrayList();
+                    for (int i = 0; i < rd.FieldCount; i++)
+                    {
+                        arrHeader.Add(rd.GetName(i).ToString().ToUpper());
+                    }
+                    arrValue.Add(arrHeader);
+                    firstRow = false;
+                }
+
+                while (rd.Read())
+                {
+                    effRows += 1;
+                    if (currRow >= fromRow && currRow <= toRow)
+                    {
+                        ArrayList arrRow = new ArrayList();
+                        if (firstRow)
+                        {
+                            for (int i = 0; i < rd.FieldCount; i++)
+                            {
+                                arrRow.Add(rd.GetName(i).ToString().ToUpper());
+                            }
+                            arrValue.Add(arrRow);
+                            arrRow = new ArrayList();
+                            firstRow = false;
+                        }
+                        for (int i = 0; i < rd.FieldCount; i++)
+                        {
+                            arrRow.Add(rd.GetValue(i).ToString().Trim());
+                        }
+                        arrValue.Add(arrRow);
+                    }
+                    currRow += 1;
+                }
+                rd.Close();
+                rd.Dispose();
+                msg.Body = arrValue;
+                msg.effectRows = effRows;
+
+            }
+            catch (ErrorMessage ex)
+            {
+                ErrorHandler.Process(ex);
+            }
+            catch (Exception ex)
+            {
+               ErrorHandler.Process(ex);
             }
         }
 
