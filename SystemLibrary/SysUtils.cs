@@ -3600,6 +3600,88 @@ namespace WB.SYSTEM
             }
         }
 
+        public static ArrayList DataSet2ArrayList(DataSet ds, string strCondition, string strSortColum = "", string tableName = "")
+        {
+            try
+            {
+                if (ds == null)
+                {
+                    return null;
+                }
+
+                ArrayList arrResult = new ArrayList();
+
+                DataTable dt = ds.Tables[0];
+
+                if (!string.IsNullOrEmpty(tableName)) dt = ds.Tables[tableName];
+
+                arrResult = DataTable2ArrayList(dt, strSortColum, strCondition);
+
+                return arrResult;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public static ArrayList DataSet2ArrayList(DataSet ds, int indexTable)
+        {
+            try
+            {
+                if (ds == null)
+                {
+                    return null;
+                }
+
+                ArrayList arrResult = new ArrayList();
+
+                DataTable dt = ds.Tables[indexTable];
+
+                arrResult = DataTable2ArrayList(dt);
+
+                return arrResult;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static ArrayList DataTable2ArrayList(DataTable datatable, string strSortColum, string strCondition = "")
+        {
+            try
+            {
+                int num;
+                ArrayList list = new ArrayList();
+                ArrayList list2 = new ArrayList();
+                if (datatable == null)
+                {
+                    return null;
+                }
+                for (num = 0; num < datatable.Columns.Count; num++)
+                {
+                    list2.Add(datatable.Columns[num].ColumnName);
+                }
+                list.Add(list2);
+                DataRow[] rowArray = datatable.Select(strCondition, strSortColum);
+                for (num = 0; num < rowArray.GetLength(0); num++)
+                {
+                    DataRow row = rowArray[num];
+                    ArrayList list3 = new ArrayList();
+                    for (int i = 0; i < datatable.Columns.Count; i++)
+                    {
+                        list3.Add(row[i]);
+                    }
+                    list.Add(list3);
+                }
+                return list;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         #region GetFileContents
 
         public static string GetFileContents(string p_FullPath)
