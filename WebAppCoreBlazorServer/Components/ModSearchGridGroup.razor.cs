@@ -15,7 +15,6 @@ namespace WebAppCoreBlazorServer.Components
 {
     public partial class ModSearchGridGroup
     {
-        [Parameter]
         public SearchModuleInfo modSearch { get; set; }
         [Parameter]
         public List<CodeInfoModel> codeInfos { get; set; } = new List<CodeInfoModel>();
@@ -34,21 +33,8 @@ namespace WebAppCoreBlazorServer.Components
         public ModuleInfoModel ModuleInfoModel { get; set; }
         protected override Task OnInitializedAsync()
         {
+            modSearch=Search.modSearch;
             return base.OnInitializedAsync();
-        }
-        private static dynamic Projection(object a, IEnumerable<string> props)
-        {
-            if (a == null)
-            {
-                return null;
-            }
-            IDictionary<string, object> res = new ExpandoObject();
-            var type = a.GetType();
-            foreach (var pair in props.Select(n => new {Name = n,Property = type.GetProperty(n)}))
-            {
-                res[pair.Name] = pair.Property.GetValue(a, new object[0]);
-            }
-            return res;
         }
     }
 }

@@ -15,4 +15,15 @@ namespace WebModelCore
         [Description("TABPAGE")]
         T
     }
+    public enum ECallSubMod
+    {
+        [Description("Mod Edit")]
+        MED,
+        [Description("Mod Add")]
+        MAD,
+        [Description("Mod View")]
+        MVW,
+        [Description("Mod Excute")]
+        MMN
+    }
 }

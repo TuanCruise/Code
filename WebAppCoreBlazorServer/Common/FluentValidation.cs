@@ -14,7 +14,7 @@ namespace WebAppCoreBlazorServer.Common
         public FluentValidation()
         {
 
-            RuleFor(p => p.Value).NotNull().NotEmpty().When(m => m.Nullable != "Y").WithMessage("Đây là trường bắt buộc");
+            RuleFor(p => p.Value).NotNull().NotEmpty().When(m => m.Nullable != "Y").WithMessage(p=>p.FieldName+ " Đây là trường bắt buộc");
         }
 
         private async Task<bool> IsUniqueAsync(string name)

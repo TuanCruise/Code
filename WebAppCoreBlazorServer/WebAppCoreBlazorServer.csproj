@@ -12,6 +12,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Common\ModalService\**" />
+    <Compile Remove="Common\Modal\**" />
+    <Content Remove="Common\ModalService\**" />
+    <Content Remove="Common\Modal\**" />
+    <EmbeddedResource Remove="Common\ModalService\**" />
+    <EmbeddedResource Remove="Common\Modal\**" />
+    <None Remove="Common\ModalService\**" />
+    <None Remove="Common\Modal\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Components\BlazoredModal.razor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\BlazoredModal.razor" />
+    <Content Remove="Pages\ModalForm.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\src\img\.gitignore" />
     <_ContentIncludedByDefault Remove="wwwroot\src\img\brand-white.svg" />
     <_ContentIncludedByDefault Remove="wwwroot\src\img\brand.svg" />
@@ -67,6 +87,12 @@
     <None Include="wwwroot\js\widget-data.js" />
     <None Include="wwwroot\js\widget-statistic.js" />
     <None Include="wwwroot\js\widgets.js" />
+    <None Include="wwwroot\plugins\bootbox\bootbox.all.js" />
+    <None Include="wwwroot\plugins\bootbox\bootbox.all.min.js" />
+    <None Include="wwwroot\plugins\bootbox\bootbox.js" />
+    <None Include="wwwroot\plugins\bootbox\bootbox.locales.js" />
+    <None Include="wwwroot\plugins\bootbox\bootbox.locales.min.js" />
+    <None Include="wwwroot\plugins\bootbox\bootbox.min.js" />
     <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\css\bootstrap-datepicker.css.map" />
     <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\css\bootstrap-datepicker.standalone.css.map" />
     <None Include="wwwroot\plugins\bootstrap-datepicker-1.9.0-dist\css\bootstrap-datepicker3.css.map" />
@@ -161,17 +187,23 @@
   <ItemGroup>
     <PackageReference Include="Blazored.FluentValidation" Version="1.3.0" />
     <PackageReference Include="Blazored.SessionStorage" Version="1.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="5.0.0-preview.5.20279.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.2.0-preview3.20168.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.3" />
     <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+    <PackageReference Include="NEST" Version="7.7.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Serilog" Version="2.9.0" />
     <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.1.0" />
+    <PackageReference Include="System.Text.Json" Version="4.7.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BlazorControl\GridBlazor\GridBlazor.csproj" />
     <ProjectReference Include="..\Blazored.Modal\Blazored.Modal.csproj" />
-    <ProjectReference Include="..\SystemLibrary\SystemLibrary.csproj" />
     <ProjectReference Include="..\WebCore.Common\WebCore.Common.csproj" />
     <ProjectReference Include="..\WebCore.Entities\WebCore.Entities.csproj" />
     <ProjectReference Include="..\WebModelCore\WebModelCore.csproj" />
