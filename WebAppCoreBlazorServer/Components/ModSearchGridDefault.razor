@@ -47,28 +47,6 @@
                 <tbody id="tbody">
                     @{
                         var data = DataSearch;
-                        //if (parramEdit.Any() && data != null)
-                        //{
-                        //    foreach (var item in parramEdit)
-                        //    {
-
-                        //        foreach (var dataSearch in data)
-                        //        {
-                        //            var dataRows = ((Newtonsoft.Json.Linq.JContainer)dataSearch);
-                        //            foreach (var datarow in dataRows)
-                        //            {
-                        //                var columnName = ((Newtonsoft.Json.Linq.JProperty)datarow).Name;
-                        //                if (columnName.ToUpper() == item.FieldName.ToUpper())
-                        //                {
-                        //                    if (datarow != null && ((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)datarow).Value) != null)
-                        //                    {
-                        //                        item.Value = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)datarow).Value).Value ?? "").ToString();
-                        //                    }
-                        //                }
-                        //            }
-                        //        }
-                        //    }
-                        //}
                         if (data == null)
                         {
                             <tr>
@@ -173,13 +151,26 @@
                                                         {
                                                             par.Value = item[par.FieldName.ToLower()];
                                                         }
+                                                        var callModId = btnInColAction.CallModuleID;
                                                         if (parBtn.Any())
                                                         {
-                                                            <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.CallMod(btnInColAction.CallModuleID,modId,String.Join(",",parBtn.Select(x=>x.FieldName)),JsonConvert.SerializeObject(parBtn),"1"))"><i class="ik ik-edit btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                            var paramTemp = JsonConvert.SerializeObject(parBtn);
+                                                            if (btnInColAction.IsCallModMaintain())
+                                                            {
+                                                                var isView = btnInColAction.IsButtonView();
+                                                                <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(e=>Search.CallMod(callModId,modId,String.Join(",",parBtn.Select(x=>x.FieldName)),paramTemp,isView))"><i class="ik ik-edit btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.Delete(callModId,parBtn))"><i class="ik ik-delete btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                            }
                                                         }
                                                         else
                                                         {
-                                                            <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.CallMod(btnInColAction.CallModuleID,modId))"><i class="ik ik-edit btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                            if (btnInColAction.IsCallModMaintain())
+                                                            {
+                                                                <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.CallMod(callModId,modId))"><i class="ik ik-plus btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                            }
                                                         }
                                                     }
                                                 </ul>

@@ -445,8 +445,39 @@ namespace WebAppCoreBlazorServer.Common
             }
             return field.FieldID;
         }
-
-
+        public static string GetTextConfirmBtn(this ButtonInfo field, List<LanguageInfo> languages)
+        {
+            //if (field != null && !string.IsNullOrEmpty(field.MenuName))
+            //{
+            //    field.MenuName = field.MenuName.Trim();
+            //}
+            var languageText = "Bạn chắc chắn muốn xóa dữ liệu này";
+            //var nameCheck = string.Format("MENU.{0}.ICON", field.MenuName);
+            //var langCheck = languages == null ? new List<LanguageInfo>() : languages.Where(x => x.LanguageName.ToUpper() == nameCheck.ToUpper());
+            //if (langCheck != null)
+            //{
+            //    if (langCheck.Any())
+            //        languageText = langCheck.First().LanguageValue;
+            //    return languageText;
+            //}
+            return languageText;
+        }
+        public static bool IsCallModMaintain(this ButtonInfo btn)
+        {
+            if (btn.CallSubModule!= ECallSubMod.MMN.ToString())
+            {
+                return true;
+            }
+            return false;
+        }
+        public static string IsButtonView(this ButtonInfo btn)
+        {
+            if (btn.CallSubModule == ECallSubMod.MVW.ToString())
+            {
+                return "0";
+            }
+            return "1";
+        }
     }
 
     public class SwInputTextBase : InputBase<string>

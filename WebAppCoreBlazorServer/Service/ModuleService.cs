@@ -366,10 +366,6 @@ namespace WebAppCoreBlazorServer.Service
         Task<List<SearchModuleInfo>> LoadModSearchByModId(string modId);
         Task<List<ExecProcModuleInfo>> LoadExcuteModule(string modId);
         Task<List<dynamic>> LoadQueryModule(ParramModuleQuery parram);
-        //Dongpv
-        Task<DataTable> getQuery(ParramModuleQuery parram);
-        //Task<List<DataTable>> getQuery(ParramModuleQuery parram);
-
         Task<DataTable> LoadQueryModuleDataTable(ParramModuleQuery parram);
         Task<List<dynamic>> LoadQueryModule(ParramModuleQueryDynamicQuery logic);
         /// <summary>
@@ -396,11 +392,5 @@ namespace WebAppCoreBlazorServer.Service
         Task<List<DefTasks>> GetAllDefTasks();
         Task<List<ModWorkflow>> GetAllModWorkFolow();
         Task<List<dynamic>> SearchModSearch(SearchModSearch searchModSearch);
-        //Dongpv:24/06/2020
-        Task<RestOutput<string>> SaveData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits);
-        Task<RestOutput<string>> UpdateData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits);
-        Task<RestOutput<string>> DeleteData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits);
-        //Dongpv:24/06/2020
-
     }
 }

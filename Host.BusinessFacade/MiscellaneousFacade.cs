@@ -52,6 +52,10 @@ namespace Host.BusinessFacade
                 {
                     GetSearch(ref msg);
                 }
+                else if (msg.ObjectName.ToUpper() == Constants.OBJ_PROCEDURE_PAGING)
+                {
+                    msg.Body = this.LoadDataByProcdure(ref msg);
+                }
                 else
                 {
                     msg.Body = GetStoreQuery(msg.Body, msg.ObjectName);
@@ -69,6 +73,122 @@ namespace Host.BusinessFacade
             {
             }
         }
+
+        private ArrayList LoadDataByProcdure(ref WB.MESSAGE.Message msg)
+        {
+            try
+            {
+                string strProName = SysUtils.CString(SysUtils.getValue(msg.Body, "ENTITY"));
+                ArrayList arrParm = (ArrayList)(SysUtils.getValue(msg.Body, "PARMVAL"));
+
+                //1.GET PARAMS
+                BusinessEntity ent = new BusinessEntity();
+                ent.dbManager = this.dbManager; 
+                ent.retrieveDataQuery = "SELECT PARAMETER_NAME ,DATA_TYPE ,CHARACTER_MAXIMUM_LENGTH , PARAMETER_MODE, ORDINAL_POSITION FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_NAME = '" + strProName + "'";
+                ArrayList arrListParms = ent.LoadByQuery();
+                //ArrayList arrListParms = ent.arrProperties;
+
+                //2.QUIRY  DATA
+                int num;
+                ArrayList arrResult = new ArrayList();
+
+                if (arrListParms.Count > 1)
+                {
+                    ParamStruct[] param = new ParamStruct[arrListParms.Count - 1];
+                    //ParamStruct[] param = new ParamStruct[arrListParms.Count];
+                    num = 0;
+                    ArrayList arrPName = (ArrayList)arrListParms[0];
+
+                    for (int i = 1; i < arrListParms.Count; i++)
+                    {
+                        ArrayList arrParmName = (ArrayList)arrListParms[i];
+                        string PName = SysUtils.getProperty(arrPName, arrParmName, "PARAMETER_NAME");
+                        string Dtype = SysUtils.getProperty(arrPName, arrParmName, "DATA_TYPE");
+                        string MaxLen = SysUtils.getProperty(arrPName, arrParmName, "CHARACTER_MAXIMUM_LENGTH");
+                        string ParmMode = SysUtils.getProperty(arrPName, arrParmName, "PARAMETER_MODE");
+
+                        string PVal = SysUtils.getProperty(arrParm, PName.Substring(1));
+
+                        param[num].ParameterName = PName; //"@" + 
+                        param[num].size = 1024;
+
+                        string strVal = SysUtils.CString(PVal);
+                        if (!string.IsNullOrEmpty(strVal))
+                            param[num].Value = strVal;
+                        else
+                            param[num].Value = null;
+
+                        switch (ParmMode)
+                        {
+                            case "OUTPUT":
+                                param[num].Direction = ParameterDirection.Output;
+                                break;
+                            case "INOUT":
+                                param[num].Direction = ParameterDirection.Output;
+                                break;
+                            case "RETURNVALUE":
+                                param[num].Direction = ParameterDirection.ReturnValue;
+                                break;
+                            default:
+                                param[num].Direction = ParameterDirection.Input;
+                                break;
+                        }
+
+                        //switch (Dtype)
+                        //{
+                        //    case "datetime":
+                        //        param[num].DbType = DbType.DateTime;
+                        //        break;
+                        //}
+
+                        param[num] = this.dbManager.SetDBType(param[num], Dtype);
+
+                        num++;
+                    }
+
+                    // return value
+                    //param[num].Direction = ParameterDirection.ReturnValue;
+                    //param[num].DbType = DbType.Int32;
+                    //param[num].ParameterName = "@Returned";
+
+                    this.dbManager.CreateParameters(param);
+                }
+              
+                DataSet ds = this.dbManager.ExecuteDataSet(CommandType.StoredProcedure, strProName);
+
+                //3. GET RESULT
+                arrResult = SysUtils.DataSet2ArrayList(ds, 0);
+                msg.effectRows = this.dbManager.totalRows;
+
+                //if have any error throw exception 
+                if (arrResult.Count > 1)
+                {
+                    //if (!string.IsNullOrEmpty(this.dbManager.Err_code))
+                    string strErr_code = SysUtils.getProperty(arrResult, "ERR_CODE");
+                    if (!string.IsNullOrEmpty(strErr_code))
+                    {
+                        ErrorMessage ex = new ErrorMessage();
+                        ex.ErrorSource = SysUtils.getProperty(arrResult, "ENTITY");
+                        ex.ErrorCode = strErr_code;
+                        ex.ErrorDesc_vn = SysUtils.getProperty(arrResult, "ERR_CAPTION");
+                        ex.ErrorDesc = SysUtils.getProperty(arrResult, "ERR_CAPTION");
+                        ErrorHandler.ThrowError(ex);
+
+                    }
+                }
+
+                return arrResult;
+            }
+            catch (ErrorMessage ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         private void GetSearch(ref Message msg)
         {

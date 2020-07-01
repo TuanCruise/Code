@@ -26,17 +26,17 @@
             <thead class="h-head">
                 @{
                     checkColAction = btnInfos.Where(x => x.ShowOnToolbar == "N");
-                    @*if (modSearch != null && modSearch.ShowCheckBox == "Y")
-                            {
-                            <th><input type="checkbox" @bind="CheckAll" /></th>
-                        }*@
-                    var fieldGrid = ModuleFieldInfos.Where(x => x.FieldGroup == FLDGROUP.SEARCH_COLUMN).ToList();
-                    foreach (var item in fieldGrid)
+                    if ( modSearch != null && modSearch.ShowCheckBox == "Y")
                     {
-                        if (item.HideWeb == "Y")
-                        {
-                            continue;
-                        }
+                    <th><input type="checkbox" @bind="Search.CheckAll" /></th>
+                }
+                var fieldGrid = ModuleFieldInfos.Where(x => x.FieldGroup == FLDGROUP.SEARCH_COLUMN).ToList();
+                foreach (var item in fieldGrid)
+                {
+                    if (item.HideWeb == "Y")
+                    {
+                        continue;
+                    }
                     <th>@item.FieldName.GetLanguage(ModuleInfoModel.LanguageInfo, ModuleInfoModel.ModulesInfo.ModuleName)</th>
                 }
 
@@ -49,28 +49,6 @@
                 <tbody id="tbody">
                     @{
                         var data = DataSearch;
-                        //if (parramEdit.Any() && data != null)
-                        //{
-                        //    foreach (var item in parramEdit)
-                        //    {
-
-                        //        foreach (var dataSearch in data)
-                        //        {
-                        //            var dataRows = ((Newtonsoft.Json.Linq.JContainer)dataSearch);
-                        //            foreach (var datarow in dataRows)
-                        //            {
-                        //                var columnName = ((Newtonsoft.Json.Linq.JProperty)datarow).Name;
-                        //                if (columnName.ToUpper() == item.FieldName.ToUpper())
-                        //                {
-                        //                    if (datarow != null && ((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)datarow).Value) != null)
-                        //                    {
-                        //                        item.Value = (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)datarow).Value).Value ?? "").ToString();
-                        //                    }
-                        //                }
-                        //            }
-                        //        }
-                        //    }
-                        //}
                         if (data == null)
                         {
                             <tr>
@@ -86,7 +64,7 @@
                     }
                 </tbody>
                 @{
-                    if (data.Any())
+                    if (data!=null && data.Any())
                     {
                         var fldGroup = ModuleFieldInfos.Where(x => x.GroupOnSearch == "Y").OrderBy(x => x.FieldID).Select(x => x.FieldName);
                         DataTable tableGroup = new DataTable();
@@ -157,7 +135,7 @@
                                 @{
                                     foreach (var item in dataGroupByFields)
                                     {
-                                        var dataRows = ((Newtonsoft.Json.Linq.JContainer)item);
+                                           var dataRows = ((Newtonsoft.Json.Linq.JContainer)item);
 
                                         var valueEdit = "";
                                         var valueDelete = "";
@@ -167,23 +145,23 @@
                                         var barcode = "";
                                         var groupId = 0;
                                         var modeCallEdit = "";
-                                        <tr  aria-expanded="false">
+                                        <tr aria-expanded="false">
                                             @{
-                                                @*if (modSearch != null && modSearch.ShowCheckBox == "Y")
-                                                    {
+                                                if (modSearch != null && modSearch.ShowCheckBox == "Y")
+                                                {
 
-                                                        var checkBox = new CheckBoxModel { Value = false, KeyValue = item };
-                                                        var checkCheckBox = CheckBoxModels.Where(x => x.KeyValue == item);
-                                                        if (checkCheckBox.Any())
-                                                        {
-                                                            checkBox = checkCheckBox.First();
-                                                        }
-                                                        else
-                                                        {
-                                                            CheckBoxModels.Add(checkBox);
-                                                        }
-                                                        <td><input type="checkbox" @bind="checkBox.Value" /></td>
-                                                    }*@
+                                                    var checkBox = new CheckBoxModel { Value = false, KeyValue = item };
+                                                    var checkCheckBox = Search.CheckBoxModels.Where(x => x.KeyValue == item);
+                                                    if (checkCheckBox.Any())
+                                                    {
+                                                        checkBox = checkCheckBox.First();
+                                                    }
+                                                    else
+                                                    {
+                                                        Search.CheckBoxModels.Add(checkBox);
+                                                    }
+                                                    <td><input type="checkbox" @bind="checkBox.Value" /></td>
+                                                }
                                             }
                                             @foreach (var col in fieldGrid)
                                             {
@@ -246,13 +224,34 @@
                                                                 {
                                                                     par.Value = item[par.FieldName.ToLower()];
                                                                 }
+                                                                var callModId = btnInColAction.CallModuleID;
                                                                 if (parBtn.Any())
                                                                 {
-                                                                    <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.CallMod(btnInColAction.CallModuleID,modId,String.Join(",",parBtn.Select(x=>x.FieldName)),JsonConvert.SerializeObject(parBtn),"1"))"><i class="ik ik-edit btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                                    var paramTemp = JsonConvert.SerializeObject(parBtn);
+                                                                    if (btnInColAction.IsCallModMaintain())
+                                                                    {
+                                                                        var isView = btnInColAction.IsButtonView();
+                                                                        <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(e=>Search.CallMod(callModId,modId,String.Join(",",parBtn.Select(x=>x.FieldName)),paramTemp,isView))"><i class="ik ik-edit btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        if (btnInColAction.ShowConfirm == "Y")
+                                                                        {
+                                                                            var title = btnInColAction.GetTextConfirmBtn(Search.moduleInfoModel.LanguageInfo);
+                                                                            <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.ShowConfirmDel(callModId,paramTemp,title))"><i class="ik ik-delete btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.DeleteNoConfirm(callModId,paramTemp))"><i class="ik ik-delete btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                                        }
+                                                                    }
                                                                 }
                                                                 else
                                                                 {
-                                                                    <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.CallMod(btnInColAction.CallModuleID,modId))"><i class="ik ik-edit btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                                    if (btnInColAction.IsCallModMaintain())
+                                                                    {
+                                                                        <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.CallMod(callModId,modId))"><i class="ik ik-plus btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                                    }
                                                                 }
                                                             }
                                                         </ul>

@@ -1,6 +1,7 @@
 ﻿@page "/Edit/{modId}/{modSearchId}"
 @page "/Edit/{modId}/{modSearchId}/{fieldNameEdit}/{parram}/{pedit}"
 @inject IJSRuntime JSRuntime
+@inject NavigationManager NavManager
 @using Newtonsoft.Json
 @using WebModelCore;
 @using WebModelCore.CodeInfo
@@ -17,7 +18,7 @@
 
 @inject IDistributedCache distributedCache
 @inject IModuleService moduleService
-
+@inject IModalService Modal
 <EditForm EditContext="@editContext">
     <Blazored.FluentValidation.FluentValidationValidator DisableAssemblyScanning="@true" />
     @*<ValidationSummary />*@
@@ -73,7 +74,7 @@
                                             <span class="text-danger">*</span>
                                         }
                                     </label>
-                                    <WebAppCoreBlazorServer.Components.GenControl field="@fieldGroup" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                                    <WebAppCoreBlazorServer.Components.GenControl field="@fieldGroup" dataComboBoxs="@codeInfos"  dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
                                     @*@((MarkupString)(fieldGroup.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
                                 </div>
                                 lstFieldNotAdd.Remove(fieldGroup);
@@ -109,7 +110,7 @@
                                                             <span class="text-danger">*</span>
                                                         }
                                                     </label>
-                                                    <WebAppCoreBlazorServer.Components.GenControl field="@fieldGroup" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                                                    <WebAppCoreBlazorServer.Components.GenControl field="@fieldGroup"  dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
                                                     @*@((MarkupString)(fieldGroup.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
                                                 </div>
                                                 lstFieldNotAdd.Remove(fieldGroup);
@@ -128,7 +129,7 @@
             {
                 if (field2 != null && !string.IsNullOrEmpty(field2.FieldsGroup))
                 {
-                    <div class="row col-sm-12">
+                    <div class="row">
                         <div class="form-group col-sm-6">
                             <label class="control-label">
                                 @field1.GetLanguage(moduleInfoModel.LanguageInfo, moduleInfoModel.ModulesInfo.ModuleName)
@@ -154,7 +155,7 @@
                     </div>
                     lstFieldNotAdd.Remove(field1);
                     var fieldGroups = lstFieldNotAdd.Where(x => x.FieldsGroup == field2.FieldsGroup);
-                    <div class="row  col-sm-12">
+                    <div class="row">
                         @{
                             var countFieldGroups = fieldGroups.Count();
                             foreach (var fieldGroup in fieldGroups.ToList())
@@ -270,200 +271,4 @@
             </div>
         </div>
     </div>
-}
-
-
-@*@if (moduleInfo != null && moduleInfo.IsRealTime == "Y")
-    {
-        <script src="~/lib/signalr/dist/browser/signalr.js"></script>
-        <script src="~/js/Home/realtime.js"></script>
-    }*@
-@*@if (moduleInfo != null && moduleInfo.ModuleID == "05H10")
-    {
-        <script>
-            $(".save").click(function () {
-                $(".call-realtime").click();
-            });
-            function LoadSop() {
-                console.log('ff');
-            }
-        </script>
-
-    }*@
-
-@*<script src="~/plugins/schedule/schedule.js"></script>
-    <script src="~/js/calendar-schedule.js"></script>
-    <script src="~/js/Home/Edit.js"></script>
-    <script src="~/js/CommonJs/EventControl.js"></script>*@
-
-@code{
-    [Parameter]
-    public string modId { get; set; } = "02906";
-
-    [Parameter]
-    public string modSearchId { get; set; } = "";
-    [Parameter]
-    public string fieldNameEdit { get; set; } = "";
-    [Parameter]
-    public string parram { get; set; } = "";
-    [Parameter]
-    public string pEdit { get; set; } = "1";
-    public bool edit { get; set; }
-    public int success { get; set; } = 0;
-    //string modId, string modSearchId, string subModId, string fieldNameEdit, string parram, bool edit = true, int success = 0
-    public List<string> ErrorValidate { get; set; }
-    private ModuleInfoModel moduleInfoModel { get; set; }
-    //ViewBag.Title = moduleInfoModel.ModulesInfo == null ? "" : moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo);
-    private ModuleInfo moduleInfo { get; set; }
-    private List<ModuleFieldInfo> moduleFieldInfo { get; set; }
-    private List<CodeInfoModel> codeInfos;
-    private List<dynamic> dataControl { get; set; } //= (List<dynamic>)ViewBag.DataControl;
-    private string keyEdit { get; set; }// = @ViewBag.KeyEdit;
-    private EditContext editContext;
-    private bool formInvalid = true;
-
-    private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
-    {
-        formInvalid = !editContext.Validate();
-        StateHasChanged();
-    }
-    ModuleFieldInfo moduleFieldInfoValidate = new ModuleFieldInfo();
-    protected override void OnInitialized()
-    {
-        try
-        {
-            editContext = new EditContext(moduleFieldInfoValidate);
-            HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
-            edit = pEdit == "1" ? true : false;
-            var data = Task.Run(() => homeBus.LoadViewBagEdit(modId, modSearchId, "", fieldNameEdit, parram, true, success)).Result;
-            if (data != null)
-            {
-                moduleInfoModel = data.ModuleInfo == null ? new ModuleInfoModel() : data.ModuleInfo;
-                moduleInfo = data.ModuleInfo == null ? new ModuleInfo() : data.ModuleInfo.ModulesInfo;
-            }
-            else
-            {
-                moduleInfoModel = new ModuleInfoModel();
-                moduleInfo = new ModuleInfo();
-            }
-            //ViewBag.Title = moduleInfoModel.ModulesInfo == null ? "" : moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo);
-            moduleFieldInfo = moduleInfoModel.FieldsInfo.Where(x => x.FieldGroup == FLDGROUP.COMMON.ToString()).Where(x => x.HideWeb != "Y").OrderBy(x => x.Order).ToList();
-            if (moduleFieldInfo == null)
-                moduleFieldInfo = new List<ModuleFieldInfo>();
-            codeInfos = data.DataCombobox;
-            dataControl = data.DataControl;
-            //Set title
-            var arr = new string[1];
-            arr[0] = moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo); ;
-            Task.Run(() => JSRuntime.InvokeVoidAsync("SetTitle", arr));
-            //Hết SetTitle
-            foreach (var field in moduleFieldInfo)
-            {
-                if (dataControl != null)
-                {
-                    foreach (var item in dataControl)
-                    {
-                        var dataRows = ((Newtonsoft.Json.Linq.JContainer)item);
-
-                        foreach (var column in dataRows)
-                        {
-                            var columnName = ((Newtonsoft.Json.Linq.JProperty)column).Name;
-                            if (columnName.ToUpper() == field.FieldName.ToUpper())
-                            {
-                                if (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value != null)
-                                {
-                                    field.Value += (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value).ToString().Trim() + ",";
-                                }
-                            }
-                        }
-                    }
-                }
-                if (field.Value != null)
-                {
-                    field.Value = field.Value.Trim(',');
-                }
-            }
-
-            var lstSources = moduleFieldInfo.Where(x => !String.IsNullOrEmpty(x.ListSource) && x.ListSource.IndexOf("(") > 0 && x.ListSource.IndexOf("()") < 0).ToList();//Lấy các list source dạng store có truyền vào tên field
-            foreach (var item in lstSources)
-            {
-                var sourceParr = item.ListSource.Substring(item.ListSource.IndexOf("(") + 1, item.ListSource.IndexOf(")") - item.ListSource.IndexOf("(") - 1).Split(",");
-                foreach (var source in sourceParr)
-                {
-                    var checkItems = moduleFieldInfo.Where(x => ":" + x.FieldID.ToUpper() == source.ToUpper());
-                    if (checkItems.Any())
-                    {
-                        item.ListSource = item.ListSource.Replace(source, checkItems.First().Value);
-                    }
-                }
-            }
-
-            edit = data.Edit;
-            keyEdit = data.KeyEdit;
-            //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
-            //{
-            //    return RedirectToAction("Login", "Home");
-            //}
-            //await LoadViewBagEdit(modId, modSearchId, subModId, fieldNameEdit, parram, edit, success);
-            //codeInfos = DataCombobox;
-        }
-        catch (Exception e)
-        {
-
-        }
-    }
-    public async Task Save()
-    {
-        ErrorValidate = new List<string>();
-        //foreach (var item in moduleFieldInfo)
-        //{
-        //    FluentValidation validator = new FluentValidation();
-
-        //    var rsErr = validator.Validate(item);
-        //    if (!rsErr.IsValid)
-        //    {
-        //        ErrorValidate.AddRange(rsErr.Errors.Select(x => x.ErrorMessage));
-        //    }
-
-        //}
-        //if (ErrorValidate.Any())
-        //{
-
-        //    return;
-        //}
-        HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
-
-        string validate = "";
-
-        var modMaintain = await homeBus.LoadMaintainModuleInfo(modId);
-        var store = "";
-        if (string.IsNullOrEmpty(keyEdit))
-        {
-            store = modMaintain.AddInsertStore;
-        }
-        else
-        {
-            store = modMaintain.EditUpdateStore;
-        }
-        //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, fieldEdits));
-        //Dongpv: fix
-        //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, moduleFieldInfo));
-        var excute = (await moduleService.SaveData(modId, store, keyEdit, moduleFieldInfo));
-
-        if (excute.Data != "success")
-        {
-            var err = excute.Data.GetError();
-        }
-    }
-    [CascadingParameter] Blazored.Modal.BlazoredModalInstance BlazoredModal { get; set; }
-
-    void Close() => BlazoredModal.Close(Blazored.Modal.Services.ModalResult.Ok(true));
-    void Cancel() => BlazoredModal.Cancel();
-}
-@code {
-    void SubmitValidForm()
-    {
-        Console.WriteLine("Form Submitted Successfully!");
-    }
-
 }
