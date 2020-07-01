@@ -6,11 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using WebCore.Entities;
-using WebCore;
 using WebModelCore;
 using WebModelCore.CodeInfo;
 using WebModelCore.Common;
-using WebModelCore.LogicCondition;
 
 namespace WebAppCoreBlazorServer.Service
 {
@@ -55,8 +53,9 @@ namespace WebAppCoreBlazorServer.Service
         {
             try
             {
-                var url = "Module/LoadQueryModule";
-                var data = await PostApi(url, parram);
+                //var url = "Module/LoadQueryModule";
+                //var data = await PostApi(url, parram);
+                var data = await getQuery(parram);
                 var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
                 DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
                 var moduledData = JsonConvert.DeserializeObject<List<dynamic>>(moduleds.Data);
@@ -74,6 +73,7 @@ namespace WebAppCoreBlazorServer.Service
             {
                 var url = "Module/LoadQueryModule";
                 var data = await PostApi(url, parram);
+                //var data = await getQuery(parram);
                 var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
                 DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
                 return dt;

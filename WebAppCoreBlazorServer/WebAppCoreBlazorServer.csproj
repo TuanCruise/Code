@@ -204,6 +204,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BlazorControl\GridBlazor\GridBlazor.csproj" />
     <ProjectReference Include="..\Blazored.Modal\Blazored.Modal.csproj" />
+    <ProjectReference Include="..\SystemLibrary\SystemLibrary.csproj" />
     <ProjectReference Include="..\WebCore.Common\WebCore.Common.csproj" />
     <ProjectReference Include="..\WebCore.Entities\WebCore.Entities.csproj" />
     <ProjectReference Include="..\WebModelCore\WebModelCore.csproj" />
