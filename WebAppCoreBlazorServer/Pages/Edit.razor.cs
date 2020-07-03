@@ -140,7 +140,6 @@ namespace WebAppCoreBlazorServer.Pages
                 {
                     ErrorValidate.AddRange(rsErr.Errors.Select(x => x.ErrorMessage));
                 }
-
             }
             if (ErrorValidate.Any())
             {
@@ -192,7 +191,6 @@ namespace WebAppCoreBlazorServer.Pages
             {
                 Close();
                 //NavManager.NavigateTo(String.Format("/Search/{0}", modSearchId));
-
             }
         }
     }

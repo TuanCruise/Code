@@ -53,9 +53,9 @@ namespace WebAppCoreBlazorServer.Service
         {
             try
             {
-                //var url = "Module/LoadQueryModule";
-                //var data = await PostApi(url, parram);
-                var data = await getQuery(parram);
+                var url = "Module/LoadQueryModule";
+                var data = await PostApi(url, parram);
+                //var data = await getQuery(parram);
                 var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
                 DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
                 var moduledData = JsonConvert.DeserializeObject<List<dynamic>>(moduleds.Data);

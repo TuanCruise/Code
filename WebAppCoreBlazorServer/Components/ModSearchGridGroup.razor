@@ -231,7 +231,7 @@
                                                                     if (btnInColAction.IsCallModMaintain())
                                                                     {
                                                                         var isView = btnInColAction.IsButtonView();
-                                                                        <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(e=>Search.CallMod(callModId,modId,String.Join(",",parBtn.Select(x=>x.FieldName)),paramTemp,isView))"><i class="ik ik-edit btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                                        <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(e=>Search.CallMod(callModId,Search.modId,String.Join(",",parBtn.Select(x=>x.FieldName)),paramTemp,isView))"><i class="ik ik-edit btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
                                                                     }
                                                                     else
                                                                     {
