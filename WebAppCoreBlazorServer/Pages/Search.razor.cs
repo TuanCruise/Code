@@ -509,6 +509,7 @@ namespace WebAppCoreBlazorServer.Pages
                     parameters.Add("fieldNameEdit", fieldNameEdit);
                     parameters.Add("parram", parram);
                     parameters.Add("pedit", pedit);
+
                     Modal.Show<Pages.Edit>(moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo), parameters);
                 }
                 else

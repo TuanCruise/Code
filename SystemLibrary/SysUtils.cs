@@ -278,9 +278,9 @@ namespace WB.SYSTEM
             try
             {
                 if (objValue != null)
-                {
-                    strValue = strValue.Replace("\"","");
+                {                   
                     strValue = Convert.ToString(objValue).Trim();
+                    strValue = strValue.Replace("\"", "");
                 }
                 return strValue;
             }
@@ -1455,6 +1455,37 @@ namespace WB.SYSTEM
                 return null;
             }
         }
+
+        public static ArrayList Property2Value(ArrayList arrDetail, ArrayList arrHeader)
+        {
+            try
+            {
+                ArrayList arrData = new ArrayList();               
+                int intCount = arrHeader.Count;
+
+                for (int i = 0; i < intCount; i++)
+                {
+                    if (arrDetail[i] != null)
+                    {
+                        arrData.Add(arrHeader[i]);
+                        arrData.Add(arrDetail[i]);
+                    }
+                }
+
+                return arrData;
+            }
+            catch (WB.SYSTEM.ErrorMessage ex)
+            {
+                WB.SYSTEM.ErrorHandler.Process(ex);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                WB.SYSTEM.ErrorHandler.Process(ex);
+                return null;
+            }
+        }
+
 
         public static ArrayList Value2Property(ArrayList arrValue)
         {

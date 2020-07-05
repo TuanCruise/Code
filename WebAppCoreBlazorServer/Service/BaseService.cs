@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using WB.SYSTEM;
 using WebCore.Entities;
 using WebModelCore;
@@ -148,7 +150,7 @@ namespace WebAppCoreBlazorServer.Service
                 //2. CALL HOST
                 var data = await SendMessage(json);
 
-                //DataTable dt = SysUtils.Json2Table(data);
+                DataTable tb = SysUtils.Json2Table(data);
                 //var moduleds = JsonConvert.DeserializeObject<string> (data);
                 //var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
                 //DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
@@ -156,16 +158,20 @@ namespace WebAppCoreBlazorServer.Service
                 //var moduledData = JsonConvert.DeserializeObject<List<dynamic>>(moduleds);
                 // return moduledData;       
                 //DataTable dt = (DataTable)JsonConvert.DeserializeObject(data, (typeof(DataTable)));
+                var outPut = new RestOutput<string>();
+                outPut.Data = JsonConvert.SerializeObject(tb, Formatting.Indented, new JsonSerializerSettings { Converters = new[] { new DataSetConverter() } });
+                //string json = JsonConvert.SerializeObject(dataSet, Formatting.Indented, new JsonSerializerSettings { Converters = new[] { new Newtonsoft.Json.Converters.DataSetConverter() } });
+                outPut.ResultCode = 1;
+                outPut.Message = "";
+                return JsonConvert.SerializeObject(outPut);
 
-                return data;
+                //return data;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-
-
 
         public async Task<RestOutput<string>> SaveData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits)
         {
@@ -266,7 +272,7 @@ namespace WebAppCoreBlazorServer.Service
                     ModuleID = modId,
                     ObjectName = enity,
                     MsgType = Constants.MSG_MNT_TYPE,
-                    MsgAction = Constants.MSG_ADD_ACTION,
+                    MsgAction = Constants.MSG_UPDATE_ACTION,
                     Body = Body
                 };
 
