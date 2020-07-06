@@ -29,7 +29,7 @@ namespace WebApi.Controllers
     {
 
         private IConfiguration _configuration;
-        private string _Schema = "audit";
+        private string _Schema = "";
         public ModuleController(IConfiguration configuration) : base(configuration)
         {
             _configuration = configuration;
@@ -375,7 +375,7 @@ namespace WebApi.Controllers
                 var lst = new List<string>();
                 if (!string.IsNullOrEmpty(store))
                 {
-                    var param = m_Client.DiscoveryParameters(store.IndexOf(".") > 0 ? store : _Schema + "." + store);
+                    var param = m_Client.DiscoveryParameters(store.IndexOf(".") > 0 ? store : store);
                     cm.GetNpgsqlParameterValues(param, fields);
                     var dataStore = m_Client.RunStoreToDataTable(store, param);
                     outPut.Data = JsonConvert.SerializeObject(dataStore);

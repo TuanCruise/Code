@@ -53,7 +53,7 @@ namespace WebApiCore
                 param.Value = "";
                 foreach (var field in fields)
                 {
-                    if (!string.IsNullOrEmpty(field.ParameterName) && (param.ParameterName.ToUpper() == field.ParameterName.ToUpper() || param.ParameterName.ToUpper() == "@" + field.FieldName.ToUpper()))
+                    if (!string.IsNullOrEmpty(field.ParameterName) && (param.ParameterName.ToUpper() == field.ParameterName.ToUpper() || param.ParameterName.ToUpper() == "@" + field.ParameterName.ToUpper()))
                     {
                         switch (param.DbType)
                         {
