@@ -1610,6 +1610,38 @@ namespace WB.SYSTEM
             }
         }
 
+        public static void String2ArrayList(ref ArrayList arrResult, string strString, string strSymBolSp, string subSymbol = "")
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(strString))
+                {
+                    string[] strArr = strString.Split(char.Parse(strSymBolSp));
+
+                    for (int i = 0; i < strArr.GetLength(0); i++)
+                    {
+                        string strFName = strArr[i];
+
+                        if (string.IsNullOrEmpty(subSymbol))
+                        {
+                            string strValue = strArr[i + 1];
+                            setValue(ref arrResult, strFName, strValue);
+                            i++;
+                            //arrResult.Add(strValue);
+                            //arrResult.Add(strValue);
+                        }
+                        else
+                        {
+                            String2ArrayList(ref arrResult, strFName, subSymbol);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static ArrayList Array2ArrValue(string[] arr, ArrayList  arrParm)
         {
             ArrayList arrData = new ArrayList();

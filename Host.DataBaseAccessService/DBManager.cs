@@ -20,7 +20,7 @@ namespace Host.DataBaseAccessService
       private IDbTransaction idbTransaction =null;
       private IDbDataParameter[]idbParameters =null;
       private string strConnection;
-      public int totalRows = 0;
+      public string result = null;
 
       public DBManager()
       {

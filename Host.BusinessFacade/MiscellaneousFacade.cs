@@ -48,7 +48,11 @@ namespace Host.BusinessFacade
             {
                 dbManager.Open();
 
-                if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_SEARCH)
+                if (msg.ObjectName == null)
+                {
+                    msg.Body = GetStoreQuery(msg.Body, msg.ObjectName);
+                }
+                else if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_SEARCH)
                 {
                     GetSearch(ref msg);
                 }
@@ -56,10 +60,7 @@ namespace Host.BusinessFacade
                 {
                     msg.Body = this.ExecuteStoreProcedure(ref msg);
                 }
-                else
-                {
-                    msg.Body = GetStoreQuery(msg.Body, msg.ObjectName);
-                }
+            
              }
             catch (ErrorMessage ex)
             {
@@ -156,7 +157,7 @@ namespace Host.BusinessFacade
 
                 //3. GET RESULT
                 arrResult = SysUtils.DataSet2ArrayList(ds, 0);
-                msg.effectRows = this.dbManager.totalRows;
+                //msg.effectRows = this.dbManager.totalRows;
 
                 //if have any error throw exception 
                 if (arrResult.Count > 1)

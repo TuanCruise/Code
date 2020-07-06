@@ -40,7 +40,7 @@ namespace WB.MESSAGE
 		public string MsgSessionID;
 		public string MsgSessionType;
 		public string Language;		
-		public string SvcID;    //module id   
+		public string ModId;    //module id   
 
 		/// <Body>
 		[XmlArrayItemAttribute("Detail")]

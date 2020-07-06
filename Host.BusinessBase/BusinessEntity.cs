@@ -1659,39 +1659,11 @@ namespace Host.BusinessBase
                 }
 
                 //Case:DataSet
-                //DataSet ds = dbManager.ExecuteDataSet(CommandType.StoredProcedure, this.entityName);
-                //arrResult = SysUtils.DataSet2ArrayList(ds, 0);
-
-                IDataReader reader = dbManager.ExecuteReader(CommandType.StoredProcedure, this.entityName);
-
-                bool flag = true;
-                while (reader.Read())
-                {
-                    ArrayList arrTemp = new ArrayList();
-                    if (flag)
-                    {
-                        num = 0;
-                        while (num < reader.FieldCount)
-                        {
-                            arrTemp.Add(reader.GetName(num).ToString());
-                            num++;
-                        }
-                        arrResult.Add(arrTemp);
-                        arrTemp = new ArrayList();
-                        flag = false;
-                    }
-                    for (num = 0; num < reader.FieldCount; num++)
-                    {
-                        arrTemp.Add(reader.GetValue(num).ToString());
-                    }
-                    arrResult.Add(arrTemp);
-                }
-
-                reader.Close();
-                reader.Dispose();
-
+                DataSet ds = dbManager.ExecuteDataSet(CommandType.StoredProcedure, this.entityName);
+                arrResult = SysUtils.DataSet2ArrayList(ds, 0);
+                            
                 //3. GET RESULT             
-                //msg.effectRows = dbManager.totalRows;
+                //msg.effectRows = dbManager.result;
 
                 //if have any error throw exception 
                 if (arrResult.Count > 1)

@@ -7,10 +7,13 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Blazored.Modal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using NuGet.Frameworks;
+using WB.MESSAGE;
 using WB.SYSTEM;
 using WebCore.Entities;
 using WebModelCore;
@@ -62,7 +65,6 @@ namespace WebAppCoreBlazorServer.Service
                     }
                     catch (Exception e1)
                     {
-
                         System.Diagnostics.Debug.WriteLine("hieu=" + e1.ToString());
                     }
                     return content;
@@ -109,7 +111,7 @@ namespace WebAppCoreBlazorServer.Service
 
         //Dongpv:15/06/2020
         //public async Task<List<dynamic>> getQuery(ParramModuleQuery parram)
-        public async Task<string> getQuery(ParramModuleQuery parram)
+        public async Task<List<dynamic>> getQuery(Message msg = null) //ParramModuleQuery parram ModalParameters
         {
             try
             {
@@ -135,15 +137,18 @@ namespace WebAppCoreBlazorServer.Service
                 Body.Add("Page");
                 Body.Add(0);
 
-                var order = new {
+                var order = new Message
+                {
                     UserID = "0000",
-                    IP = "00000",
+                    MsgIP = "00000",
                     BranchID = "000",
                     ObjectName = Constants.OBJ_SEARCH,
                     MsgType = Constants.MSG_MISC_TYPE,
                     MsgAction = Constants.MSG_SEARCH,
                     Body = Body
                 };
+
+                if (msg != null) order = msg;
 
                 var json = JsonConvert.SerializeObject(order);
 
@@ -163,7 +168,12 @@ namespace WebAppCoreBlazorServer.Service
                 //string json = JsonConvert.SerializeObject(dataSet, Formatting.Indented, new JsonSerializerSettings { Converters = new[] { new Newtonsoft.Json.Converters.DataSetConverter() } });
                 outPut.ResultCode = 1;
                 outPut.Message = "";
-                return JsonConvert.SerializeObject(outPut);
+                //return JsonConvert.SerializeObject(outPut);
+
+                var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(JsonConvert.SerializeObject(outPut));
+                DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
+                var moduledData = JsonConvert.DeserializeObject<List<dynamic>>(moduleds.Data);
+                return moduledData;
 
                 //return data;
             }
