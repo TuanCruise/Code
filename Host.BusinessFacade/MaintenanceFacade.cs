@@ -177,13 +177,5 @@ namespace Host.BusinessFacade
         }
         
 
-        #region BatchProcess
-
-
-
-
-
-        #endregion
-
     }
 }
