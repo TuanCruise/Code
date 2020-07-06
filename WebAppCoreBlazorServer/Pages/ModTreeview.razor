@@ -1,0 +1,26 @@
+﻿@page "/ModTreeview/{modId}"
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavManager
+@using Newtonsoft.Json
+@using WebModelCore;
+@using WebModelCore.CodeInfo
+@using WebModelCore.Common
+@using WebAppCoreBlazorServer.Common
+@using WebAppCoreBlazorServer.Service
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.Extensions.Configuration
+@using WebAppCoreBlazorServer.BUS
+@using WebCore.Entities;
+@using Microsoft.Extensions.Caching.Distributed
+@inject NavigationManager NavManager
+@inject IModalService Modal
+@inject IJSRuntime JSRuntime;
+@inject NavigationManager NavigationManager
+@inject IConfiguration iConfiguration
+@inject IDistributedCache distributedCache
+@inject IModuleService moduleService
+<h3>ModTreeview</h3>
+
+@code {
+
+}
