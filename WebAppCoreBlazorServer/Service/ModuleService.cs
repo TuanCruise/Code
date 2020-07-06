@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using Blazored.Modal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ using WebModelCore;
 using WebModelCore.CodeInfo;
 using WebModelCore.Common;
 using WebModelCore.ModTreeViewModel;
+using WB.MESSAGE;
 
 namespace WebAppCoreBlazorServer.Service
 {
@@ -426,5 +428,8 @@ namespace WebAppCoreBlazorServer.Service
         Task<List<dynamic>> SearchModSearch(SearchModSearch searchModSearch);
         Task<List<ModTreeView>> GetAllModTreeView();
         Task<List<TreeviewInfo>> GetDataTreeviewInfo(ParramModuleQuery query);
+        //Dongpv
+        Task<List<dynamic>> getQuery(Message msg);
+
     }
 }
