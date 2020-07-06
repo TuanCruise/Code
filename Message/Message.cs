@@ -41,9 +41,10 @@ namespace WB.MESSAGE
 		public string MsgSessionType;
 		public string Language;		
 		public string ModId;    //module id   
+        public string modSearchId;    
 
-		/// <Body>
-		[XmlArrayItemAttribute("Detail")]
+        /// <Body>
+        [XmlArrayItemAttribute("Detail")]
 		public ArrayList Body;
 		
 		public Message()

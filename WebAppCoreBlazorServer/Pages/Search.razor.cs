@@ -545,6 +545,8 @@ namespace WebAppCoreBlazorServer.Pages
                     //Dongpv:Load data to edit
                     Message msg = new Message();
                     msg.ModId = callModId;
+                    msg.modSearchId = modSearchId;
+
                     msg.UserID = "000";
                     msg.BranchID = "000";
                     msg.MsgIP = "000";
@@ -566,6 +568,7 @@ namespace WebAppCoreBlazorServer.Pages
                     //msg.Body.Add(pedit);
 
                     var dataGrid = await moduleService.getQuery(msg);
+
                     //Dongpv:Load data to edit
 
                     Modal.Show<Pages.Edit>(moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo), parameters);

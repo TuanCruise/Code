@@ -52,9 +52,24 @@ namespace Host.BusinessFacade
                 {
                     msg.Body = GetStoreQuery(msg.Body, msg.ObjectName);
                 }
+                else if(msg.ObjectName.ToUpper() == Constants.OBJ_SQLQUERY)
+                {
+                    msg.Body = this.GetSQLQuery(msg.getValue("SQLQUERY").ToString());
+                }
                 else if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_SEARCH)
                 {
-                    GetSearch(ref msg);
+                    if (msg.ModId != null)
+                    {
+                        //1.call MODMAINTAIN
+                        ArrayList arrModMaintain = GetSQLQuery("select * from MODMAINTAIN WHERE MODID ='" + msg.ModId + "'");
+                        string strStoreName = SysUtils.getProperty(arrModMaintain, "EDITSELECTSTORE");
+
+                        //2.Call store
+                        msg.Body = GetStoreQuery(msg.Body, strStoreName);
+                    }
+                    else {
+                        GetSearch(ref msg);
+                    }
                 }
                 else if (msg.ObjectName.ToUpper() == Constants.OBJ_PROCEDURE_PAGING)
                 {
@@ -72,6 +87,51 @@ namespace Host.BusinessFacade
             }
             finally
             {
+            }
+        }
+
+        private ArrayList GetSQLQuery(string strSQL)
+        {
+            try
+            {
+                ArrayList list = new ArrayList();
+                IDataReader reader = this.dbManager.ExecuteReader(strSQL, CommandType.Text);
+                bool flag = true;
+                while (reader.Read())
+                {
+                    int num;
+                    ArrayList list2 = new ArrayList();
+                    if (flag)
+                    {
+                        num = 0;
+                        while (num < reader.FieldCount)
+                        {
+                            list2.Add(reader.GetName(num).ToString());
+                            num++;
+                        }
+                        list.Add(list2);
+                        list2 = new ArrayList();
+                        flag = false;
+                    }
+                    for (num = 0; num < reader.FieldCount; num++)
+                    {
+                        list2.Add(reader.GetValue(num).ToString());
+                    }
+                    list.Add(list2);
+                }
+                reader.Close();
+                reader.Dispose();
+                return list;
+            }
+            catch (ErrorMessage message)
+            {
+                ErrorHandler.Process(message);
+                return null;
+            }
+            catch (Exception exception)
+            {
+                ErrorHandler.Process(exception);
+                return null;
             }
         }
 
@@ -365,8 +425,11 @@ namespace Host.BusinessFacade
                     for (int i = 1; i < arrListParms.Count; i++)
                     {
                         ArrayList arrParmName = (ArrayList)arrListParms[i];
-                        string PName = SysUtils.getProperty(arrPName, arrParmName, "PARAM");
+                        string PName = SysUtils.getProperty(arrPName, arrParmName, "PARAM").Trim();
                         string PVal = SysUtils.CString(SysUtils.getValue(arrParm, PName));
+                        //fix
+                        if(string.IsNullOrEmpty(PVal)) PVal = SysUtils.CString(SysUtils.getValue(arrParm, "Value"));
+
                         param[num].Direction = ParameterDirection.Input;
                         param[num].ParameterName = "@" + PName;
                         param[num].Value = SysUtils.CString(PVal);

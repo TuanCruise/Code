@@ -1179,7 +1179,7 @@ namespace WB.SYSTEM
             try
             {
                 for (int i = 0; i < arr.Count - 1; i += 2)
-                    if (arr[i].ToString().ToUpper() == name.ToUpper()) return arr[i + 1];
+                    if (arr[i].ToString().ToUpper().Trim() == name.ToUpper()) return arr[i + 1];
                 return null;
             }
             catch

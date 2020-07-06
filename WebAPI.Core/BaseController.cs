@@ -112,7 +112,12 @@ namespace Core.API
                 var msg = new WB.MESSAGE.Message();
                 msg.ObjectName = jsonObject.ObjectName;
                 msg.MsgAction = jsonObject.MsgAction;
-
+                try
+                {
+                    string modid = jsonObject.ModId;
+                    msg.ModId = modid.Trim();
+                }
+                catch { }
                 //msg.Body = (ArrayList)jsonObject.Body;            
                 msg.Body = SysUtils.String2Arrray(arrBody.ToString().Replace("[", "").Replace("]", "").Replace("\r\n", "").Replace("\"", ""), ",");
 
