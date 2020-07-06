@@ -1,0 +1,29 @@
+@using WebModelCore.ModTreeViewModel
+@{
+    var child = TreeView.Where(x => x.ParentId == ParentId);
+    if (child.Any())
+    {
+    <div class='collapse p-3' id='item-@ParentId'>
+        @foreach (var item in child)
+        {
+            var checkHasParent = TreeView.Where(x => x.ParentId == item.Id);
+            <h5 class='mb-0'><a class='btn btn-link @(checkHasParent.Any()?"accordion-toggle":"")' data-toggle='collapse' href='#item-@item.Id' role='button' aria-expanded='false' aria-controls='collapseExample' @onclick="@(()=>ModTreeview.UpdateChangeMod(item.ModId))">@item.TreeName</a></h5>
+            if (checkHasParent.Any())
+            {
+                if (TreeView != null)
+                {
+                    <ModTreeviewChild ParentId="@item.Id" TreeView="TreeView"></ModTreeviewChild>
+                }
+            }
+        }
+    </div>
+    }
+}
+@code{
+    [Parameter]
+    public string ParentId { get; set; }
+    [Parameter]
+    public List<TreeviewInfo> TreeView { get; set; }
+    [Parameter]
+    public WebAppCoreBlazorServer.Pages.ModTreeview ModTreeview { get; set; }
+}

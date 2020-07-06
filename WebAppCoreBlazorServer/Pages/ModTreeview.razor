@@ -19,8 +19,28 @@
 @inject IConfiguration iConfiguration
 @inject IDistributedCache distributedCache
 @inject IModuleService moduleService
-<h3>ModTreeview</h3>
 
-@code {
+<div class="row">
+    <div class="col-md-6 col-lg-6">
+        @if (TreeView != null)
+        {
+            <WebAppCoreBlazorServer.Components.ModTreeviewParent TreeView="@TreeView" ModTreeview="@this"></WebAppCoreBlazorServer.Components.ModTreeviewParent>
+        }
+    </div>
+    <div class="col-md-6 col-lg-6">
+        @{
+            if (!String.IsNullOrEmpty(RightModId))
+            {
+                if (RightModInfo.ModulesInfo.First().ModuleType == "03")
+                {
+                    <WebAppCoreBlazorServer.Pages.Search modId="@RightModId" ></WebAppCoreBlazorServer.Pages.Search>
+                }
+                else
+                {
+                    <WebAppCoreBlazorServer.Pages.Edit modId="@RightModId" modSearchId="@ModId"></WebAppCoreBlazorServer.Pages.Edit>
+                }
 
-}
+            }
+        }
+    </div>
+</div>

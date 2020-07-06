@@ -590,5 +590,51 @@ namespace WebAppCoreBlazorServer.BUS
                 return null;
             }
         }
+
+        /// <summary>
+        /// Load Tất cả defTask vào cache
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<ModTreeView>> GetAllModTreeview()
+        {
+            try
+            {
+                string key = ECacheKey.ModTreeview.ToString();
+                var cachedData = _distributedCache.GetString(key);
+                if (cachedData != null)
+                {
+                    var modTreeview = JsonConvert.DeserializeObject<List<ModTreeView>>(cachedData);
+                    return modTreeview;
+                }
+                else
+                {
+                    var modTreeview = await _moduleService.GetAllModTreeView();
+                    RedisUtils.SetCacheData(_distributedCache, _Configuration, modTreeview, key);
+                    return modTreeview;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+        /// <summary>
+        /// Load Tất cả defTask vào cache
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ModTreeView> GetModTreeviewById(string modId)
+        {
+            try
+            {
+                string key = ECacheKey.ModTreeview.ToString();
+                var lstModTreeView = await GetAllModTreeview();
+                return lstModTreeView.Where(x => x.Modid == modId).FirstOrDefault();
+
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

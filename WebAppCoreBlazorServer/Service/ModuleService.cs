@@ -9,6 +9,7 @@ using WebCore.Entities;
 using WebModelCore;
 using WebModelCore.CodeInfo;
 using WebModelCore.Common;
+using WebModelCore.ModTreeViewModel;
 
 namespace WebAppCoreBlazorServer.Service
 {
@@ -21,8 +22,7 @@ namespace WebAppCoreBlazorServer.Service
         public async Task<List<CodeInfo>> GetCombobox(string para)
         {
             var url = "Module/LoadDefModByTypeValue?parameter=" + para;
-            var data = await LoadGetApi(url);
-            var module = JsonConvert.DeserializeObject<RestOutput<List<CodeInfo>>>(data);
+            var data = await LoadGetApi(url); var module = JsonConvert.DeserializeObject<RestOutput<List<CodeInfo>>>(data);
             return module.Data;
         }
 
@@ -55,7 +55,6 @@ namespace WebAppCoreBlazorServer.Service
             {
                 var url = "Module/LoadQueryModule";
                 var data = await PostApi(url, parram);
-                //var data = await getQuery(parram);
                 var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
                 DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
                 var moduledData = JsonConvert.DeserializeObject<List<dynamic>>(moduleds.Data);
@@ -73,7 +72,6 @@ namespace WebAppCoreBlazorServer.Service
             {
                 var url = "Module/LoadQueryModule";
                 var data = await PostApi(url, parram);
-                //var data = await getQuery(parram);
                 var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
                 DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
                 return dt;
@@ -359,6 +357,39 @@ namespace WebAppCoreBlazorServer.Service
                 return null;
             }
         }
+        public async Task<List<ModTreeView>> GetAllModTreeView()
+        {
+            try
+            {
+                var url = string.Format("Module/GetAllModTreeView");
+                var data = await LoadGetApi(url);
+                var moduleds = JsonConvert.DeserializeObject<RestOutput<List<ModTreeView>>>(data);
+                return moduleds.Data;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<List<TreeviewInfo>> GetDataTreeviewInfo(ParramModuleQuery query)
+        {
+            try
+            {
+                var url = string.Format("Module/GetDataTreeviewInfo");
+                var data = await PostApi(url, query);
+                return JsonConvert.DeserializeObject<RestOutput<List<TreeviewInfo>>>(data).Data;
+                ////var dataQuery = JsonConvert.DeserializeObject<RestOutput<string>>(data);
+                //if (!string.IsNullOrEmpty(dataQuery.Data))
+                //{
+                //    return JsonConvert.DeserializeObject<RestOutput<List<TreeviewInfo>>>(dataQuery.Data).Data;
+                //}
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return null;
+        }
     }
     public interface IModuleService
     {
@@ -393,5 +424,7 @@ namespace WebAppCoreBlazorServer.Service
         Task<List<DefTasks>> GetAllDefTasks();
         Task<List<ModWorkflow>> GetAllModWorkFolow();
         Task<List<dynamic>> SearchModSearch(SearchModSearch searchModSearch);
+        Task<List<ModTreeView>> GetAllModTreeView();
+        Task<List<TreeviewInfo>> GetDataTreeviewInfo(ParramModuleQuery query);
     }
 }
