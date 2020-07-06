@@ -82,6 +82,7 @@ namespace WebAppCoreBlazorServer.Service
                 return null;
             }
         }
+
         public async Task<List<dynamic>> LoadQueryModule(ParramModuleQueryDynamicQuery logic)
         {
             try

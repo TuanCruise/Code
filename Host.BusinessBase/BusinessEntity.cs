@@ -6,6 +6,8 @@ using System.Data;
 using System.Configuration;
 using Host.DataBaseAccessService;
 using WB.SystemLibrary;
+using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace Host.BusinessBase
 { 
@@ -1586,7 +1588,146 @@ namespace Host.BusinessBase
                 return false;
             }
         }
-        //toannc 20018-08-24
+
+        //public static List<T> ExecuteProcedure<T>(ref WB.MESSAGE.Message msg)       
+        public ArrayList ExecuteStoreProcedure(ArrayList arrListParms)
+        {
+            try
+            {                            
+                //2.QUIRY  DATA
+                int num;
+                ArrayList arrResult = new ArrayList();
+
+                if (arrListParms.Count > 1)
+                {
+                    ParamStruct[] param = new ParamStruct[arrListParms.Count - 1];
+                    //ParamStruct[] param = new ParamStruct[arrListParms.Count];
+                    num = 0;
+                    ArrayList arrPName = (ArrayList)arrListParms[0];
+
+                    for (int i = 1; i < arrListParms.Count; i++)
+                    {
+                        ArrayList arrParmName = (ArrayList)arrListParms[i];
+                        string PName = SysUtils.getProperty(arrPName, arrParmName, "PARAMETER_NAME");
+                        string Dtype = SysUtils.getProperty(arrPName, arrParmName, "DATA_TYPE");
+                        string MaxLen = SysUtils.getProperty(arrPName, arrParmName, "CHARACTER_MAXIMUM_LENGTH");
+                        string ParmMode = SysUtils.getProperty(arrPName, arrParmName, "PARAMETER_MODE");
+
+                        object PVal = this.getProperty(PName.Substring(1));
+
+                        param[num].ParameterName = PName; //"@" + 
+                        param[num].size = 1024;
+
+                        string strVal = SysUtils.CString(PVal);
+                        if (!string.IsNullOrEmpty(strVal))
+                            param[num].Value = strVal;
+                        else
+                            param[num].Value = null;
+
+                        switch (ParmMode)
+                        {
+                            case "OUTPUT":
+                                param[num].Direction = ParameterDirection.Output;
+                                break;
+                            case "INOUT":
+                                param[num].Direction = ParameterDirection.Output;
+                                break;
+                            case "RETURNVALUE":
+                                param[num].Direction = ParameterDirection.ReturnValue;
+                                break;
+                            default:
+                                param[num].Direction = ParameterDirection.Input;
+                                break;
+                        }
+
+                        //switch (Dtype)
+                        //{
+                        //    case "datetime":
+                        //        param[num].DbType = DbType.DateTime;
+                        //        break;
+                        //}
+
+                        param[num] = dbManager.SetDBType(param[num], Dtype);
+                        num++;
+                    }
+
+                    // return value
+                    //param[num].Direction = ParameterDirection.ReturnValue;
+                    //param[num].DbType = DbType.Int32;
+                    //param[num].ParameterName = "@Returned";
+                    dbManager.CreateParameters(param);
+                }
+
+                //Case:DataSet
+                //DataSet ds = dbManager.ExecuteDataSet(CommandType.StoredProcedure, this.entityName);
+                //arrResult = SysUtils.DataSet2ArrayList(ds, 0);
+
+                IDataReader reader = dbManager.ExecuteReader(CommandType.StoredProcedure, this.entityName);
+
+                bool flag = true;
+                while (reader.Read())
+                {
+                    ArrayList arrTemp = new ArrayList();
+                    if (flag)
+                    {
+                        num = 0;
+                        while (num < reader.FieldCount)
+                        {
+                            arrTemp.Add(reader.GetName(num).ToString());
+                            num++;
+                        }
+                        arrResult.Add(arrTemp);
+                        arrTemp = new ArrayList();
+                        flag = false;
+                    }
+                    for (num = 0; num < reader.FieldCount; num++)
+                    {
+                        arrTemp.Add(reader.GetValue(num).ToString());
+                    }
+                    arrResult.Add(arrTemp);
+                }
+
+                reader.Close();
+                reader.Dispose();
+
+                //3. GET RESULT             
+                //msg.effectRows = dbManager.totalRows;
+
+                //if have any error throw exception 
+                if (arrResult.Count > 1)
+                {                    
+                    string strErr_code = SysUtils.getProperty(arrResult, "ERR_CODE");
+                    if (!string.IsNullOrEmpty(strErr_code))
+                    {
+                        ErrorMessage ex = new ErrorMessage();
+                        ex.ErrorSource = SysUtils.getProperty(arrResult, "ENTITY");
+                        ex.ErrorCode = strErr_code;
+                        ex.ErrorDesc_vn = SysUtils.getProperty(arrResult, "ERR_CAPTION");
+                        ex.ErrorDesc = SysUtils.getProperty(arrResult, "ERR_CAPTION");
+                        ErrorHandler.ThrowError(ex);
+                    }
+                }
+
+                return arrResult;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+            catch (ErrorMessage ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {                
+            }
+        }
+
+
         /// <summary>
         /// chay store tra ra ket qua la arraylist
         /// </summary>
@@ -1659,6 +1800,7 @@ namespace Host.BusinessBase
                 return null;
             }
         }
+
         /// <summary>
         /// chuyen result tu store thanh arraylist
         /// </summary>
@@ -1734,6 +1876,7 @@ namespace Host.BusinessBase
                 return null;
             }
         }
+
         /// <summary>
         /// Tim theo dieu kien xem record co ton tai hay ko
         /// </summary>

@@ -54,7 +54,7 @@ namespace Host.BusinessFacade
                 }
                 else if (msg.ObjectName.ToUpper() == Constants.OBJ_PROCEDURE_PAGING)
                 {
-                    msg.Body = this.LoadDataByProcdure(ref msg);
+                    msg.Body = this.ExecuteStoreProcedure(ref msg);
                 }
                 else
                 {
@@ -74,7 +74,7 @@ namespace Host.BusinessFacade
             }
         }
 
-        private ArrayList LoadDataByProcdure(ref WB.MESSAGE.Message msg)
+        private ArrayList ExecuteStoreProcedure(ref WB.MESSAGE.Message msg)
         {
             try
             {
@@ -142,7 +142,6 @@ namespace Host.BusinessFacade
                         //}
 
                         param[num] = this.dbManager.SetDBType(param[num], Dtype);
-
                         num++;
                     }
 
@@ -150,7 +149,6 @@ namespace Host.BusinessFacade
                     //param[num].Direction = ParameterDirection.ReturnValue;
                     //param[num].DbType = DbType.Int32;
                     //param[num].ParameterName = "@Returned";
-
                     this.dbManager.CreateParameters(param);
                 }
               

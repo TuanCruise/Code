@@ -68,10 +68,58 @@ namespace Host.BusinessFacade
 
                         if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_MNT_ROLE_PERMISSION)
                         {
-                                                  
+
                         }
-                        else
+                        else if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_EXECUTESTOREPROCEDURE) //Kiem tra: Goi store hay sinh cau lenh sql
                         {
+                            BusinessEntity ent = new BusinessEntity();
+                            ent.dbManager = dbManager;
+
+                            //List objects
+                            ArrayList arrayLists = new ArrayList();
+
+                            ArrayList arrObj = msg.Body;
+                            ArrayList arrDetail = new ArrayList();
+                            ArrayList arrHeader = new ArrayList();
+                            ArrayList arrData = new ArrayList();
+
+                            string strObjName = "";
+                            
+                            for (int i = 0; i < arrObj.Count; i += 2)
+                            {
+                                strObjName = arrObj[i].ToString();
+                                arrData = (ArrayList)arrObj[i + 1];
+
+                                //Exec foreach store
+                                arrHeader = (ArrayList)arrData[0];
+                                for (int j = 1; j < arrData.Count; j++)
+                                {
+                                    arrDetail = (ArrayList)arrData[i + 1];
+
+                                    ent.arrProperties = SysUtils.Property2Value(arrDetail, arrHeader);
+                                    ent.entityName = strObjName;
+
+                                    //1.GET PARAMS of store                                                               
+                                    ent.retrieveDataQuery = "SELECT PARAMETER_NAME ,DATA_TYPE ,CHARACTER_MAXIMUM_LENGTH , PARAMETER_MODE, ORDINAL_POSITION FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_NAME = '" + strObjName + "'";
+                                    ArrayList arrListParms = ent.LoadByQuery();
+
+                                    //Execute
+                                    arrDetail = ent.ExecuteStoreProcedure(arrListParms);
+
+                                    if (ent.arrPK == null)
+                                        ent.arrPK = arrDetail;
+
+                                    //Reture
+                                    arrayLists.Add(strObjName);
+                                    arrayLists.Add(arrDetail);
+                                }
+                            }
+
+                            msg.Body = arrayLists;
+
+                        }
+                        else  //defaul: gen sql statement
+                        {                           
                             BusinessEntity ent = new BusinessEntity();
                             ent.dbManager = dbManager;
                             ent.arrProperties = msg.Body;
@@ -90,9 +138,9 @@ namespace Host.BusinessFacade
                                 ent.Delete();
                             }
 
-                            msg.Body = ent.getPKProperties();                   
+                            msg.Body = ent.getPKProperties();
                         }
-
+                        
                         transaction.Complete();
 
                     }
@@ -127,14 +175,7 @@ namespace Host.BusinessFacade
                 objErr.Dispose();
             }
         }
-
-        #region BatchProcess
-
- 
-
-       
-      
-        #endregion
         
+
     }
 }

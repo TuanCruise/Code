@@ -26,8 +26,7 @@ namespace WB.MESSAGE
 		public string VerifiedUser;
 		public string ApprovedUser;
 		public string SentUser;
-		public string ObjectName;
-		public string ConnectionString;
+		public string ObjectName;		
 		public string FunctionID;
 		public string MsgStatus;
 		public string MsgErrCode;
@@ -40,9 +39,8 @@ namespace WB.MESSAGE
 		public bool CheckResponse = true;
 		public string MsgSessionID;
 		public string MsgSessionType;
-		public string Language;
-		public string LimitTxnID;
-		public string SvcID;    //SERVICE NAME         
+		public string Language;		
+		public string SvcID;    //module id   
 
 		/// <Body>
 		[XmlArrayItemAttribute("Detail")]

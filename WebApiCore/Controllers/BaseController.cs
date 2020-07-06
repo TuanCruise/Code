@@ -16,7 +16,9 @@ namespace WebApiCore.Controllers
         {
             Configuration = configuration;
         }
+
         public string ConnectionString { get { return Configuration["ConfigApp:DbContext"];} }
+
         //public string UserName {
         //    get {
 
