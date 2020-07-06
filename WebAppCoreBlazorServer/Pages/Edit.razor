@@ -227,22 +227,11 @@
 
         <div class="col-sm-12 text-center">
             <div>
-                @if (moduleFieldInfo.Count > 0)
-                {
-
-                    @*<div>@((MarkupString)("<input type='text' id='name' @bind='abcd' />"))</div>*@
-                }
-
                 @if (edit)
                 {
-
                     <button type="submit" class="btn btn-success save" @onclick="@(() =>  Save())"><i class="fa fa-save"></i> &nbsp; Lưu</button>
                     <button type="button" class="btn call-realtime  d-none"><i class="fa fa-save"></i> &nbsp; CallRealtime</button>
                 }
-                @*@if (!string.IsNullOrEmpty(ModSearchId))
-                    {
-                        <a href="@Url.Action(" Index", "Home", new { modId = ViewBag.ModSearchId, parr = ViewBag.KeyEdit })" class="btn btn-default"><i class="fa close"></i> &nbsp; Hủy</a>
-                    }*@
             </div>
         </div>
 

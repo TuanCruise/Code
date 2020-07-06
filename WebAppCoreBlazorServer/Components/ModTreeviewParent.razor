@@ -1,0 +1,38 @@
+@using WebModelCore.ModTreeViewModel
+<div class='card'>
+    @{
+        var parent = TreeView.Where(x => String.IsNullOrEmpty(x.ParentId) || x.ParentId == "000000");
+        if (parent.Any())
+        {
+            foreach (var item in parent)
+            {
+                var checkHasParent = TreeView.Where(x => x.ParentId == item.Id);
+                <div class=''>
+                    @if (string.IsNullOrEmpty(item.ModId))
+                    {
+                    <h5 class='col-md-12 col-lg-12 mb-0 card-header float-left p-1'>
+                        <a class='btn btn-link @(checkHasParent.Any()?"accordion-toggle":"")' data-toggle='collapse' href='#item-@item.Id' role='button' aria-expanded='false' aria-controls='collapseExample'>@item.TreeName </a>  
+                    </h5>
+                    }
+                    else
+                    {
+                        <h5 class='col-md-12 col-lg-12 mb-0 card-header p-1'><a class='btn btn-link @(checkHasParent.Any()?"accordion-toggle":"")' data-toggle='collapse' href='#item-@item.Id' role='button' aria-expanded='false' aria-controls='collapseExample' @onclick="@(()=>ModTreeview.UpdateChangeMod(item.ModId))">@item.TreeName </a> </h5>
+                    }
+                    @{
+                        if (checkHasParent.Any())
+                        {
+                            <ModTreeviewChild ParentId="@item.Id" TreeView="@TreeView" ModTreeview="@ModTreeview"></ModTreeviewChild>
+                        }
+                    }
+
+                </div>
+            }
+        }
+    }
+</div>
+@code{
+    [Parameter]
+    public List<TreeviewInfo> TreeView { get; set; }
+    [Parameter]
+    public WebAppCoreBlazorServer.Pages.ModTreeview ModTreeview { get; set; }
+}

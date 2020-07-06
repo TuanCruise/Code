@@ -149,7 +149,7 @@
                                                         var parBtn = ModuleInfoModel.ButtonParamsInfo == null ? new List<ButtonParamInfo>() : ModuleInfoModel.ButtonParamsInfo.Where(x => x.ButtonName == btnInColAction.ButtonName).ToList();
                                                         foreach (var par in parBtn)
                                                         {
-                                                            par.Value = item[par.FieldName.ToUpper()];
+                                                            par.Value = item[par.FieldName.ToLower()];
                                                         }
                                                         var callModId = btnInColAction.CallModuleID;
                                                         if (parBtn.Any())

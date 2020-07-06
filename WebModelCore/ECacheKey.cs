@@ -18,5 +18,6 @@
         DefCode,
         DefTasks,
         ModWorkFlow,
+        ModTreeview,
     }
 }
