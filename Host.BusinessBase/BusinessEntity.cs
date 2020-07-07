@@ -1339,14 +1339,13 @@ namespace Host.BusinessBase
             {
                 //1. LOG SQL STATEMENT
                 DateTime dtLog = DateTime.Now;
-                string strINSERT = "INSERT INTO USERLOG (USERID,LOGTIME,SQLSTATEMENT)";
+                string strINSERT = " INSERT INTO USERLOG (USERID,LOGTIME,SQLSTATEMENT)";
                 strINSERT = strINSERT + " VALUES ('" + this._UserID + "','" + dtLog + "','" + strSqlStatement + "')";
-                dbManager.ExecuteNonQuery(CommandType.Text, strINSERT);
+                //dbManager.ExecuteNonQuery(CommandType.Text, strINSERT);
 
                 //3. LOG FIELDS DETAIL
                 //SystemLog(strAction, parm);
-
-                //2.Dongpv:22/04/2018
+                
                 //strSqlStatement = strSqlStatement.Replace("''", "'");
                 //LogMessage.Log(strSqlStatement + "\n", "TRANCE_SQL");
 
