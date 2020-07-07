@@ -28,11 +28,9 @@ namespace Core.API
         {
             try
             {
-
+                
                 var request = _requestClient.Create(new {Value = "Hello, World."}, cancellationToken);
-
                 var response = await request.GetResponse<Message>();
-
                 return Content($"{response.Message.Value}, MessageId: {response.MessageId:D}");
             }
             catch (RequestTimeoutException exception)

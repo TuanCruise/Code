@@ -303,7 +303,8 @@ namespace WebAppCoreBlazorServer.Service
             try
             {
                 //FIX
-                _remoteServiceBaseUrl = $"http://localhost:65104";
+                //_remoteServiceBaseUrl = $"http://localhost:65104";
+                _remoteServiceBaseUrl = $"http://localhost:12345";
                 var uri = _remoteServiceBaseUrl;
                 //var uri = _remoteServiceBaseUrl + url;
                 using (var client = new HttpClient())
