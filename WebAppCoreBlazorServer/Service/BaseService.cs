@@ -224,7 +224,7 @@ namespace WebAppCoreBlazorServer.Service
             }
         }
 
-        public async Task<RestOutput<string>> DeleteData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits)
+        public async Task<RestOutput<string>> DeleteData(string modId, string enity, string keyEdit, List<ButtonParamInfo> fieldEdits)
         {
             try
             {
@@ -233,7 +233,7 @@ namespace WebAppCoreBlazorServer.Service
                 //ArrayList Body = new ArrayList(); Body.Add("pv_UserId"); Body.Add(userId);
                 //1. Convert obj to arraylist
                 ArrayList Body = new ArrayList();
-                foreach (ModuleFieldInfo moduleFieldInfo in fieldEdits)
+                foreach (ButtonParamInfo moduleFieldInfo in fieldEdits)
                 {
                     Body.Add(moduleFieldInfo.FieldName); Body.Add(moduleFieldInfo.Value);
                 }

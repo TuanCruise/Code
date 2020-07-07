@@ -433,6 +433,7 @@ namespace WebAppCoreBlazorServer.Service
         //Task<RestOutput<string>> SaveEditModule(string modId, string store, string keyEdit, List<ModuleFieldInfo> fieldEdits);
         Task<RestOutput<string>> SaveData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits);
         Task<RestOutput<string>> UpdateData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits);
-        Task<RestOutput<string>> DeleteData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits);
+        //Task<RestOutput<string>> DeleteModule(string store, List<ModuleFieldInfo> fieldDels);
+        Task<RestOutput<string>> DeleteData(string modId, string enity, string keyEdit, List<ButtonParamInfo> fieldEdits);
     }
 }

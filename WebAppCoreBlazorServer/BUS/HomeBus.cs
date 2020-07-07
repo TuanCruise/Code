@@ -10,6 +10,8 @@ using WebAppCoreBlazorServer.Service;
 using Microsoft.Extensions.Configuration;
 using WebCore.Entities;
 using WebModelCore.CodeInfo;
+using WB.MESSAGE;
+using WB.SYSTEM;
 
 namespace WebAppCoreBlazorServer.BUS
 {
@@ -272,7 +274,26 @@ namespace WebAppCoreBlazorServer.BUS
                     item.Value = "";
                 }
                 AssignParamField(parram, fields);
-                var dataMaintainInfo = (await _moduleService.LoadDataMainTainModule(modId, subModId, parram, fields));
+                //Dongpv:Fix
+                //var dataMaintainInfo = (await _moduleService.LoadDataMainTainModule(modId, subModId, parram, fields));
+                Message msg = new Message();
+                msg.ModId = modId;
+                msg.modSearchId = modSearchId;
+
+                msg.UserID = "000";
+                msg.BranchID = "000";
+                msg.MsgIP = "000";
+
+                msg.ObjectName = Constants.OBJ_SEARCH;
+                msg.MsgType = Constants.MSG_MISC_TYPE;
+                msg.MsgAction = Constants.MSG_SEARCH;
+
+                string strParm = parram.ToString().Replace("[{", "").Replace("}]", "").Replace("\r\n", "").Replace("\"", "");
+                SysUtils.String2ArrayList(ref msg.Body, strParm, ",", ":");
+                
+                var dataMaintainInfo = (await _moduleService.getQuery(msg));
+                //Dongpv:Fix
+
                 result.DataControl = dataMaintainInfo;
                 result.ModId = modId;
                 result.SubModId = subModId;

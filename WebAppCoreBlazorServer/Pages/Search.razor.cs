@@ -416,7 +416,12 @@ namespace WebAppCoreBlazorServer.Pages
             var dataExcute = await homeBus.LoadExcuteModule(modId);
             if (dataExcute != null)
             {
-                var excute = (await moduleService.DeleteModule(dataExcute.ExecuteStore, fieldDels));
+                //Dongpv: FIX
+                //var excute = (await moduleService.DeleteModule(dataExcute.ExecuteStore, fieldDels));
+                
+                var excute = (await moduleService.DeleteData(modId, dataExcute.ExecuteStore, "", keyDels));
+                //Dongpv:
+
                 if (excute.Data != "success")
                 {
                     var err = excute.Data.GetError();
@@ -567,7 +572,7 @@ namespace WebAppCoreBlazorServer.Pages
                     //msg.Body.Add("pedit");
                     //msg.Body.Add(pedit);
 
-                    var dataGrid = await moduleService.getQuery(msg);
+                    //var dataGrid = await moduleService.getQuery(msg);
 
                     //Dongpv:Load data to edit
 

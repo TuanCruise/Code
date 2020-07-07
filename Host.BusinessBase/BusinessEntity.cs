@@ -1364,9 +1364,27 @@ namespace Host.BusinessBase
             try
             {
                 if (ValidateDelete())
-                {                    
-                    string sqlStr = "SELECT * FROM [" + _entityName + "] WITH (NOLOCK) WHERE 1=0";
+                {
+                    //1. Get Primary key field   
+                    string sqlStr = "";
                     IDataReader rd;
+                    if (this.arrPK == null || this.arrPK.Count == 0)
+                    {
+                        sqlStr = "SELECT TAG FROM LANGUAGE  WITH (NOLOCK) WHERE PKFIELD='Y' AND ENTITY='" + _entityName + "'";
+                        rd = dbManager.ExecuteReader(sqlStr, CommandType.Text);
+
+                        while (rd.Read())
+                        {
+                            string key = rd[0].ToString().Trim();
+                            string Val = getProperty(key).ToString().Trim();                            
+                            setPK(key, Val);
+                        }
+                        rd.Close();
+                    }
+
+                    //2.Gen sql
+                    sqlStr = "SELECT * FROM [" + _entityName + "] WITH (NOLOCK) WHERE 1=0";
+                    
                     rd = dbManager.ExecuteReader(sqlStr, CommandType.Text);
                     ParamStruct[] pmi = new ParamStruct[arrPK.Count];
                     sqlStr = "DELETE FROM [" + _entityName + "] ";

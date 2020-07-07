@@ -1599,7 +1599,8 @@ namespace WB.SYSTEM
 
                 for (int i = 0; i < arrDetail.GetLength(0); i++)
                 {
-                    arrData.Add(arrDetail[i]);
+                    string strVal = SysUtils.CString(arrDetail[i]);
+                    arrData.Add(strVal);
                 }
 
                 return arrData;
