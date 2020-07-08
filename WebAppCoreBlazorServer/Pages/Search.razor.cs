@@ -228,7 +228,7 @@ namespace WebAppCoreBlazorServer.Pages
             }
             catch (Exception ex)
             {
-
+                ErrorHandler.Process(ex);
                 //return View("Search", modId);
             }
         }
@@ -417,8 +417,7 @@ namespace WebAppCoreBlazorServer.Pages
             if (dataExcute != null)
             {
                 //Dongpv: FIX
-                //var excute = (await moduleService.DeleteModule(dataExcute.ExecuteStore, fieldDels));
-                
+                //var excute = (await moduleService.DeleteModule(dataExcute.ExecuteStore, fieldDels));                
                 var excute = (await moduleService.DeleteData(modId, dataExcute.ExecuteStore, "", keyDels));
                 //Dongpv:
 

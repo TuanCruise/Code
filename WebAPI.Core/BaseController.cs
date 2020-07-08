@@ -28,10 +28,12 @@ namespace Core.API
         {
             try
             {
-                
-                var request = _requestClient.Create(new {Value = "Hello, World."}, cancellationToken);
-                var response = await request.GetResponse<Message>();
-                return Content($"{response.Message.Value}, MessageId: {response.MessageId:D}");
+                //Dongpv:FIXD
+                //var request = _requestClient.Create(new {Value = "Hello, World."}, cancellationToken);
+                //var response = await request.GetResponse<Message>();
+                //return Content($"{response.Message.Value}, MessageId: {response.MessageId:D}");
+                return Content($"Hello, World.");
+
             }
             catch (RequestTimeoutException exception)
             {
@@ -113,6 +115,7 @@ namespace Core.API
                 try
                 {
                     string modid = jsonObject.ModId;
+                    if (!string.IsNullOrEmpty(modid))
                     msg.ModId = modid.Trim();
                 }
                 catch { }

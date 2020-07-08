@@ -63,9 +63,10 @@ namespace WebAppCoreBlazorServer.Service
                         var data = await client.GetAsync(uri);
                         content = await data.Content.ReadAsStringAsync();
                     }
-                    catch (Exception e1)
+                    catch (Exception ex)
                     {
-                        System.Diagnostics.Debug.WriteLine("hieu=" + e1.ToString());
+                        ErrorHandler.Process(ex);
+                        System.Diagnostics.Debug.WriteLine("hieu=" + ex.ToString());
                     }
                     return content;
                 }
@@ -304,14 +305,16 @@ namespace WebAppCoreBlazorServer.Service
         {
             try
             {
-                //FIX
+                //Dongpv:Fix to debug
                 //_remoteServiceBaseUrl = $"http://localhost:65104";
                 var debug = _Configuration["ConfigApp:Debug"];
-                if (debug == "Y")
+                var uri = _Configuration["ConfigApp:UrlCoreApi"];
+                if (debug == "N")
                 {
-                    _remoteServiceBaseUrl = _Configuration["ConfigApp:UrlCoreApi"]; ;
+                    uri = _remoteServiceBaseUrl;
                 }
-                var uri = _remoteServiceBaseUrl;
+                //Dongpv:Fix to debug
+
                 //var uri = _remoteServiceBaseUrl + url;
                 using (var client = new HttpClient())
                 {
@@ -322,7 +325,7 @@ namespace WebAppCoreBlazorServer.Service
                         //var data = await client.GetAsync(uri);
                         //var data = await client.PostAsync(uri);
                         //content = await data.Content.ReadAsStringAsync();
-                        var responseMessage = await client.PostAsync(_remoteServiceBaseUrl, data);
+                        var responseMessage = await client.PostAsync(uri, data);
                         //responseMessage.EnsureSuccessStatusCode();
 
                         var result = await responseMessage.Content.ReadAsStringAsync();
