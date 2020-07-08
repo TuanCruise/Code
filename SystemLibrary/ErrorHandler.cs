@@ -881,7 +881,7 @@ namespace WB.SYSTEM
 
             try
             {
-                strFilename = String.Format("{0:ddMMyyyy}", DateTime.Now) + "_LOG_EBANKING_ERROR" + ".LOG";
+                strFilename = String.Format("{0:ddMMyyyy}", DateTime.Now) + "_LOG_ERROR" + ".LOG";
                 if (Directory.Exists(strPath))
                 {
 
@@ -935,7 +935,7 @@ namespace WB.SYSTEM
 
             try
             {
-                strFilename = String.Format("{0:ddMMyyyy}", DateTime.Now) + "_LOG_EBANKING_ERROR" + ".LOG";
+                strFilename = String.Format("{0:ddMMyyyy}", DateTime.Now) + "_LOG_ERROR" + ".LOG";
 
                 if (Directory.Exists(strPath))
                 {
@@ -1030,7 +1030,7 @@ namespace WB.SYSTEM
 
             try
             {
-                strFilename = String.Format("{0:ddMMyyyy}", DateTime.Now) + "_LOG_EBANKING_ERROR" + ".LOG";
+                strFilename = String.Format("{0:ddMMyyyy}", DateTime.Now) + "_LOG_ERROR" + ".LOG";
 
                 if (Directory.Exists(strPath))
                 {
@@ -1082,7 +1082,7 @@ namespace WB.SYSTEM
 
             try
             {
-                strFilename = String.Format("{0:ddMMyyyy}", DateTime.Now) + "_LOG_EBANKING_ERROR" + ".LOG";
+                strFilename = String.Format("{0:ddMMyyyy}", DateTime.Now) + "_LOG_ERROR" + ".LOG";
 
                 if (Directory.Exists(strPath))
                 {

@@ -22,7 +22,7 @@ namespace WebAppCoreBlazorServer.Service
 {
     public class BaseService
     {
-        private string _remoteServiceBaseUrl = "";
+        private string _remoteServiceBaseUrl = "";        
         private string _authToken = "";
         protected IConfiguration _Configuration;
         private IConfiguration configuration;
@@ -81,6 +81,7 @@ namespace WebAppCoreBlazorServer.Service
             try
             {
                 var uri = _remoteServiceBaseUrl + url;
+                ErrorHandler.WirteTrace(uri);
                 using (var client = new HttpClient())
                 {
                     var textBytes = Encoding.UTF8.GetBytes(_Configuration["ConfigApp:UserNameApi"] + ":" + _Configuration["ConfigApp:PasswordApi"] + ":" + ""/* _session.GetString("UserName")*/);
@@ -96,15 +97,16 @@ namespace WebAppCoreBlazorServer.Service
                         var dataString = await data.Content.ReadAsStringAsync();
                         return dataString;
                     }
-                    catch (Exception ew)
+                    catch (Exception ex)
                     {
-
+                        
+                        ErrorHandler.Process(ex);
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
+                ErrorHandler.Process(ex);
             }
             return null;
         }
@@ -304,7 +306,11 @@ namespace WebAppCoreBlazorServer.Service
             {
                 //FIX
                 //_remoteServiceBaseUrl = $"http://localhost:65104";
-                _remoteServiceBaseUrl = $"http://localhost:12345";
+                var debug = _Configuration["ConfigApp:Debug"];
+                if (debug == "Y")
+                {
+                    _remoteServiceBaseUrl = _Configuration["ConfigApp:UrlCoreApi"]; ;
+                }
                 var uri = _remoteServiceBaseUrl;
                 //var uri = _remoteServiceBaseUrl + url;
                 using (var client = new HttpClient())
