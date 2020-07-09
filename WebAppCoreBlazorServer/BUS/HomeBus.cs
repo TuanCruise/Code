@@ -49,7 +49,7 @@ namespace WebAppCoreBlazorServer.BUS
             {
                 string key = ECacheKey.ModuleInfo.ToString() + modId;
                 var cachedData = _distributedCache.GetString(key);
-                if (cachedData != null)
+                if (cachedData != null && cachedData != "null")
                 {
                     var module = JsonConvert.DeserializeObject<ModuleInfoViewModel>(cachedData);
                     return module;
@@ -84,7 +84,7 @@ namespace WebAppCoreBlazorServer.BUS
             {
                 string key = ECacheKey.BtnLanguageInfo.ToString();
                 var cachedData = _distributedCache.GetString(key);
-                if (cachedData != null)
+                if (cachedData != null && cachedData != "null")
                 {
                     var module = JsonConvert.DeserializeObject<List<LanguageInfo>>(cachedData);
                 }
@@ -140,7 +140,7 @@ namespace WebAppCoreBlazorServer.BUS
             {
                 string key = ECacheKey.DefCode.ToString();
                 var cachedData = _distributedCache.GetString(key);
-                if (cachedData != null)
+                if (cachedData != null && cachedData != "null")
                 {
                     var defcodes = JsonConvert.DeserializeObject<List<CodeInfo>>(cachedData);
                     return defcodes;
@@ -169,7 +169,7 @@ namespace WebAppCoreBlazorServer.BUS
                 string key = ECacheKey.DefCode.ToString();
                 var cachedData = _distributedCache.GetString(key);
                 var defcodes = new List<CodeInfo>();
-                if (cachedData != null)
+                if (cachedData != null && cachedData != "null")
                 {
                     defcodes = JsonConvert.DeserializeObject<List<CodeInfo>>(cachedData);
                 }
@@ -198,7 +198,7 @@ namespace WebAppCoreBlazorServer.BUS
                 string key = ECacheKey.DefCode.ToString();
                 var cachedData = _distributedCache.GetString(key);
                 var defcodes = new List<CodeInfo>();
-                if (cachedData != null)
+                if (cachedData != null && cachedData != "null")
                 {
                     defcodes = JsonConvert.DeserializeObject<List<CodeInfo>>(cachedData);
                 }
@@ -221,7 +221,7 @@ namespace WebAppCoreBlazorServer.BUS
                 string key = ECacheKey.DefCode.ToString();
                 var cachedData = _distributedCache.GetString(key);
                 var defcodes = new List<CodeInfo>();
-                if (cachedData != null)
+                if (cachedData != null && cachedData != "null")
                 {
                     defcodes = JsonConvert.DeserializeObject<List<CodeInfo>>(cachedData);
                 }
@@ -243,7 +243,7 @@ namespace WebAppCoreBlazorServer.BUS
             {
                 string key = ECacheKey.ModuleSearchInfo.ToString() + modId;
                 var cachedData = _distributedCache.GetString(key);
-                if (cachedData != null)
+                if (cachedData != null && cachedData != "null")
                 {
                     var module = JsonConvert.DeserializeObject<List<SearchModuleInfo>>(cachedData);
                     return module.FirstOrDefault();
@@ -452,7 +452,7 @@ namespace WebAppCoreBlazorServer.BUS
         {
             string key = ECacheKey.MaintainModuleInfo.ToString() + modId;
             var cachedData = _distributedCache.GetString(key);
-            if (cachedData != null)
+            if (cachedData != null && cachedData != "null")
             {
                 var exec = JsonConvert.DeserializeObject<List<MaintainModuleInfo>>(cachedData);
                 return exec.First();
@@ -469,7 +469,7 @@ namespace WebAppCoreBlazorServer.BUS
             string key = ECacheKey.ErrorInfo.ToString();
             var cachedData = _distributedCache.GetString(key);
             var lstAllError = new List<ErrorInfo>();
-            if (cachedData != null)
+            if (cachedData != null && cachedData != "null")
             {
                 lstAllError = JsonConvert.DeserializeObject<List<ErrorInfo>>(cachedData);
             }
@@ -495,7 +495,7 @@ namespace WebAppCoreBlazorServer.BUS
             string key = ECacheKey.LanguageInfo.ToString();
             var cachedData = _distributedCache.GetString(key);
             var lsAllLanguage = new List<LanguageInfo>();
-            if (cachedData != null)
+            if (cachedData != null && cachedData != "null")
             {
                 lsAllLanguage = JsonConvert.DeserializeObject<List<LanguageInfo>>(cachedData);
             }
@@ -524,7 +524,7 @@ namespace WebAppCoreBlazorServer.BUS
             {
                 string key = ECacheKey.DefTasks.ToString();
                 var cachedData = _distributedCache.GetString(key);
-                if (cachedData != null)
+                if (cachedData != null && cachedData != "null")
                 {
                     var defTasks = JsonConvert.DeserializeObject<List<DefTasks>>(cachedData);
                     return defTasks;
@@ -607,7 +607,7 @@ namespace WebAppCoreBlazorServer.BUS
             {
                 string key = ECacheKey.ModWorkFlow.ToString();
                 var cachedData = _distributedCache.GetString(key);
-                if (cachedData != null)
+                if (cachedData != null && cachedData != "null")
                 {
                     var defTasks = JsonConvert.DeserializeObject<List<ModWorkflow>>(cachedData);
                     return defTasks;
@@ -635,7 +635,7 @@ namespace WebAppCoreBlazorServer.BUS
             {
                 string key = ECacheKey.ModTreeview.ToString();
                 var cachedData = _distributedCache.GetString(key);
-                if (cachedData != null)
+                if (cachedData != null && cachedData != "null")
                 {
                     var modTreeview = JsonConvert.DeserializeObject<List<ModTreeView>>(cachedData);
                     return modTreeview;
