@@ -274,6 +274,7 @@ namespace WebAppCoreBlazorServer.BUS
                     item.Value = "";
                 }
                 AssignParamField(parram, fields);
+                
                 //Dongpv:Fix
                 //var dataMaintainInfo = (await _moduleService.LoadDataMainTainModule(modId, subModId, parram, fields));
                 Message msg = new Message();
@@ -288,9 +289,20 @@ namespace WebAppCoreBlazorServer.BUS
                 msg.MsgType = Constants.MSG_MISC_TYPE;
                 msg.MsgAction = Constants.MSG_SEARCH;
 
-                string strParm = parram.ToString().Replace("[{", "").Replace("}]", "").Replace("\r\n", "").Replace("\"", "");
-                SysUtils.String2ArrayList(ref msg.Body, strParm, ",", ":");
-                
+                //string strParm = parram.ToString().Replace("[{", "").Replace("}]", "").Replace("\r\n", "").Replace("\"", "");
+                //SysUtils.String2ArrayList(ref msg.Body, strParm, ",", ":");
+
+                foreach (var prr in fields)
+                {
+                    msg.Body.Add(prr.FieldName);
+                    string val = prr.Value;
+                    if (val != null)
+                    {
+                        val = val.ToString().TrimEnd(','); 
+                        msg.Body.Add(val.Trim());
+                    }
+                }
+
                 var dataMaintainInfo = (await _moduleService.getQuery(msg));
                 //Dongpv:Fix
 
