@@ -154,18 +154,25 @@ namespace WebAppCoreBlazorServer.Pages
 
             var modMaintain = await homeBus.LoadMaintainModuleInfo(modId);
             var store = "";
+            //Dongpv
+            var excute = new RestOutput<string>();
             if (string.IsNullOrEmpty(keyEdit))
             {
                 store = modMaintain.AddInsertStore;
+                //Dongpv
+                excute = (await moduleService.SaveData(modId, store, keyEdit, moduleFieldInfo));
             }
             else
             {
                 store = modMaintain.EditUpdateStore;
+                //Dongpv
+                excute = (await moduleService.UpdateData(modId, store, keyEdit, moduleFieldInfo));
             }
+            
             //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, fieldEdits));
+
             //Dongpv:     
-            //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, moduleFieldInfo));
-            var excute = (await moduleService.SaveData(modId, store, keyEdit, moduleFieldInfo));
+            //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, moduleFieldInfo));                     
             //Dongpv:
 
             if (excute.Data != "success")
@@ -184,6 +191,7 @@ namespace WebAppCoreBlazorServer.Pages
                 }
 
             }
+
         }
         [CascadingParameter] Blazored.Modal.BlazoredModalInstance BlazoredModal { get; set; }
 

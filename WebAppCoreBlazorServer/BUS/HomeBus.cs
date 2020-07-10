@@ -30,7 +30,7 @@ namespace WebAppCoreBlazorServer.BUS
         {
             string key = ECacheKey.ExecProcModuleInfo.ToString() + modId;
             var cachedData = _distributedCache.GetString(key);
-            if (cachedData != null && cachedData != "[]")
+            if (cachedData != null && cachedData != "null" && cachedData != "[]")
             {
                 var exec = JsonConvert.DeserializeObject<List<ExecProcModuleInfo>>(cachedData);
                 return exec.First();
