@@ -1,0 +1,139 @@
+﻿@inject WebAppCoreBlazorServer.Service.IModuleService moduleService
+@using System
+@using WebModelCore
+@using WebAppCoreBlazorServer.Common
+@inject IModalService Modal
+@{
+    var colAction = ModuleInfo.ButtonsInfo.Where(x => x.FldId == Field.FieldID);
+}
+<table class="table table-bordered table-responsive-md table-responsive-lg table-striped">
+    <thead class="h-head">
+        @{
+            var fieldGrid = Field.FieldChilds;// ModuleInfo.FieldsInfo.Where(x => x.ParentId == Field.FieldID).ToList();
+            foreach (var item in fieldGrid)
+            {
+                if (item.HideWeb == "Y")
+                {
+                    continue;
+                }
+
+            <th>@item.FieldName.GetLanguage(LanguageInfos, ModName)</th>
+        }
+        <th>Hành động</th>
+        }
+        </thead>
+        <tbody id="tbody">
+            @{
+                <tr>
+                    @{
+                        var colActionAdd = colAction.Where(x => x.ButtonName == EDefModBtn.BTN_ADD.ToString());
+                        if (colActionAdd.Any())
+                        {
+                            var callModId = colActionAdd.First().CallModuleID;
+                            if (String.IsNullOrEmpty(callModId))//Nếu ko khai modId. là insert trực tiếp trên grid
+                            {
+                                if (DataSearchSource != null)
+                                {
+                                    var checkEdit = DataSearchSource.Select("CoreSource=2 Or CoreSource>=4");
+                                    if (checkEdit == null || !checkEdit.Any())
+                                    {
+                                        <EditItemGridComponent DataComboBoxs="@DataComboBoxs" DataSearchSource="@DataSearchSource" ModuleInfo="@ModuleInfo" Field="@(Field)" Fields="@Fields" LanguageInfos="@LanguageInfos" ModName="@ModuleInfo.ModulesInfo.ModuleName"></EditItemGridComponent>
+                                    }
+                                }
+                                else
+                                {
+                                    <EditItemGridComponent DataComboBoxs="@DataComboBoxs" DataSearchSource="@DataSearchSource" ModuleInfo="@ModuleInfo" Field="@(Field)" Fields="@Fields" LanguageInfos="@LanguageInfos" ModName="@ModuleInfo.ModulesInfo.ModuleName"></EditItemGridComponent>
+                                }
+                            }
+                            else
+                            {
+                                <button class="btn btndefault btn-success" @onclick="@(()=>ShowModAdd(callModId))">Add</button>
+                            }
+                        }
+                    }
+                </tr>
+                if (DataSearchSource == null || DataSearchSource.Rows.Count == 0)
+                {
+                    <tr>
+                        <td colspan="@(fieldGrid.Count()+1/*+ (checkColAction.Any()?1:0) + ((modSearch!=null && modSearch.ShowCheckBox=="Y")?1:0)*/)">Không có dữ liệu</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (System.Data.DataRow item in DataSearchSource.Rows)
+                    {
+                        //var dataRows = ((Newtonsoft.Json.Linq.JContainer)item);
+
+                        var checkAll = 1;
+                        if (item["CoreSource"].ToString().StartsWith('4'))//Trường hợp đánh dấu sửa
+                        {
+                            <EditItemGridComponent DataComboBoxs="@DataComboBoxs" RowEdit="@item" DataSearchSource="@DataSearchSource" ModuleInfo="@ModuleInfo" Field="@Field" Fields="@Fields" LanguageInfos="@LanguageInfos" ModName="@ModuleInfo.ModulesInfo.ModuleName"></EditItemGridComponent>
+                            continue;
+                        }
+                        else if (item["CoreSource"].ToString() == "3")//Trường hợp row bị xóa
+                        {
+                            continue;
+                        }
+                        <tr>
+                            @foreach (var col in fieldGrid)
+                            {
+
+                                if (col.HideWeb == "Y")
+                                {
+                                    continue;
+                                }
+                                <td>
+                                    @{
+                                        //foreach (var column in dataRows)
+                                        //{
+                                        var columnName = col.FieldName.ToLower();//((Newtonsoft.Json.Linq.JProperty)column).Name;
+                                        var value = item[columnName];
+                                        if (columnName.ToUpper() == col.FieldName.ToUpper())
+                                        {
+
+                                            if (!string.IsNullOrEmpty(col.ListSource))
+                                            {
+
+                                                if (value != null)
+                                                {
+                                                    //col.FieldID = ((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value.ToString();
+                                                    col.Value = value.ToString();
+                                                    var text = col.GetValueGridControl(DataComboBoxs);
+                                                    <span field="@col.FieldName" title="@text">@(text.Length > 50 ? text.Substring(0, 50) + "..." : text)</span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                var text = value.ToString(); // (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value ?? "").ToString();
+                                                <span field="@col.FieldName" title="@text">@(text.Length > 50 ? text.Substring(0, 50) + "..." : text)</span>
+                                            }
+                                            checkAll++;
+                                        }
+                                        if (columnName.ToUpper() == "TotalRow".ToUpper())
+                                        {
+                                            TotalRow = int.Parse(value.ToString());
+                                        }
+                                        @*}*@
+                                    }
+                                </td>
+
+                            }
+                            @if (colAction.Any())
+                            {
+                                <td>
+                                    @if (colAction.Where(x => x.ButtonName == EDefModBtn.BTN_EDIT.ToString()).Any())
+                                    {
+                                        <button class="btn btn-success btndefault" @onclick="@(()=>EditField(item))"><i class="ik ik-edit"></i> Edit</button>
+                                    }
+                                    @if (colAction.Where(x => x.ButtonName == EDefModBtn.BTN_DELETE.ToString()).Any())
+                                    {
+                                        <button class="btn btn-success btndefault" @onclick="@(()=>DeleteField(item))"><i class="ik ik-delete"></i> Del</button>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>

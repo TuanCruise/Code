@@ -15,9 +15,6 @@ using WebModelCore.CodeInfo;
 using WebModelCore.Common;
 using WebModelCore.LogicCondition;
 using WebModelCore.ModelCheckBox;
-using WB.MESSAGE;
-using WebAppCoreBlazorServer.Service;
-using WB.SYSTEM;
 
 namespace WebAppCoreBlazorServer.Pages
 {
@@ -228,7 +225,7 @@ namespace WebAppCoreBlazorServer.Pages
             }
             catch (Exception ex)
             {
-                ErrorHandler.Process(ex);
+
                 //return View("Search", modId);
             }
         }
@@ -345,36 +342,7 @@ namespace WebAppCoreBlazorServer.Pages
 
                 //CurrPage = currPage;
                 //FieldSubmited = fieldEdits;
-                //Dongpv:Load data to edit
-                if (modSearch.GroupModule == "004")
-                {
-                    Message msg = new Message();
-                    msg.ObjectName = Constants.OBJ_SEARCH;
-                    msg.MsgType = Constants.MSG_MISC_TYPE;
-                    msg.MsgAction = Constants.MSG_SEARCH;
-
-                    msg.Body.Add("SearchObject");
-                    msg.Body.Add("CUSTOMER");
-                    msg.Body.Add("Condition");
-                    msg.Body.Add(" WHERE 1=1");
-                    msg.Body.Add("Page");
-                    msg.Body.Add(0);
-
-                    var dataGrid = await moduleService.getQuery(msg);
-                    DataSearch = dataGrid;
-                }
-                else
-                {
-                    var dataGrid = await moduleService.LoadQueryModule(new ParramModuleQuery { Store = query });
-                    DataSearch = dataGrid;
-                }
-
-                
-
-
-                //var dataGrid = await moduleService.getQuery(msg);
-                //Dongpv:Load data to edit
-
+                var dataGrid = await moduleService.LoadQueryModule(new ParramModuleQuery { Store = query });
                 //var dataGrid = await moduleService.LoadQueryModule(new ParramModuleQueryDynamicQuery { LogicConditionModels= SearchConditionInstances,SearchModuleInfo= modSearch });
                 //if (!string.IsNullOrEmpty(export))
                 //{
@@ -382,7 +350,7 @@ namespace WebAppCoreBlazorServer.Pages
                 //    Data2ExcelFile(dataGrid, module.FieldsInfo, module, pathSaveAs);
                 //    return DownloadFile(pathSaveAs);
                 //}
-
+                DataSearch = dataGrid;
                 //int userId = int.Parse("0" + HttpContext.Session.GetString("UserId"));
                 //var groupModUser = await moduleService.GetGroupModByUserId(userId);
                 //ViewBag.RoleUser = groupModUser;
@@ -410,22 +378,18 @@ namespace WebAppCoreBlazorServer.Pages
             HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
             var modInfo = await homeBus.GetModule(modId);
             var fieldDels = CommonFunction.GetModuleFields(modInfo.FieldsInfo, modId, FLDGROUP.PARAMETER);
-
             homeBus.AssignParamField(keyDels, fieldDels);
 
             var dataExcute = await homeBus.LoadExcuteModule(modId);
             if (dataExcute != null)
             {
-                //Dongpv: FIX
-                //var excute = (await moduleService.DeleteModule(dataExcute.ExecuteStore, fieldDels));                
-                var excute = (await moduleService.DeleteData(modId, dataExcute.ExecuteStore, "", keyDels));
-                //Dongpv:
-
+                var excute = (await moduleService.DeleteModule(dataExcute.ExecuteStore, fieldDels));
                 if (excute.Data != "success")
                 {
                     var err = excute.Data.GetError();
                     var errText = await homeBus.GetErrText(err);
                     var textMsg = await homeBus.GetTextLang(errText);
+                    JSRuntime.InvokeAsync<string>("bb_alert", textMsg, DotNetObjectReference.Create(this), "AlertCallBack");
                 }
                 else
                 {
@@ -545,36 +509,6 @@ namespace WebAppCoreBlazorServer.Pages
                     parameters.Add("fieldNameEdit", fieldNameEdit);
                     parameters.Add("parram", parram);
                     parameters.Add("pedit", pedit);
-
-                    //Dongpv:Load data to edit
-                    Message msg = new Message();
-                    msg.ModId = callModId;
-                    msg.modSearchId = modSearchId;
-
-                    msg.UserID = "000";
-                    msg.BranchID = "000";
-                    msg.MsgIP = "000";
-                    
-                    msg.ObjectName = Constants.OBJ_SEARCH;
-                    msg.MsgType = Constants.MSG_MISC_TYPE;
-                    msg.MsgAction = Constants.MSG_SEARCH;
-
-                    string strParm = parram.ToString().Replace("[{", "").Replace("}]", "").Replace("\r\n", "").Replace("\"", "");
-                    SysUtils.String2ArrayList(ref msg.Body, strParm, ",", ":");
-
-                    //msg.Body.Add("modSearchId");
-                    //msg.Body.Add(modSearchId);
-                    //msg.Body.Add("fieldNameEdit");
-                    //msg.Body.Add(fieldNameEdit);
-                    //msg.Body.Add("parram");
-                    //msg.Body.Add(parram);
-                    //msg.Body.Add("pedit");
-                    //msg.Body.Add(pedit);
-
-                    //var dataGrid = await moduleService.getQuery(msg);
-
-                    //Dongpv:Load data to edit
-
                     Modal.Show<Pages.Edit>(moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo), parameters);
                 }
                 else

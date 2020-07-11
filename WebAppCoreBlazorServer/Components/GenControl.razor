@@ -155,6 +155,10 @@
     }
     else if (field.ControlType == EControlType.SCL.ToString())
     {
-        <ScheduleControl></ScheduleControl>
+        @*<ScheduleControl></ScheduleControl>*@
+    }
+    else if (field.ControlType == EControlType.GE.ToString())
+    {
+        <GridEditComponent DataComboBoxs="@dataComboBoxs" ModuleInfo="@ModuleInfo" Field="@field" Fields="@fields" LanguageInfos="languageInfos" ModName="@modName"></GridEditComponent>
     }
 }

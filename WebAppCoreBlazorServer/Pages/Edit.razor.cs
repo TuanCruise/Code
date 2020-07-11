@@ -103,6 +103,20 @@ namespace WebAppCoreBlazorServer.Pages
                 }
 
                 var lstSources = moduleFieldInfo.Where(x => !String.IsNullOrEmpty(x.ListSource) && x.ListSource.IndexOf("(") > 0 && x.ListSource.IndexOf("()") < 0).ToList();//Lấy các list source dạng store có truyền vào tên field
+                var fieldChild=moduleFieldInfo.Where(x => x.FieldChilds != null).Select(x => x.FieldChilds);
+                if (fieldChild.Any())
+                {
+                    foreach (var child in fieldChild)
+                    {
+                        var sourceChild = child.Where(x => !String.IsNullOrEmpty(x.ListSource) && x.ListSource.IndexOf("(") > 0 && x.ListSource.IndexOf("()") < 0);
+                        if (sourceChild.Any())
+                        {
+                            lstSources.AddRange(sourceChild.ToList());
+                        }
+                        
+                    }
+                   
+                }
                 foreach (var item in lstSources)
                 {
                     var sourceParr = item.ListSource.Substring(item.ListSource.IndexOf("(") + 1, item.ListSource.IndexOf(")") - item.ListSource.IndexOf("(") - 1).Split(",");
@@ -131,23 +145,21 @@ namespace WebAppCoreBlazorServer.Pages
         public async Task Save()
         {
             ErrorValidate = new List<string>();
-            
-            //Dongpv:FIX TO RUN
-            //foreach (var item in moduleFieldInfo)
-            //{
-            //    var validator = new Common.FluentValidation();
+            foreach (var item in moduleFieldInfo)
+            {
+                var validator = new Common.FluentValidation();
 
-            //    var rsErr = validator.Validate(item);
-            //    if (!rsErr.IsValid)
-            //    {
-            //        ErrorValidate.AddRange(rsErr.Errors.Select(x => x.ErrorMessage));
-            //    }
-            //}
-            //if (ErrorValidate.Any())
-            //{
-            //    return;
-            //}
+                var rsErr = validator.Validate(item);
+                if (!rsErr.IsValid)
+                {
+                    ErrorValidate.AddRange(rsErr.Errors.Select(x => x.ErrorMessage));
+                }
+            }
+            if (ErrorValidate.Any())
+            {
 
+                return;
+            }
             HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
 
             string validate = "";
@@ -163,11 +175,7 @@ namespace WebAppCoreBlazorServer.Pages
                 store = modMaintain.EditUpdateStore;
             }
             //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, fieldEdits));
-            //Dongpv:     
-            //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, moduleFieldInfo));
-            var excute = (await moduleService.SaveData(modId, store, keyEdit, moduleFieldInfo));
-            //Dongpv:
-
+            var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, moduleFieldInfo));
             if (excute.Data != "success")
             {
                 var err = excute.Data.GetError();

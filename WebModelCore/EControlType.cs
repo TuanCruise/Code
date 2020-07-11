@@ -25,6 +25,8 @@ namespace WebModelCore {
         SCL,
         [Description("TAB")]
         TAB,
+        [Description("GRID EDIT")]
+        GE,
 
     }
 }

@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using Blazored.Modal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using WB.MESSAGE;
 using WebCore.Entities;
 using WebModelCore;
 using WebModelCore.CodeInfo;
 using WebModelCore.Common;
 using WebModelCore.ModTreeViewModel;
-using WB.MESSAGE;
 
 namespace WebAppCoreBlazorServer.Service
 {
@@ -184,6 +183,25 @@ namespace WebAppCoreBlazorServer.Service
             }
         }
 
+        public async Task<DataTable> Store2DataTable(ParramModuleQuery query)
+        {
+            try
+            {
+                var url = string.Format("Module/ExcuteStore2DataTable");
+                var data = await PostApi(url, query);
+                var dataQuery = JsonConvert.DeserializeObject<RestOutput<string>>(data);
+                if (!string.IsNullOrEmpty(dataQuery.Data))
+                {
+                    return JsonConvert.DeserializeObject<DataTable>(dataQuery.Data);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
+        }
         //
 
         public async Task<List<MaintainModuleInfo>> LoadMaintainModuleInfo(string modId)
@@ -421,6 +439,7 @@ namespace WebAppCoreBlazorServer.Service
         Task<List<SysVar>> GetAllSysVar();
         Task<List<GroupMod>> GetGroupModByUserId(int userId);
         Task<List<dynamic>> ExcuteStore2DataTable(ParramModuleQuery query);
+        Task<DataTable> Store2DataTable(ParramModuleQuery query);
         Task<RestOutput<string>> ChangeModel(string barcode);
         Task<List<CodeInfo>> GetAllDefCode();
         Task<List<DefTasks>> GetAllDefTasks();

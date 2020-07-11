@@ -1,0 +1,23 @@
+@inject WebAppCoreBlazorServer.Service.IModuleService moduleService
+@using WebModelCore
+@using WebAppCoreBlazorServer.Common
+@{
+    foreach (var child in Field.FieldChilds)
+    {
+        if (RowEdit!=null)
+        {
+            child.Value = RowEdit[child.FieldName.ToLower()].ToString();
+        }
+        else
+        {
+            child.Value = "";
+        }
+        <td>
+            <WebAppCoreBlazorServer.Components.GenControl field="@child" ModuleInfo="@ModuleInfo" dataComboBoxs="@DataComboBoxs" modName="@ModuleInfo.ModulesInfo.ModuleName" languageInfos="@ModuleInfo.LanguageInfo" />
+        </td>
+    }
+<td>
+    <button class="btn btn-success btndefault" @onclick="@(()=>SaveField())">Save</button>
+    <button class="btn btn-danger btndefault" @onclick="@(()=>CancelField())">Cancel</button>
+</td>
+}

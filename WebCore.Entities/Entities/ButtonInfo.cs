@@ -29,6 +29,8 @@ namespace WebCore.Entities
         [DataMember, Column(Name = "PARAMMODE")]
         public string ParameterMode { get; set; }
         [DataMember, Column(Name = "DBCLICK")]
-        public string DBClick { get; set; }          
+        public string DBClick { get; set; }
+        [DataMember, Column(Name = "FLDID")]
+        public string FldId { get; set; }
     }
 }

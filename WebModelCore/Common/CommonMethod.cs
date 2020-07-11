@@ -190,6 +190,14 @@ namespace WebModelCore.Common
             return text;
         }
         public static int PageSize = 20;
+
+    }
+    public static class ListExtensions
+    {
+        public static List<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
+        {
+            return listToClone.Select(item => (T)item.Clone()).ToList();
+        }
     }
 
 }

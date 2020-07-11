@@ -74,7 +74,7 @@
                                             <span class="text-danger">*</span>
                                         }
                                     </label>
-                                    <WebAppCoreBlazorServer.Components.GenControl field="@fieldGroup" dataComboBoxs="@codeInfos"  dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                                    <WebAppCoreBlazorServer.Components.GenControl field="@fieldGroup" dataComboBoxs="@codeInfos"  dataEdit="dataControl" keyEdit="@keyEdit" ModuleInfo="@moduleInfoModel" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
                                     @*@((MarkupString)(fieldGroup.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
                                 </div>
                                 lstFieldNotAdd.Remove(fieldGroup);
@@ -110,7 +110,7 @@
                                                             <span class="text-danger">*</span>
                                                         }
                                                     </label>
-                                                    <WebAppCoreBlazorServer.Components.GenControl field="@fieldGroup"  dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                                                    <WebAppCoreBlazorServer.Components.GenControl field="@fieldGroup"  ModuleInfo="@moduleInfoModel"  dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
                                                     @*@((MarkupString)(fieldGroup.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
                                                 </div>
                                                 lstFieldNotAdd.Remove(fieldGroup);
@@ -139,7 +139,7 @@
                                 }
                             </label>
                             @*@((MarkupString)(field1.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
-                            <WebAppCoreBlazorServer.Components.GenControl field="@field1" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                            <WebAppCoreBlazorServer.Components.GenControl field="@field1"  ModuleInfo="@moduleInfoModel"  dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
                         </div>
                         <div class="form-group col-sm-6">
                             <label class="control-label">
@@ -149,11 +149,12 @@
                                     <span class="text-danger">*</span>
                                 }
                             </label>
-                            <WebAppCoreBlazorServer.Components.GenControl field="@field2" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                            <WebAppCoreBlazorServer.Components.GenControl field="@field2" ModuleInfo="@moduleInfoModel"  dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
                             @*@((MarkupString)(field1.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
                         </div>
                     </div>
                     lstFieldNotAdd.Remove(field1);
+                    lstFieldNotAdd.Remove(field2);
                     var fieldGroups = lstFieldNotAdd.Where(x => x.FieldsGroup == field2.FieldsGroup);
                     <div class="row">
                         @{
@@ -168,7 +169,7 @@
                                             <span class="text-danger">*</span>
                                         }
                                     </label>
-                                    <WebAppCoreBlazorServer.Components.GenControl field="@fieldGroup" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                                    <WebAppCoreBlazorServer.Components.GenControl field="@fieldGroup"  ModuleInfo="@moduleInfoModel"  dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
                                     @*@((MarkupString)(fieldGroup.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
                                 </div>
                                 lstFieldNotAdd.Remove(fieldGroup);
@@ -187,7 +188,7 @@
                                     <span class="text-danger">*</span>
                                 }
                             </label>
-                            <WebAppCoreBlazorServer.Components.GenControl field="@field1" dataComboBoxs="@codeInfos" dataEdit="@dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                            <WebAppCoreBlazorServer.Components.GenControl field="@field1" ModuleInfo="@moduleInfoModel"  dataComboBoxs="@codeInfos" dataEdit="@dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
                             @*@((MarkupString)(field1.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
                         </div>
                     </div>
@@ -204,7 +205,7 @@
                                     <span class="text-danger">*</span>
                                 }
                             </label>
-                            <WebAppCoreBlazorServer.Components.GenControl field="@field1" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                            <WebAppCoreBlazorServer.Components.GenControl  ModuleInfo="@moduleInfoModel" field="@field1" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
                             @*@((MarkupString)(field1.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
                         </div>
                         <div class="form-group col-sm-6">
@@ -215,7 +216,7 @@
                                     <span class="text-danger">*</span>
                                 }
                             </label>
-                            <WebAppCoreBlazorServer.Components.GenControl field="@field2" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                            <WebAppCoreBlazorServer.Components.GenControl field="@field2" ModuleInfo="@moduleInfoModel"  dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
                             @*@((MarkupString)(field2.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
                         </div>
                     </div>
@@ -227,11 +228,11 @@
 
         <div class="col-sm-12 text-center">
             <div>
-                @if (edit)
-                {
+                @*@if (edit)
+                {*@
                     <button type="submit" class="btn btn-success save" @onclick="@(() =>  Save())"><i class="fa fa-save"></i> &nbsp; Lưu</button>
                     <button type="button" class="btn call-realtime  d-none"><i class="fa fa-save"></i> &nbsp; CallRealtime</button>
-                }
+                @*}*@
             </div>
         </div>
 

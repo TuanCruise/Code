@@ -1,10 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using WebCore.Base;
 
 namespace WebCore.Entities
 {
     [DataContract]
-    public class ButtonParamInfo
+    public class ButtonParamInfo: ICloneable
     {
         [DataMember, Column(Name = "MODID")]
         public string ModuleID { get; set; }
@@ -18,5 +19,10 @@ namespace WebCore.Entities
         public string Value { get; set; }
         [DataMember, Column(Name = "CONDITIONNAME")]
         public string ConditionName { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

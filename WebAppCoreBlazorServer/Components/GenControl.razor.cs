@@ -7,6 +7,7 @@ using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using WebAppCoreBlazorServer.BUS;
 using WebCore.Entities;
+using WebModelCore;
 using WebModelCore.CodeInfo;
 
 namespace WebAppCoreBlazorServer.Components
@@ -24,6 +25,8 @@ namespace WebAppCoreBlazorServer.Components
         [Parameter]
         public List<LanguageInfo> languageInfos { get; set; }
         [Parameter]
+        public ModuleInfoModel ModuleInfo { get; set; }
+        [Parameter]
         public string subMod { get; set; }
         [Parameter]
         public List<dynamic> dataEdit { get; set; }
@@ -38,10 +41,8 @@ namespace WebAppCoreBlazorServer.Components
         [Parameter]
         public RenderFragment ChildContent { get; set; }
 
-        private DotNetObjectReference<ModuleFieldInfo> objRef;
         protected override Task OnInitializedAsync()
         {
-            objRef = DotNetObjectReference.Create(field);
             return base.OnInitializedAsync();
         }
         [JSInvokable()]

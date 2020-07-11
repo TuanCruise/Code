@@ -7,7 +7,7 @@ namespace WebCore.Entities
 {
     [DataContract]
     [Serializable]
-    public class ModuleFieldInfo : EntityBase
+    public class ModuleFieldInfo : EntityBase, ICloneable
     {
         private string m_ParameterName;
         [DataMember, Column(Name = "FLDID")]
@@ -129,7 +129,6 @@ namespace WebCore.Entities
         public string CallModId { get; set; }
         [DataMember, Column(Name = "ENTITY")]
         public string Entity { get; set; }
-
         /// <summary>
         /// Cột này chỉ để bind dữ liệu khi control nhập. ko có trong DB
         /// </summary>
@@ -144,7 +143,6 @@ namespace WebCore.Entities
                 _Value = value;
             }
         }
-
         [DataMember, Column(Name = "ValueDate")]
         public DateTime? ValueDate {
             get
@@ -173,6 +171,11 @@ namespace WebCore.Entities
         public ModuleFieldInfo()
         {
             FieldChilds = new List<ModuleFieldInfo>();
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }
