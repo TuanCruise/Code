@@ -136,7 +136,7 @@
     {
         string key = ECacheKey.AllIcon.ToString();
         var cachedData = distributedCache.GetString(key);
-        if (cachedData != null)
+        if (cachedData != null && cachedData != "null")
         {
             var menus = JsonConvert.DeserializeObject<List<LanguageInfo>>(cachedData);
             return menus;
