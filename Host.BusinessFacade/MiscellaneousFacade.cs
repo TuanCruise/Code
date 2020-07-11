@@ -61,8 +61,14 @@ namespace Host.BusinessFacade
                     if (msg.ModId != null)
                     {
                         //1.call MODMAINTAIN
-                        ArrayList arrModMaintain = GetSQLQuery("select * from MODMAINTAIN WHERE MODID ='" + msg.ModId + "'");
-                        string strStoreName = SysUtils.getProperty(arrModMaintain, "EDITSELECTSTORE");
+                        BusinessEntity ent = new BusinessEntity();
+                        ent.dbManager = dbManager;
+                        ent.entityName = "MODMAINTAIN";
+                        ent.setProperty("MODID", msg.ModId);
+                        ent.setPK("MODID", msg.ModId);
+                        ent.Load();
+                        ArrayList arrModMaintain = ent.arrProperties; //GetSQLQuery("SELECT * FROM MODMAINTAIN WHERE MODID ='" + msg.ModId + "'");
+                        string strStoreName = SysUtils.CString(SysUtils.getValue(arrModMaintain, "EDITSELECTSTORE"));
 
                         //2.Call store
                         msg.Body = GetStoreQuery(msg.Body, strStoreName);
