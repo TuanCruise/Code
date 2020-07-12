@@ -246,7 +246,7 @@ namespace Host.BusinessBase
         {
             try
             {
-                string sqlStr = "SELECT * FROM " + _entityName + " WITH (NOLOCK)  WHERE 1<>0";
+                string sqlStr = "SELECT * FROM " + _entityName + " WITH (NOLOCK)  WHERE 1=0";
                 IDataReader rd;
                 rd = dbManager.ExecuteReader(sqlStr, CommandType.Text);
                 ParamStruct[] pmi = new ParamStruct[arrPK.Count];

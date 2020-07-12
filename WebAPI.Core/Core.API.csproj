@@ -24,5 +24,6 @@
     <ProjectReference Include="..\Host.BusinessFacade\Host.BusinessFacade.csproj" />
     <ProjectReference Include="..\Message\Message.csproj" />
     <ProjectReference Include="..\SystemLibrary\SystemLibrary.csproj" />
+    <ProjectReference Include="..\WebCore.Entities\WebCore.Entities.csproj" />
   </ItemGroup>
 </Project>

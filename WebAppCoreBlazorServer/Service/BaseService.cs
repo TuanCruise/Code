@@ -194,28 +194,41 @@ namespace WebAppCoreBlazorServer.Service
                 //var  json = JsonConvert.DeserializeObject<string>(apiResponse);
                 //ArrayList Body = new ArrayList(); Body.Add("pv_UserId"); Body.Add(userId);
                 //1. Convert obj to arraylist
-                ArrayList Body = new ArrayList();
-                foreach (ModuleFieldInfo moduleFieldInfo in fieldEdits)
-                {
-                    if (moduleFieldInfo.Value != null)
-                    {
-                        Body.Add(moduleFieldInfo.FieldName); Body.Add(moduleFieldInfo.Value);
-                        enity = moduleFieldInfo.Entity;
-                    }
-                }
+                //ArrayList Body = new ArrayList();
+                //foreach (ModuleFieldInfo moduleFieldInfo in fieldEdits)
+                //{
+                //    if (moduleFieldInfo.Value != null)
+                //    {
+                //        if(string.IsNullOrEmpty(enity)) enity = moduleFieldInfo.Entity;
 
-                var order = new {
+                //        string controlType = moduleFieldInfo.ControlType;
+                //        string fileName = moduleFieldInfo.FieldName.Trim();
+                //        object value = moduleFieldInfo.Value;
+
+                //        if (controlType == "GE")
+                //        {
+                //            ArrayList arrDetail = new ArrayList();
+                //            SysUtils.String2ArrayList(ref arrDetail, value.ToString().Replace("[", "").Replace("]", "").Replace("{", "").Replace("}", "").Replace("\r\n", "").Replace("\"", ""), ",", ":");
+                //            value = arrDetail;
+                //        }
+
+                //       Body.Add(fileName); Body.Add(value);                        
+                //    }
+                //}
+
+                var message = new {
                     UserID = "0000",
                     IP = "00000",
                     BranchID = "000",
                     ModuleID = modId,
+                    ModId = modId,
                     ObjectName = enity,
                     MsgType = Constants.MSG_MNT_TYPE,
                     MsgAction = Constants.MSG_ADD_ACTION,
-                    Body = Body
+                    Body = fieldEdits
                 };
 
-                var json = JsonConvert.SerializeObject(order);
+                var json = JsonConvert.SerializeObject(message);
 
                 var data = await SendMessage(json);
                 var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);

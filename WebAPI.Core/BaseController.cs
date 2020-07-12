@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
@@ -9,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WB.SYSTEM;
+using WebCore.Entities;
 
 namespace Core.API
 {
@@ -105,10 +108,8 @@ namespace Core.API
             try
             {
                 dynamic jsonObject = JsonConvert.DeserializeObject(json);
-                //1. Get Json             
-                JObject obj = JObject.Parse(json);
-                JArray arrBody = (JArray)obj["Body"];
 
+                //1.genaral
                 var msg = new WB.MESSAGE.Message();
                 msg.ObjectName = jsonObject.ObjectName;
                 msg.MsgAction = jsonObject.MsgAction;
@@ -116,13 +117,37 @@ namespace Core.API
                 {
                     string modid = jsonObject.ModId;
                     if (!string.IsNullOrEmpty(modid))
-                    msg.ModId = modid.Trim();
+                        msg.ModId = modid.Trim();
                 }
                 catch { }
-                //msg.Body = (ArrayList)jsonObject.Body;            
-                msg.Body = SysUtils.String2Arrray(arrBody.ToString().Replace("[", "").Replace("]", "").Replace("\r\n", "").Replace("\"", ""), ",");
 
-                //2.Process business
+                //2. Get body                       
+                try
+                {                    
+                    List<ModuleFieldInfo> modfld = jsonObject.Body.ToObject<List<ModuleFieldInfo>>();
+                    foreach(ModuleFieldInfo moduleFieldInfo in modfld)
+                    {
+                        //System.Collections.ArrayList arrDetail = new System.Collections.ArrayList();
+                        if (!string.IsNullOrEmpty(moduleFieldInfo.Value))
+                        {
+                            msg.Body.Add(moduleFieldInfo.FieldName);
+                            msg.Body.Add(moduleFieldInfo.Value);
+                        }
+                    }
+                }
+                catch(Exception ex)
+                {
+                }
+
+                if (msg.Body == null || msg.Body.Count == 0)
+                {
+                    JObject obj = JObject.Parse(json);
+                    JArray arrBody = (JArray)obj["Body"];
+                    //msg.Body = (ArrayList)jsonObject.Body;            
+                    msg.Body = SysUtils.String2Arrray(arrBody.ToString().Replace("[", "").Replace("]", "").Replace("\r\n", "").Replace("\"", ""), ",");
+                }
+
+                //3.Process business
                 if (jsonObject.MsgType == Constants.MSG_MNT_TYPE)
                 {
                     MaintenanceFacade maintenanceFacade = new MaintenanceFacade();
@@ -134,7 +159,7 @@ namespace Core.API
                     miscellaneousFacade.Process(ref msg);
                 }
 
-                //3.Return
+                //4.Return
                 var order = new {
                     Value = msg.Body
                 };
