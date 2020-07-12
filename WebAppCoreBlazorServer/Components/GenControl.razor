@@ -124,7 +124,7 @@
             </div>*@
 
         <div class="input-group">
-            <InputDate class="form-control" id='@field.FieldName' @bind-Value='@field.ValueDate' data-date-format="@(String.IsNullOrEmpty(field.FieldFormat)?"dd-MM-yyyy":field.FieldFormat)"></InputDate>
+            <InputDate class="form-control" id='@field.FieldName' @bind-Value='@field.ValueDate' data-date-format="@(String.IsNullOrEmpty(field.FieldFormat)?"dd/MM/yyyy":field.FieldFormat)"></InputDate>
             <label class="input-group-text"><i class="ik ik-calendar"></i></label>
             <ValidationMessage For="@(() => field.ValueDate)" />
         </div>
