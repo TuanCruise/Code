@@ -280,8 +280,8 @@ namespace WB.SYSTEM
                 if (objValue != null)
                 {                   
                     strValue = Convert.ToString(objValue).Trim();
-                    strValue = strValue.Replace("\"", "");
-                }
+                    //strValue = strValue.Replace("\"", "");
+                                    }
                 return strValue;
             }
             catch

@@ -158,10 +158,7 @@ namespace Host.BusinessFacade
 
                             //2.2 SAVE DETAIL                           
                             if (arrDefModFld.Count > 0)
-                            {
-                                ent.arrProperties = new ArrayList();
-                                ent.arrPK = new ArrayList();
-
+                            {                                
                                 ArrayList arrHeader = (ArrayList)arrDefModFld[0];
                                 ArrayList arrDetail = new ArrayList();
 
@@ -172,8 +169,8 @@ namespace Host.BusinessFacade
                                     ent.entityName = entity;
 
                                     string fldName = SysUtils.getProperty(arrHeader, arrDetail, "FLDNAME");                                   
-                                    string jsonValue = SysUtils.getValue(msg.Body, fldName).ToString();
-                                    
+                                    string jsonValue = SysUtils.CString(SysUtils.getValue(msg.Body, fldName));
+                                    if (string.IsNullOrEmpty(jsonValue)) break;
 
                                     //2.2.1 Convert jsonValue to Table or List<Model>
                                     //JArray arrBody = JArray.Parse(jsonValue);
@@ -186,8 +183,10 @@ namespace Host.BusinessFacade
                                         for (int j = 1; j < arrData.Count; j++)
                                         {
                                             ent.arrProperties = SysUtils.Property2Value( (ArrayList)arrData[j], (ArrayList)arrData[0]);
+                                            ent.arrPK = new ArrayList();
+
                                             //2.2.2.1 Update FKey from Pkey of Master
-                                            for(int k =0; k < arrMasterPkey.Count; k++ )
+                                            for (int k =0; k < arrMasterPkey.Count; k++ )
                                             {
                                                 string strPkey = arrMasterPkey[k].ToString();
                                                 ent.setProperty(strPkey, SysUtils.getValue(arrMasterProperties, strPkey));                                                
