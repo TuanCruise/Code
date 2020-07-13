@@ -156,11 +156,14 @@ namespace Host.BusinessFacade
                             ent.arrPK = ent.arrProperties;                            
                             ArrayList arrDefModFld = ent.Fetch("");
 
+                            ArrayList arrHeader = new ArrayList();
+                            ArrayList arrDetail = new ArrayList();
+
                             //2.2 SAVE DETAIL                           
                             if (arrDefModFld.Count > 0)
                             {                                
-                                ArrayList arrHeader = (ArrayList)arrDefModFld[0];
-                                ArrayList arrDetail = new ArrayList();
+                                arrHeader = (ArrayList)arrDefModFld[0];
+                                arrDetail = new ArrayList();
 
                                 for (int i = 1; i < arrDefModFld.Count; i++)
                                 {
@@ -228,11 +231,14 @@ namespace Host.BusinessFacade
                             }
 
 
-                            msg.Body = ent.getPKProperties();
+                           
                         }
+
+                        msg.Body = new ArrayList();
+                        ArrayList arrTemp = new ArrayList(); arrTemp.Add("CODE"); msg.Body.Add(arrTemp);
+                        arrTemp = new ArrayList(); arrTemp.Add("success"); msg.Body.Add(arrTemp);
                         
                         transaction.Complete();
-
                     }
                     catch (Exception ex)
                     {                      

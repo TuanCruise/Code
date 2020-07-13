@@ -156,9 +156,10 @@ namespace WebAppCoreBlazorServer.Service
                 var json = JsonConvert.SerializeObject(order);
 
                 //2. CALL HOST
-                var data = await SendMessage(json);
+                var tb = await SendMessage(json);
 
-                DataTable tb = SysUtils.Json2Table(data);
+                //DataTable tb = SysUtils.Json2Table(data);
+
                 //var moduleds = JsonConvert.DeserializeObject<string> (data);
                 //var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
                 //DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
@@ -176,6 +177,7 @@ namespace WebAppCoreBlazorServer.Service
                 var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(JsonConvert.SerializeObject(outPut));
                 DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
                 var moduledData = JsonConvert.DeserializeObject<List<dynamic>>(moduleds.Data);
+
                 return moduledData;
 
                 //return data;
@@ -230,8 +232,19 @@ namespace WebAppCoreBlazorServer.Service
 
                 var json = JsonConvert.SerializeObject(message);
 
-                var data = await SendMessage(json);
-                var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
+                var tb = await SendMessage(json);
+
+                var outPut = new RestOutput<string>();
+                outPut.Data = JsonConvert.SerializeObject(tb, Formatting.Indented, new JsonSerializerSettings { Converters = new[] { new DataSetConverter() } });
+                //string json = JsonConvert.SerializeObject(dataSet, Formatting.Indented, new JsonSerializerSettings { Converters = new[] { new Newtonsoft.Json.Converters.DataSetConverter() } });
+                outPut.ResultCode = 1;
+                outPut.Message = "";
+
+                //var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
+                var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(JsonConvert.SerializeObject(outPut));
+                DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
+                var moduledData = JsonConvert.DeserializeObject<List<dynamic>>(moduleds.Data);
+
                 return moduleds;
             }
             catch (Exception ex)
@@ -268,7 +281,16 @@ namespace WebAppCoreBlazorServer.Service
                 var json = JsonConvert.SerializeObject(order);
 
                 var data = await SendMessage(json);
-                var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
+                //var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
+                var outPut = new RestOutput<string>();
+                outPut.Data = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings { Converters = new[] { new DataSetConverter() } });                
+                outPut.ResultCode = 1;
+                outPut.Message = "";
+                
+                var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(JsonConvert.SerializeObject(outPut));
+                DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
+                var moduledData = JsonConvert.DeserializeObject<List<dynamic>>(moduleds.Data);
+
                 return moduleds;
             }
             catch (Exception ex)
@@ -305,7 +327,16 @@ namespace WebAppCoreBlazorServer.Service
                 var json = JsonConvert.SerializeObject(order);
 
                 var data = await SendMessage(json);
-                var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
+                //var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
+                var outPut = new RestOutput<string>();
+                outPut.Data = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings { Converters = new[] { new DataSetConverter() } });
+                outPut.ResultCode = 1;
+                outPut.Message = "";
+
+                var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(JsonConvert.SerializeObject(outPut));
+                DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
+                var moduledData = JsonConvert.DeserializeObject<List<dynamic>>(moduleds.Data);
+
                 return moduleds;
             }
             catch (Exception ex)
@@ -314,7 +345,7 @@ namespace WebAppCoreBlazorServer.Service
             }
         }
 
-        public async Task<string> SendMessage(string json)
+        public async Task<DataTable> SendMessage(string json)
         {
             try
             {
@@ -332,7 +363,7 @@ namespace WebAppCoreBlazorServer.Service
                 using (var client = new HttpClient())
                 {
                     var data = new StringContent(json, Encoding.UTF8, "application/json");
-                    var content = "";
+                    DataTable content =  null;
                     try
                     {
                         //var data = await client.GetAsync(uri);
@@ -345,7 +376,9 @@ namespace WebAppCoreBlazorServer.Service
 
                         if (responseMessage.StatusCode == HttpStatusCode.OK)
                         {
-                            content = result;
+                            //content = result;
+                            if (result != "null")
+                                content = SysUtils.Json2Table(result);
                         }
 
                     }
@@ -354,6 +387,7 @@ namespace WebAppCoreBlazorServer.Service
 
                         System.Diagnostics.Debug.WriteLine("hieu=" + e1.ToString());
                     }
+
                     return content;
 
                 }
