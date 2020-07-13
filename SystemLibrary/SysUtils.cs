@@ -4026,7 +4026,9 @@ namespace WB.SYSTEM
 
                     for (j = 0; j < col.GetLength(0); j++)
                     {
-                        aRow[j] = CString(col[j]);
+                        object obj = CString(col[j]);
+                        if(obj != null) obj = obj.ToString().Replace("\"", "");
+                        aRow[j] = CString(obj);
                     }
 
                     myTable.Rows.Add(aRow);
