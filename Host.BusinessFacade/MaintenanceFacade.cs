@@ -197,7 +197,12 @@ namespace Host.BusinessFacade
                                     }
                                     if (msg.MsgAction == WB.SYSTEM.Constants.MSG_UPDATE_ACTION)
                                     {
-                                        //2.2.2 Update
+                                        //2.2.2.1 Delete by FKey
+                                        ent.arrProperties = arrMasterProperties;
+                                        ent.arrPK = arrMasterPkey;
+                                        ent.Delete();
+
+                                        //2.2.2.2 Update
                                         for (int j = 1; j < arrData.Count; j++)
                                         {
                                             ent.arrProperties = SysUtils.Property2Value((ArrayList)arrData[0], (ArrayList)arrData[j]);
@@ -210,17 +215,13 @@ namespace Host.BusinessFacade
 
                                             ent.Update();
                                         }
-                                      
+
                                     }
                                     if (msg.MsgAction == WB.SYSTEM.Constants.MSG_DELETE_ACTION)
                                     {
-                                        //2.2.2.1 Update FKey from Pkey of Master
-                                        for (int k = 0; k < arrMasterPkey.Count; k++)
-                                        {
-                                            string strPkey = arrMasterPkey[k].ToString();
-                                            ent.setProperty(strPkey, ent.getProperty(strPkey));
-                                        }
-
+                                        //2.2.2.1 Delete by FKey
+                                        ent.arrProperties = arrMasterProperties;
+                                        ent.arrPK = arrMasterPkey;
                                         ent.Delete();
                                     }
                                 }
