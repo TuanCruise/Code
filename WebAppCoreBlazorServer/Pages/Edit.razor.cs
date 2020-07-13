@@ -139,27 +139,29 @@ namespace WebAppCoreBlazorServer.Pages
             }
             catch (Exception e)
             {
-
+                
             }
         }
         public async Task Save()
         {
-            ErrorValidate = new List<string>();
-            foreach (var item in moduleFieldInfo)
-            {
-                var validator = new Common.FluentValidation();
+            //Dongpv:FIX TO RUN
+            //ErrorValidate = new List<string>();
+            //foreach (var item in moduleFieldInfo)
+            //{
+            //    var validator = new Common.FluentValidation();
 
-                var rsErr = validator.Validate(item);
-                if (!rsErr.IsValid)
-                {
-                    ErrorValidate.AddRange(rsErr.Errors.Select(x => x.ErrorMessage));
-                }
-            }
-            if (ErrorValidate.Any())
-            {
+            //    var rsErr = validator.Validate(item);
+            //    if (!rsErr.IsValid)
+            //    {
+            //        ErrorValidate.AddRange(rsErr.Errors.Select(x => x.ErrorMessage));
+            //    }
+            //}
+            //if (ErrorValidate.Any())
+            //{
+            //    return;
+            //}
+            //Dongpv:FIX TO RUN
 
-                return;
-            }
             HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
 
             string validate = "";
@@ -175,7 +177,11 @@ namespace WebAppCoreBlazorServer.Pages
                 store = modMaintain.EditUpdateStore;
             }
             //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, fieldEdits));
-            var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, moduleFieldInfo));
+            //Dongpv:   
+            //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, moduleFieldInfo));
+            var excute = (await moduleService.SaveData(modId, store, keyEdit, moduleFieldInfo));
+            //Dongpv:
+
             if (excute.Data != "success")
             {
                 var err = excute.Data.GetError();
@@ -192,6 +198,7 @@ namespace WebAppCoreBlazorServer.Pages
                 }
 
             }
+
         }
         [CascadingParameter] Blazored.Modal.BlazoredModalInstance BlazoredModal { get; set; }
 
