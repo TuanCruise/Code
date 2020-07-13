@@ -58,24 +58,25 @@ namespace Host.BusinessFacade
                 }
                 else if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_SEARCH)
                 {
-                    if (msg.ModId != null)
-                    {
-                        //1.call MODMAINTAIN
-                        BusinessEntity ent = new BusinessEntity();
-                        ent.dbManager = dbManager;
-                        ent.entityName = "MODMAINTAIN";
-                        ent.setProperty("MODID", msg.ModId);
-                        ent.setPK("MODID", msg.ModId);
-                        ent.Load();
-                        ArrayList arrModMaintain = ent.arrProperties; //GetSQLQuery("SELECT * FROM MODMAINTAIN WHERE MODID ='" + msg.ModId + "'");
-                        string strStoreName = SysUtils.CString(SysUtils.getValue(arrModMaintain, "EDITSELECTSTORE"));
+                    //if (msg.ModId != null)
+                    //{
+                    //    //1.call MODMAINTAIN
+                    //    BusinessEntity ent = new BusinessEntity();
+                    //    ent.dbManager = dbManager;
+                    //    ent.entityName = "MODMAINTAIN";
+                    //    ent.setProperty("MODID", msg.ModId);
+                    //    ent.setPK("MODID", msg.ModId);
+                    //    ent.Load();
+                    //    ArrayList arrModMaintain = ent.arrProperties; //GetSQLQuery("SELECT * FROM MODMAINTAIN WHERE MODID ='" + msg.ModId + "'");
+                    //    string strStoreName = SysUtils.CString(SysUtils.getValue(arrModMaintain, "EDITSELECTSTORE"));
 
-                        //2.Call store
-                        msg.Body = GetStoreQuery(msg.Body, strStoreName);
-                    }
-                    else {
-                        GetSearch(ref msg);
-                    }
+                    //    //2.Call store
+                    //    msg.Body = GetStoreQuery(msg.Body, strStoreName);
+                    //}
+                    //else {
+                    //    GetSearch(ref msg);
+                    //}
+                    GetSearch(ref msg);
                 }
                 else if (msg.ObjectName.ToUpper() == Constants.OBJ_PROCEDURE_PAGING)
                 {
