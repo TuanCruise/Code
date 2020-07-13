@@ -449,6 +449,9 @@ namespace WebAppCoreBlazorServer.Service
         Task<List<TreeviewInfo>> GetDataTreeviewInfo(ParramModuleQuery query);
         //Dongpv
         Task<List<dynamic>> getQuery(Message msg);
+        //Dongpv
+        Task<List<dynamic>> getDetail(List<ModuleFieldInfo> fieldEdits);
+
         //Task<RestOutput<string>> SaveEditModule(string modId, string store, string keyEdit, List<ModuleFieldInfo> fieldEdits);
         Task<RestOutput<string>> SaveData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits);
         Task<RestOutput<string>> UpdateData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits);

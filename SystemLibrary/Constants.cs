@@ -46,6 +46,7 @@ namespace WB.SYSTEM
         public static string OBJ_MNT_CUSTOMER = "CUSTOMER";
         public static string OBJ_SEARCH = "OBJ_SEARCH";
         public static string OBJ_SQLQUERY = "SQLQUERY";
+        public static string OBJ_DETAIL = "OBJ_DETAIL";        
 
         public static string OBJ_PROCEDURE_PAGING = "PROCEDURE_PAGING";
         public static string OBJ_EXECUTESTOREPROCEDURE = "EXECUTESTOREPROCEDURE";

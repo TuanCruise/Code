@@ -56,6 +56,31 @@ namespace Host.BusinessFacade
                 {
                     msg.Body = this.GetSQLQuery(msg.getValue("SQLQUERY").ToString());
                 }
+                else if (msg.ObjectName.ToUpper() == Constants.OBJ_DETAIL)
+                {
+                    BusinessEntity ent = new BusinessEntity();
+                    ent.dbManager = dbManager;
+
+                    ent.entityName = "MODMAINTAIN";
+                    ent.arrProperties = new ArrayList();
+                    ent.arrPK = new ArrayList();
+                    ent.setProperty("MODID", msg.ModId);
+                    ent.setPK("MODID", msg.ModId);
+                    ent.Load();
+                    ArrayList arrModMaintain = ent.arrProperties;
+                    string strStoreName = SysUtils.CString(SysUtils.getValue(arrModMaintain, "VIEWSELECTSTORE"));
+
+                    //LOAD
+                    ent = new BusinessEntity();
+                    ent.dbManager = dbManager;
+                    ent.arrProperties = new ArrayList();
+                    ent.arrPK = new ArrayList();
+                    ent.entityName = strStoreName;
+                    ent.arrProperties = msg.Body;
+                    ent.arrPK = msg.Body;
+                    msg.Body = ent.Fetch("");                    
+
+                }
                 else if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_SEARCH)
                 {
                     //if (msg.ModId != null)

@@ -188,6 +188,61 @@ namespace WebAppCoreBlazorServer.Service
             }
         }
 
+        public async Task<List<dynamic>> getDetail(List<ModuleFieldInfo> fieldEdits) //ParramModuleQuery parram ModalParameters
+        {
+            try
+            {
+                //var json = JsonConvert.SerializeObject(obj);    
+                //var  json = JsonConvert.DeserializeObject<string>(apiResponse);
+                //ArrayList Body = new ArrayList(); Body.Add("pv_UserId"); Body.Add(userId);
+                //1. Convert obj to arraylist
+                              
+                var order = new 
+                {
+                    UserID = "0000",
+                    MsgIP = "00000",
+                    BranchID = "000",
+                    ObjectName = Constants.OBJ_DETAIL,
+                    MsgType = Constants.MSG_MISC_TYPE,
+                    MsgAction = Constants.MSG_SEARCH,
+                    Body = fieldEdits
+                };
+                
+                var json = JsonConvert.SerializeObject(order);
+
+                //2. CALL HOST
+                var tb = await SendMessage(json);
+
+                //DataTable tb = SysUtils.Json2Table(data);
+                //var moduleds = JsonConvert.DeserializeObject<string> (data);
+                //var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(data);
+                //DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
+                //var moduledData = JsonConvert.DeserializeObject<List<dynamic>>(moduleds.Data);
+                //var moduledData = JsonConvert.DeserializeObject<List<dynamic>>(moduleds);
+                // return moduledData;       
+                //DataTable dt = (DataTable)JsonConvert.DeserializeObject(data, (typeof(DataTable)));
+                var outPut = new RestOutput<string>();
+                outPut.Data = JsonConvert.SerializeObject(tb, Formatting.Indented, new JsonSerializerSettings { Converters = new[] { new DataSetConverter() } });
+                //string json = JsonConvert.SerializeObject(dataSet, Formatting.Indented, new JsonSerializerSettings { Converters = new[] { new Newtonsoft.Json.Converters.DataSetConverter() } });
+                outPut.ResultCode = 1;
+                outPut.Message = "";
+                //return JsonConvert.SerializeObject(outPut);
+
+                var moduleds = JsonConvert.DeserializeObject<RestOutput<string>>(JsonConvert.SerializeObject(outPut));
+                DataTable dt = (DataTable)JsonConvert.DeserializeObject(moduleds.Data, (typeof(DataTable)));
+                var moduledData = JsonConvert.DeserializeObject<List<dynamic>>(moduleds.Data);
+
+                return moduledData;
+
+                //return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public async Task<RestOutput<string>> SaveData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits)
         {
             try
