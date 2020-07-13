@@ -160,19 +160,19 @@
                                                             if (btnInColAction.IsCallModMaintain())
                                                             {
                                                                 var isView = btnInColAction.IsButtonView();
-                                                                <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(e=>Search.CallMod(callModId,Search.modId,String.Join(",",parBtn.Select(x=>x.FieldName)),paramTemp,isView))"><i class="ik ik-edit btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                                <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(e=>Search.CallMod(callModId,Search.modId,String.Join(",",parBtn.Select(x=>x.FieldName)),paramTemp,isView))"><i class="ik ik-edit btn-info"></i>@(@btnInColAction.ButtonName.GetLanguageBtn(ModuleInfoModel.LanguageInfo) ?? "")</button></li>
                                                             }
                                                             else
                                                             {
                                                                 var prrTemp = parBtn.Clone();// JsonConvert.DeserializeObject<List<ButtonParamInfo>>( JsonConvert.SerializeObject(parBtn));
-                                                                <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.Delete(callModId,prrTemp))"><i class="ik ik-delete btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                                <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.Delete(callModId,prrTemp))"><i class="ik ik-delete btn-info"></i>@(@btnInColAction.ButtonName.GetLanguageBtn(ModuleInfoModel.LanguageInfo) ?? "")</button></li>
                                                             }
                                                         }
                                                         else
                                                         {
                                                             if (btnInColAction.IsCallModMaintain())
                                                             {
-                                                                <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.CallMod(callModId,modId))"><i class="ik ik-plus btn-info"></i>@(@btnInColAction.ButtonName??"")</button></li>
+                                                                <li><button class="btn btn-info btn-search btn-flat @btnInColAction.ButtonName" @onclick="@(()=>Search.CallMod(callModId,modId))"><i class="ik ik-plus btn-info"></i>@(@btnInColAction.ButtonName.GetLanguageBtn(ModuleInfoModel.LanguageInfo) ?? "")</button></li>
                                                             }
                                                         }
                                                     }

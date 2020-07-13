@@ -126,24 +126,22 @@ namespace Core.API
                 {                    
                     List<ModuleFieldInfo> modfld = jsonObject.Body.ToObject<List<ModuleFieldInfo>>();
                     foreach(ModuleFieldInfo moduleFieldInfo in modfld)
-                    {
-                        //System.Collections.ArrayList arrDetail = new System.Collections.ArrayList();
+                    {                        
                         if (!string.IsNullOrEmpty(moduleFieldInfo.Value))
                         {
                             msg.Body.Add(moduleFieldInfo.FieldName);
-                            msg.Body.Add(moduleFieldInfo.Value);
+                            msg.Body.Add(moduleFieldInfo.Value.TrimEnd(','));
+
+                            if (msg.ModId == null) msg.ModId = moduleFieldInfo.ModuleID;
                         }
                     }
                 }
-                catch(Exception ex)
-                {
-                }
+                catch {}
 
                 if (msg.Body == null || msg.Body.Count == 0)
                 {
                     JObject obj = JObject.Parse(json);
-                    JArray arrBody = (JArray)obj["Body"];
-                    //msg.Body = (ArrayList)jsonObject.Body;            
+                    JArray arrBody = (JArray)obj["Body"];                         
                     msg.Body = SysUtils.String2Arrray(arrBody.ToString().Replace("[", "").Replace("]", "").Replace("\r\n", "").Replace("\"", ""), ",");
                 }
 
@@ -166,13 +164,22 @@ namespace Core.API
 
                 //json = JsonConvert.SerializeObject(order);
                 json = JsonConvert.SerializeObject(msg.Body);
-
-                return json;
+               
             }
             catch (RequestTimeoutException ex)
             {
-                throw ex;
+                ErrorHandler.Process(ex);
             }
+            catch (ErrorMessage ex)
+            {
+                ErrorHandler.Process(ex);
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.Process(ex);
+            }
+          
+            return json;
         }
     }
 }

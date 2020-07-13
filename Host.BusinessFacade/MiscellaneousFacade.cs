@@ -56,26 +56,62 @@ namespace Host.BusinessFacade
                 {
                     msg.Body = this.GetSQLQuery(msg.getValue("SQLQUERY").ToString());
                 }
-                else if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_SEARCH)
+                else if (msg.ObjectName.ToUpper() == Constants.OBJ_DETAIL)
                 {
-                    if (msg.ModId != null)
-                    {
-                        //1.call MODMAINTAIN
-                        BusinessEntity ent = new BusinessEntity();
-                        ent.dbManager = dbManager;
-                        ent.entityName = "MODMAINTAIN";
-                        ent.setProperty("MODID", msg.ModId);
-                        ent.setPK("MODID", msg.ModId);
-                        ent.Load();
-                        ArrayList arrModMaintain = ent.arrProperties; //GetSQLQuery("SELECT * FROM MODMAINTAIN WHERE MODID ='" + msg.ModId + "'");
-                        string strStoreName = SysUtils.CString(SysUtils.getValue(arrModMaintain, "EDITSELECTSTORE"));
+                    BusinessEntity ent = new BusinessEntity();
+                    ent.dbManager = dbManager;
 
+                    ent.entityName = "MODMAINTAIN";
+                    ent.arrProperties = new ArrayList();
+                    ent.arrPK = new ArrayList();
+                    ent.setProperty("MODID", msg.ModId);
+                    ent.setPK("MODID", msg.ModId);
+                    ent.Load();
+                    ArrayList arrModMaintain = ent.arrProperties;
+                    string strStoreName = SysUtils.CString(SysUtils.getValue(arrModMaintain, "VIEWSELECTSTORE"));
+
+                    //LOAD
+                    if (strStoreName.Substring(0, 3) != "SP_")
+                    {
+                        ent = new BusinessEntity();
+                        ent.dbManager = dbManager;
+                        ent.arrProperties = new ArrayList();
+                        ent.arrPK = new ArrayList();
+                        ent.entityName = strStoreName;
+                        ent.arrProperties = msg.Body;
+                        ent.arrPK = msg.Body;
+                        msg.Body = ent.Fetch("");
+                    }
+                    else
+                    {
+                        msg.ObjectName = strStoreName;
                         //2.Call store
                         msg.Body = GetStoreQuery(msg.Body, strStoreName);
                     }
-                    else {
-                        GetSearch(ref msg);
-                    }
+                }
+                else if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_SEARCH)
+                {
+                    //if (msg.ModId != null)
+                    //{
+                    //    //1.call MODMAINTAIN
+                    //    BusinessEntity ent = new BusinessEntity();
+                    //    ent.dbManager = dbManager;
+                    //    ent.entityName = "MODMAINTAIN";
+                    //    ent.setProperty("MODID", msg.ModId);
+                    //    ent.setPK("MODID", msg.ModId);
+                    //    ent.Load();
+                    //    ArrayList arrModMaintain = ent.arrProperties; //GetSQLQuery("SELECT * FROM MODMAINTAIN WHERE MODID ='" + msg.ModId + "'");
+                    //    string strStoreName = SysUtils.CString(SysUtils.getValue(arrModMaintain, "EDITSELECTSTORE"));
+
+                    //    //2.Call store
+                    //    msg.Body = GetStoreQuery(msg.Body, strStoreName);
+                    //}
+                    //else {
+                    //    GetSearch(ref msg);
+                    //}
+
+                    GetSearch(ref msg);
+
                 }
                 else if (msg.ObjectName.ToUpper() == Constants.OBJ_PROCEDURE_PAGING)
                 {

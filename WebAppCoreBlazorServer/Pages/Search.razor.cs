@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
+using WB.MESSAGE;
+using WB.SYSTEM;
 using WebAppCoreBlazorServer.BUS;
 using WebAppCoreBlazorServer.Common;
 using WebCore.Entities;
@@ -151,10 +153,37 @@ namespace WebAppCoreBlazorServer.Pages
                     {
                         query = String.Format(modSearch.QueryFormat, Schema);
                     }
-                    var dataGrid = await moduleService.LoadQueryModule(new ParramModuleQuery { Store = query });
+
+                    //Dongpv:
+                    //var dataGrid = await moduleService.LoadQueryModule(new ParramModuleQuery { Store = query });
+                    var moduleFields = moduleInfoModel.FieldsInfo.FirstOrDefault();
+                    if (modSearch.GroupModule == "004")
+                    {
+                        Message msg = new Message();
+                        msg.ObjectName = Constants.OBJ_SEARCH;
+                        msg.MsgType = Constants.MSG_MISC_TYPE;
+                        msg.MsgAction = Constants.MSG_SEARCH;
+
+                        msg.Body.Add("SearchObject");
+                        msg.Body.Add(moduleFields.Entity);
+                        msg.Body.Add("Condition");
+                        msg.Body.Add(" WHERE 1=1");
+                        msg.Body.Add("Page");
+                        msg.Body.Add(0);
+
+                        var dataGrid = await moduleService.getQuery(msg);
+                        DataSearch = dataGrid;
+                    }
+                    else
+                    {
+                        var dataGrid = await moduleService.LoadQueryModule(new ParramModuleQuery { Store = query });
+                        DataSearch = dataGrid;
+                    }
+                    //Dongpv:
 
                     //var dataGrid = await _moduleService.LoadQueryModule(new ParramModuleQuery { Store = modSearch.QueryFormat });
-                    DataSearch = dataGrid;
+                    ////Dongpv:
+                    //DataSearch = dataGrid;
 
                     btnInfos = moduleInfoModel.ButtonsInfo == null ? new List<ButtonInfo>() : moduleInfoModel.ButtonsInfo;
                     var moduleInfo = moduleInfoModel.ModulesInfo == null ? new ModuleInfo() : moduleInfoModel.ModulesInfo;
@@ -342,18 +371,54 @@ namespace WebAppCoreBlazorServer.Pages
 
                 //CurrPage = currPage;
                 //FieldSubmited = fieldEdits;
-                var dataGrid = await moduleService.LoadQueryModule(new ParramModuleQuery { Store = query });
-                //var dataGrid = await moduleService.LoadQueryModule(new ParramModuleQueryDynamicQuery { LogicConditionModels= SearchConditionInstances,SearchModuleInfo= modSearch });
-                //if (!string.IsNullOrEmpty(export))
-                //{
-                //    string pathSaveAs = Path.Combine(_hostingEnvironment.WebRootPath, String.Format("FileTemplate/TemplateExport_{0}.xls", DateTime.Now.ToString("dd-MM-yyyy")));
-                //    Data2ExcelFile(dataGrid, module.FieldsInfo, module, pathSaveAs);
-                //    return DownloadFile(pathSaveAs);
-                //}
-                DataSearch = dataGrid;
-                //int userId = int.Parse("0" + HttpContext.Session.GetString("UserId"));
-                //var groupModUser = await moduleService.GetGroupModByUserId(userId);
-                //ViewBag.RoleUser = groupModUser;
+                //Dongpv:
+                //var dataGrid = await moduleService.LoadQueryModule(new ParramModuleQuery { Store = query });
+                ////var dataGrid = await moduleService.LoadQueryModule(new ParramModuleQueryDynamicQuery { LogicConditionModels= SearchConditionInstances,SearchModuleInfo= modSearch });
+                ////if (!string.IsNullOrEmpty(export))
+                ////{
+                ////    string pathSaveAs = Path.Combine(_hostingEnvironment.WebRootPath, String.Format("FileTemplate/TemplateExport_{0}.xls", DateTime.Now.ToString("dd-MM-yyyy")));
+                ////    Data2ExcelFile(dataGrid, module.FieldsInfo, module, pathSaveAs);
+                ////    return DownloadFile(pathSaveAs);
+                ////}
+                //DataSearch = dataGrid;
+                ////int userId = int.Parse("0" + HttpContext.Session.GetString("UserId"));
+                ////var groupModUser = await moduleService.GetGroupModByUserId(userId);
+                ////ViewBag.RoleUser = groupModUser;
+                
+                var moduleFields = module.FieldsInfo.FirstOrDefault();
+
+                if (modSearch.GroupModule == "004")
+                {
+                    string strCondition = " WHERE 1=1 ";
+                    foreach (string parm in  parrams)
+                    {
+                        if (parm.IndexOf("N'%%'") == -1)
+                            strCondition += " AND " + parm;
+                    }
+
+                    Message msg = new Message();
+                    msg.ObjectName = Constants.OBJ_SEARCH;
+                    msg.MsgType = Constants.MSG_MISC_TYPE;
+                    msg.MsgAction = Constants.MSG_SEARCH;
+                    msg.ModId = modId;
+
+                    msg.Body.Add("SearchObject");
+                    msg.Body.Add(moduleFields.Entity);
+                    msg.Body.Add("Condition");
+                    msg.Body.Add(strCondition);
+                    msg.Body.Add("Page");
+                    msg.Body.Add(0);
+
+                    var dataGrid = await moduleService.getQuery(msg);
+                    DataSearch = dataGrid;
+                }
+                else
+                {
+                    var dataGrid = await moduleService.LoadQueryModule(new ParramModuleQuery { Store = query });
+                    DataSearch = dataGrid;
+                }
+                //Dongpv:
+
             }
             //return View("Search", modId);
         }
@@ -383,8 +448,12 @@ namespace WebAppCoreBlazorServer.Pages
             var dataExcute = await homeBus.LoadExcuteModule(modId);
             if (dataExcute != null)
             {
-                var excute = (await moduleService.DeleteModule(dataExcute.ExecuteStore, fieldDels));
-                if (excute.Data != "success")
+                //Dongpv: 
+                //var excute = (await moduleService.DeleteModule(dataExcute.ExecuteStore, fieldDels));
+                var excute = (await moduleService.DeleteData(modId, dataExcute.ExecuteStore, "", keyDels));
+                //Dongpv:
+
+                if (excute.Data != "success" )
                 {
                     var err = excute.Data.GetError();
                     var errText = await homeBus.GetErrText(err);

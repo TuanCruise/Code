@@ -122,6 +122,9 @@ namespace Host.BusinessFacade
                         }
                         else  //defaul: gen sql statement
                         {
+                            //CASE1: CALL PROCEDURE
+
+                            //CASE2: Auto gen SQL
                             BusinessEntity ent = new BusinessEntity();
                             ent.dbManager = dbManager;
                             //1.SAVE MASTER                           
@@ -156,11 +159,14 @@ namespace Host.BusinessFacade
                             ent.arrPK = ent.arrProperties;                            
                             ArrayList arrDefModFld = ent.Fetch("");
 
+                            ArrayList arrHeader = new ArrayList();
+                            ArrayList arrDetail = new ArrayList();
+
                             //2.2 SAVE DETAIL                           
                             if (arrDefModFld.Count > 0)
                             {                                
-                                ArrayList arrHeader = (ArrayList)arrDefModFld[0];
-                                ArrayList arrDetail = new ArrayList();
+                                arrHeader = (ArrayList)arrDefModFld[0];
+                                arrDetail = new ArrayList();
 
                                 for (int i = 1; i < arrDefModFld.Count; i++)
                                 {
@@ -215,7 +221,7 @@ namespace Host.BusinessFacade
 
                                             ent.Update();
                                         }
-                                      
+
                                     }
                                     if (msg.MsgAction == WB.SYSTEM.Constants.MSG_DELETE_ACTION)
                                     {
@@ -225,14 +231,14 @@ namespace Host.BusinessFacade
                                         ent.Delete();
                                     }
                                 }
-                            }
-
-
-                            msg.Body = ent.getPKProperties();
+                            }                           
                         }
+
+                        msg.Body = new ArrayList();
+                        ArrayList arrTemp = new ArrayList(); arrTemp.Add("Data"); msg.Body.Add(arrTemp);
+                        arrTemp = new ArrayList(); arrTemp.Add("success"); msg.Body.Add(arrTemp);
                         
                         transaction.Complete();
-
                     }
                     catch (Exception ex)
                     {                      
@@ -242,14 +248,12 @@ namespace Host.BusinessFacade
                 }
 
             }
-            catch (ErrorMessage er)
-            {
-                               
-                ErrorHandler.ProcessErr(er);                
+            catch (ErrorMessage ex)
+            {              
+                ErrorHandler.ProcessErr(ex);                
             }
             catch (Exception ex)
-            {
-                            
+            {               
                 ErrorHandler.ProcessErr(ex, Constants.ERROR_TYPE_EBANK, ErrorHandler.EBANK_SYSTEM_ERROR);
             }
             finally

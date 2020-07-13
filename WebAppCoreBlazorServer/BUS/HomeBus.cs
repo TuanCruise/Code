@@ -12,6 +12,7 @@ using WebCore.Entities;
 using WebModelCore.CodeInfo;
 using WB.MESSAGE;
 using WB.SYSTEM;
+using System.Collections;
 
 namespace WebAppCoreBlazorServer.BUS
 {
@@ -286,25 +287,39 @@ namespace WebAppCoreBlazorServer.BUS
                 msg.BranchID = "000";
                 msg.MsgIP = "000";
 
-                msg.ObjectName = Constants.OBJ_SEARCH;
+                msg.ObjectName = Constants.OBJ_DETAIL;
                 msg.MsgType = Constants.MSG_MISC_TYPE;
                 msg.MsgAction = Constants.MSG_SEARCH;
 
-                //string strParm = parram.ToString().Replace("[{", "").Replace("}]", "").Replace("\r\n", "").Replace("\"", "");
-                //SysUtils.String2ArrayList(ref msg.Body, strParm, ",", ":");
+                //Gen condition               
+                //foreach (var prr in fields)
+                //{
+                //    entity = prr.Entity;
 
-                foreach (var prr in fields)
-                {
-                    msg.Body.Add(prr.FieldName);
-                    string val = prr.Value;
-                    if (val != null)
-                    {
-                        val = val.ToString().TrimEnd(','); 
-                        msg.Body.Add(val.Trim());
-                    }
-                }
+                //    msg.Body.Add(prr.FieldName);
+                //    string val = prr.Value;
+                //    if (val != null)
+                //    {
+                //        val = val.ToString().TrimEnd(','); 
+                //        msg.Body.Add(val.Trim());
+                //    }
+                //}
 
-                var dataMaintainInfo = (await _moduleService.getQuery(msg));
+                //var message = new {
+                //    UserID = "0000",
+                //    IP = "00000",
+                //    BranchID = "000",
+                //    ModuleID = modId,
+                //    ModId = modId,
+                //    ObjectName = Constants.OBJ_DETAIL,
+                //    MsgType = Constants.MSG_MISC_TYPE,
+                //    MsgAction = Constants.MSG_SEARCH,
+                //    Body = fields
+                //};
+
+                var dataMaintainInfo = (await _moduleService.getDetail(fields));
+
+                //var dataMaintainInfo = (await _moduleService.getQuery(msg));
                 //Dongpv:Fix
 
                 result.DataControl = dataMaintainInfo;

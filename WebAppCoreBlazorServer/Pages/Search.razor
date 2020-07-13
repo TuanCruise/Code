@@ -82,7 +82,7 @@
                                         @{
                                             if (item.ButtonName.Contains(EDefModBtn.BTN_ADD.ToString().ToUpper()) && checkBtnEdits.Count() > 0 && (groupMods.Where(x => x.ModId == checkBtnEdits.First().CallModuleID).Count() > 0 || true))
                                             {
-                                                <button class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" @onclick="@(()=>CallMod(item.CallModuleID,modId))"><i class="fa fa-plus"></i>@item.ButtonName</button>
+                                                <button class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" @onclick="@(()=>CallMod(item.CallModuleID,modId))"><i class="fa fa-plus"></i>@item.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)</button>
                                             }
                                             @*else if (item.ButtonName.ToUpper() == EDefModBtn.BTN_DELETE.ToString().ToUpper() && groupMods.Where(x => x.ModId == checkBtnDels.First().CallModuleID).Count() > 0)
                                                 {
@@ -96,13 +96,13 @@
                                             }
                                             else if (item.ButtonName.ToUpper() == EDefModBtn.BTN_PRINT.ToString().ToUpper())
                                             {
-                                                <button class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" @onclick="@(()=>CallMod(item.CallModuleID,modId))"><i class="fa fa-plus"></i>@item.ButtonName</button>
+                                                <button class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" @onclick="@(()=>CallMod(item.CallModuleID,modId))"><i class="fa fa-plus"></i>@item.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)</button>
                                             }
                                             else if (groupMods.Where(x => x.ModId == item.CallModuleID).Count() > 0 || true)
                                             {
                                                 if (item.ButtonName.ToUpper() != EDefModBtn.BTN_DELETE.ToString().ToUpper())
                                                 {
-                                                    <button class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" @onclick="@(()=>CallMod(item.CallModuleID,modId))"><i class="fa fa-plus"></i>@item.ButtonName</button>
+                                                    <button class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" @onclick="@(()=>CallMod(item.CallModuleID,modId))"><i class="fa fa-plus"></i>@item.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)</button>
 
                                                     //<a href="@Url.Action("Index","Home",new {modId=item.CallModuleID} )" class="btn btn-default" id="btn@(item.ButtonName)" name="@item.ButtonName"> @item.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)</a>
                                                 }
