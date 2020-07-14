@@ -71,15 +71,23 @@ namespace Host.BusinessFacade
                     string strStoreName = SysUtils.CString(SysUtils.getValue(arrModMaintain, "VIEWSELECTSTORE"));
 
                     //LOAD
-                    ent = new BusinessEntity();
-                    ent.dbManager = dbManager;
-                    ent.arrProperties = new ArrayList();
-                    ent.arrPK = new ArrayList();
-                    ent.entityName = strStoreName;
-                    ent.arrProperties = msg.Body;
-                    ent.arrPK = msg.Body;
-                    msg.Body = ent.Fetch("");                    
-
+                    if (strStoreName.Substring(0, 3) != "SP_")
+                    {
+                        ent = new BusinessEntity();
+                        ent.dbManager = dbManager;
+                        ent.arrProperties = new ArrayList();
+                        ent.arrPK = new ArrayList();
+                        ent.entityName = strStoreName;
+                        ent.arrProperties = msg.Body;
+                        ent.arrPK = msg.Body;
+                        msg.Body = ent.Fetch("");
+                    }
+                    else
+                    {
+                        msg.ObjectName = strStoreName;
+                        //2.Call store
+                        msg.Body = GetStoreQuery(msg.Body, strStoreName);
+                    }
                 }
                 else if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_SEARCH)
                 {
@@ -101,7 +109,9 @@ namespace Host.BusinessFacade
                     //else {
                     //    GetSearch(ref msg);
                     //}
+
                     GetSearch(ref msg);
+
                 }
                 else if (msg.ObjectName.ToUpper() == Constants.OBJ_PROCEDURE_PAGING)
                 {

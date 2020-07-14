@@ -316,11 +316,12 @@ namespace WebAppCoreBlazorServer.Service
                 //var  json = JsonConvert.DeserializeObject<string>(apiResponse);
                 //ArrayList Body = new ArrayList(); Body.Add("pv_UserId"); Body.Add(userId);
                 //1. Convert obj to arraylist
-                ArrayList Body = new ArrayList();
-                foreach (ButtonParamInfo moduleFieldInfo in fieldEdits)
-                {
-                    Body.Add(moduleFieldInfo.FieldName); Body.Add(moduleFieldInfo.Value);
-                }
+
+                //ArrayList Body = new ArrayList();
+                //foreach (ButtonParamInfo moduleFieldInfo in fieldEdits)
+                //{
+                //    Body.Add(moduleFieldInfo.FieldName); Body.Add(moduleFieldInfo.Value);
+                //}
 
                 var order = new {
                     UserID = "0000",
@@ -330,7 +331,7 @@ namespace WebAppCoreBlazorServer.Service
                     ObjectName = enity,
                     MsgType = Constants.MSG_MNT_TYPE,
                     MsgAction = Constants.MSG_DELETE_ACTION,
-                    Body = Body
+                    Body = fieldEdits
                 };
 
                 var json = JsonConvert.SerializeObject(order);
@@ -361,12 +362,13 @@ namespace WebAppCoreBlazorServer.Service
                 //var json = JsonConvert.SerializeObject(obj);    
                 //var  json = JsonConvert.DeserializeObject<string>(apiResponse);
                 //ArrayList Body = new ArrayList(); Body.Add("pv_UserId"); Body.Add(userId);
+
                 //1. Convert obj to arraylist
-                ArrayList Body = new ArrayList();
-                foreach (ModuleFieldInfo moduleFieldInfo in fieldEdits)
-                {
-                    Body.Add(moduleFieldInfo.FieldName); Body.Add(moduleFieldInfo.Value);
-                }
+                //ArrayList Body = new ArrayList();
+                //foreach (ModuleFieldInfo moduleFieldInfo in fieldEdits)
+                //{
+                //    Body.Add(moduleFieldInfo.FieldName); Body.Add(moduleFieldInfo.Value);
+                //}
 
                 var order = new {
                     UserID = "0000",
@@ -376,7 +378,7 @@ namespace WebAppCoreBlazorServer.Service
                     ObjectName = enity,
                     MsgType = Constants.MSG_MNT_TYPE,
                     MsgAction = Constants.MSG_UPDATE_ACTION,
-                    Body = Body
+                    Body = fieldEdits
                 };
 
                 var json = JsonConvert.SerializeObject(order);

@@ -122,6 +122,9 @@ namespace Host.BusinessFacade
                         }
                         else  //defaul: gen sql statement
                         {
+                            //CASE1: CALL PROCEDURE
+
+                            //CASE2: Auto gen SQL
                             BusinessEntity ent = new BusinessEntity();
                             ent.dbManager = dbManager;
                             //1.SAVE MASTER                           

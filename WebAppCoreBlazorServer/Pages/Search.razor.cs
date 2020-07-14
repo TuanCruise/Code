@@ -448,7 +448,11 @@ namespace WebAppCoreBlazorServer.Pages
             var dataExcute = await homeBus.LoadExcuteModule(modId);
             if (dataExcute != null)
             {
-                var excute = (await moduleService.DeleteModule(dataExcute.ExecuteStore, fieldDels));
+                //Dongpv: 
+                //var excute = (await moduleService.DeleteModule(dataExcute.ExecuteStore, fieldDels));
+                var excute = (await moduleService.DeleteData(modId, dataExcute.ExecuteStore, "", keyDels));
+                //Dongpv:
+
                 if (excute.Data != "success")
                 {
                     var err = excute.Data.GetError();
