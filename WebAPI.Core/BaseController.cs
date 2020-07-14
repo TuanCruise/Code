@@ -136,9 +136,7 @@ namespace Core.API
                         }
                     }
                 }
-                catch(Exception ex)
-                {
-                }
+                catch {}
 
                 if (msg.Body == null || msg.Body.Count == 0)
                 {
@@ -166,13 +164,22 @@ namespace Core.API
 
                 //json = JsonConvert.SerializeObject(order);
                 json = JsonConvert.SerializeObject(msg.Body);
-
-                return json;
+               
             }
             catch (RequestTimeoutException ex)
             {
-                throw ex;
+                ErrorHandler.Process(ex);
             }
+            catch (ErrorMessage ex)
+            {
+                ErrorHandler.Process(ex);
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.Process(ex);
+            }
+          
+            return json;
         }
     }
 }

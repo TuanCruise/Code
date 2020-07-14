@@ -453,7 +453,7 @@ namespace WebAppCoreBlazorServer.Pages
                 var excute = (await moduleService.DeleteData(modId, dataExcute.ExecuteStore, "", keyDels));
                 //Dongpv:
 
-                if (excute.Data != "success")
+                if (excute.Data != "success" )
                 {
                     var err = excute.Data.GetError();
                     var errText = await homeBus.GetErrText(err);

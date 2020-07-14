@@ -231,14 +231,11 @@ namespace Host.BusinessFacade
                                         ent.Delete();
                                     }
                                 }
-                            }
-
-
-                           
+                            }                           
                         }
 
                         msg.Body = new ArrayList();
-                        ArrayList arrTemp = new ArrayList(); arrTemp.Add("CODE"); msg.Body.Add(arrTemp);
+                        ArrayList arrTemp = new ArrayList(); arrTemp.Add("Data"); msg.Body.Add(arrTemp);
                         arrTemp = new ArrayList(); arrTemp.Add("success"); msg.Body.Add(arrTemp);
                         
                         transaction.Complete();
@@ -251,14 +248,12 @@ namespace Host.BusinessFacade
                 }
 
             }
-            catch (ErrorMessage er)
-            {
-                               
-                ErrorHandler.ProcessErr(er);                
+            catch (ErrorMessage ex)
+            {              
+                ErrorHandler.ProcessErr(ex);                
             }
             catch (Exception ex)
-            {
-                            
+            {               
                 ErrorHandler.ProcessErr(ex, Constants.ERROR_TYPE_EBANK, ErrorHandler.EBANK_SYSTEM_ERROR);
             }
             finally
