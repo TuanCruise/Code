@@ -132,6 +132,7 @@ namespace WebAppCoreBlazorServer.Service
                 //    }
                 //}
 
+
                 //ModuleID = modId,
                 Body.Add("SearchObject");
                 Body.Add("CUSTOMER");

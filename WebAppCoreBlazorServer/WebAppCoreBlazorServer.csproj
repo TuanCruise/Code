@@ -870,7 +870,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\upload\" />
+    <Folder Include="wwwroot\upload\single\" />
   </ItemGroup>
 
 </Project>
