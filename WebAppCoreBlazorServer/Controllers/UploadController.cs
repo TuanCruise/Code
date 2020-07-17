@@ -55,6 +55,20 @@ namespace WebAppCoreBlazorServer.Controllers
             }
         }
 
+        [HttpPost("upload/{id}")]
+        public IActionResult Post(IFormFile[] files, int id)
+        {
+            try
+            {
+                // Put your code here
+                return StatusCode(200);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         public async Task UploadFile(IFormFile file)
         {
             try

@@ -58,7 +58,8 @@
             events.Clear();
             foreach (var file in args.Files)
             {
-                events.Add(DateTime.Now, $"Uploaded: {file.Name} / {file.Size} bytes");
+                //events.Add(DateTime.Now, $"Uploaded: {file.Name} / {file.Size} bytes");
+                events.Add(DateTime.Now, $"Uploaded: {file.Name} ");
             }
         }
     }
