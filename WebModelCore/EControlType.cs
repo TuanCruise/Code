@@ -30,6 +30,9 @@ namespace WebModelCore {
         //dongpv:upload image
         [Description("Upload file")]
         UF,
-        //dongpv:upload image
+        //dongpv:lookup data
+        [Description("Looup data")]
+        LV,
+        
     }
 }
