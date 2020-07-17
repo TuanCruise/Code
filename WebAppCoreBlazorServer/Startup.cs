@@ -90,6 +90,8 @@ namespace WebAppCoreBlazorServer
             app.UseRouting();
 
             app.UseEndpoints(endpoints => {
+                //dongpv:upload image
+                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });

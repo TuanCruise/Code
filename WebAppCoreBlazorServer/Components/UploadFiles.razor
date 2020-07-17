@@ -10,7 +10,7 @@
         <RadzenUpload Multiple="true" Url="upload/multiple" Style="margin-bottom: 20px;"
                       Progress="@((args) => OnProgress(args, "Multiple files upload"))" />
         <br />*@
-        <h6>Upload images only</h6>
+        @*<h6>Upload images only</h6>*@
         <RadzenUpload Multiple="true" Accept="image/*" Url="upload/multiple" Style="margin-bottom: 20px;"
                       Progress="@((args) => OnProgress(args, "Images only upload"))" />
         <br />
@@ -18,10 +18,10 @@
         <RadzenUpload Multiple="true" Accept="image/*" Url=@($"upload/{1}") Style="margin-bottom: 20px;"
                       Progress="@((args) => OnProgress(args, "Upload with additional parameter"))" />
         <br />*@
-        <h6>Manual Upload</h6>
+        @*<h6>Manual Upload</h6>
         <RadzenUpload @ref="upload" Auto="false" Url="upload/single" Style="margin-bottom: 20px;"
                       Progress="@((args) => OnProgress(args, "Manual Upload"))" />
-        <RadzenButton Text="Upload" Click="@(args => upload.Upload())" />
+        <RadzenButton Text="Upload" Click="@(args => upload.Upload())" />*@
         <br />
         @*<h3>Upload completed</h3>
         <RadzenUpload Url="upload/single" Style="margin-bottom: 20px;"
