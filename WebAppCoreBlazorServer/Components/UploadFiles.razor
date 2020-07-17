@@ -1,0 +1,70 @@
+﻿@page "/edit"
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Single file upload</h3>
+        <RadzenUpload Url="upload/single" Style="margin-bottom: 20px;"
+                      Progress="@((args) => OnProgress(args, "Single file upload"))" />
+        <br />
+        <h3>Multiple files upload</h3>
+        <RadzenUpload Multiple="true" Url="upload/multiple" Style="margin-bottom: 20px;"
+                      Progress="@((args) => OnProgress(args, "Multiple files upload"))" />
+        <br />
+        <h3>Upload images only</h3>
+        <RadzenUpload Multiple="true" Accept="image/*" Url="upload/multiple" Style="margin-bottom: 20px;"
+                      Progress="@((args) => OnProgress(args, "Images only upload"))" />
+        <br />
+        <h3>Upload with additional parameter</h3>
+        <RadzenUpload Multiple="true" Accept="image/*" Url=@($"upload/{1}") Style="margin-bottom: 20px;"
+                      Progress="@((args) => OnProgress(args, "Upload with additional parameter"))" />
+        <br />
+        <h3>Manual Upload</h3>
+        <RadzenUpload @ref="upload" Auto="false" Url="upload/single" Style="margin-bottom: 20px;"
+                      Progress="@((args) => OnProgress(args, "Manual Upload"))" />
+        <RadzenButton Text="Upload" Click="@(args => upload.Upload())" />
+        <br />
+        <h3>Upload completed</h3>
+        <RadzenUpload Url="upload/single" Style="margin-bottom: 20px;"
+                      Complete="@Completed" />
+        <br />
+    </div>
+    <div class="col-md-6">
+        <h3>Events</h3>
+        <RadzenCard style="overflow: auto;height:500px;">
+            <RadzenProgressBar Value="@progress" Unit="@info" Visible="@(progress > 0)" Style="margin-bottom: 20px" />
+            @foreach (var e in events.OrderByDescending(i => i.Key))
+            {
+                @e.Value
+                <br />
+            }
+        </RadzenCard>
+    </div>
+</div>
+
+@code {
+    RadzenUpload upload;
+
+    int progress;
+    string info;
+    Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
+
+    void OnProgress(UploadProgressArgs args, string name)
+    {
+        this.info = $"% '{name}' / {args.Loaded} of {args.Total} bytes.";
+        this.progress = args.Progress;
+
+        if (args.Progress == 100)
+        {
+            events.Clear();
+            foreach (var file in args.Files)
+            {
+                events.Add(DateTime.Now, $"Uploaded: {file.Name} / {file.Size} bytes");
+            }
+        }
+    }
+
+    void Completed(UploadCompleteEventArgs args)
+    {
+        events.Add(DateTime.Now, $"Server response: {args.RawResponse}");
+    }
+}

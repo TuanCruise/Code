@@ -27,6 +27,9 @@ namespace WebModelCore {
         TAB,
         [Description("GRID EDIT")]
         GE,
-
+        //dongpv:upload image
+        [Description("Upload file")]
+        UF,
+        //dongpv:upload image
     }
 }

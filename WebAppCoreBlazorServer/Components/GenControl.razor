@@ -161,4 +161,10 @@
     {
         <GridEditComponent DataComboBoxs="@dataComboBoxs" ModuleInfo="@ModuleInfo" Field="@field" Fields="@fields" LanguageInfos="languageInfos" ModName="@modName"></GridEditComponent>
     }
+    //dongpv:upload image
+    else if (field.ControlType == EControlType.UF.ToString())
+    {
+        <UploadFiles></UploadFiles>
+    }
+    //dongpv:upload image
 }

@@ -2,10 +2,14 @@
 @inject IJSRuntime JSRuntime
 @using WebAppCoreBlazorServer.Components
 @inject NavigationManager NavigationManager
-@inject AuthenticationStateProvider AuthenticationStateProvider 
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @using WebAppCoreBlazorServer.Data
 @using WebAppCoreBlazorServer.Pages
 <Blazored.Modal.BlazoredModal />
+@*//dongpv:upload image*@
+<RadzenDialog />
+<RadzenNotification />
+@*//dongpv:upload image*@
 
 <div class="wrapper col-12">
     <header class="header-top" header-theme="light">
@@ -112,14 +116,14 @@
         <div class="main-content">
             @Body
             @*<AuthorizeView>
-                <Authorized>
-                    <button><a href="/" class="col-3" @onclick="(()=> Logout())">Logout</a></button>
-                </Authorized>
-                <NotAuthorized>
-                    <button><a href="/register" class="col-3">Register</a></button>
-                    <button><a href="/login" class="col-3">Login</a></button>
-                </NotAuthorized>
-            </AuthorizeView>*@
+                    <Authorized>
+                        <button><a href="/" class="col-3" @onclick="(()=> Logout())">Logout</a></button>
+                    </Authorized>
+                    <NotAuthorized>
+                        <button><a href="/register" class="col-3">Register</a></button>
+                        <button><a href="/login" class="col-3">Login</a></button>
+                    </NotAuthorized>
+                </AuthorizeView>*@
         </div>
 
         <aside class="right-sidebar">
@@ -364,7 +368,7 @@
     }
     public void Logout()
     {
-         ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsLoggedOut();
+        ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsLoggedOut();
         NavigationManager.NavigateTo("");
     }
 
