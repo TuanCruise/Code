@@ -146,7 +146,6 @@
                                 <WebAppCoreBlazorServer.Pages.Edit modId="@item.CallModId" modSearchId="" />
                             </div>
                         </TabPage>
-
                     }
                 }
             }
@@ -164,12 +163,12 @@
     //dongpv:upload image
     else if (field.ControlType == EControlType.UF.ToString())
     {
-        <UploadFiles></UploadFiles>
+        <UploadFiles ModuleInfo="@ModuleInfo"  Field="@field"></UploadFiles>
     }
     //dongpv:lookup data
     else if (field.ControlType == EControlType.LV.ToString())
     {
-        <LookupData></LookupData>
+        <LookupData ModuleInfo="@ModuleInfo"  Field="@field"></LookupData>
     }
     
 }

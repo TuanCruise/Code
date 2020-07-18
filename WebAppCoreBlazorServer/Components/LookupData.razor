@@ -1,4 +1,7 @@
 ﻿@page "/dialog"
+@using WebCore.Entities;
+@using WebModelCore;
+
 @inject DialogService dialogService
 
 <div class="row">
@@ -15,10 +18,10 @@
     <div class="col-md-6">
         @*<h3>Dialog</h3>*@
         @*<RadzenButton Text=@($"Show OrderID: {orderID} details") Click="@(args => dialogService.Open<WebAppCoreBlazorServer.Pages.Search>($"modId {orderID}",
-        new Dictionary<string, object>() { { "OrderID", orderID } },
-        new DialogOptions(){ Width = "700px", Height = "530px" }))" />*@
-        <RadzenButton Text=@($"Show OrderID: {orderID} details") Click="@(args => dialogService.Open<WebAppCoreBlazorServer.Pages.Search>($"moduleInfoModel {orderID}",
-        new Dictionary<string, object>() { { "modId", orderID } },
+            new Dictionary<string, object>() { { "OrderID", orderID } },
+            new DialogOptions(){ Width = "700px", Height = "530px" }))" />*@
+        <RadzenButton Text="..." Click="@(args => dialogService.Open<WebAppCoreBlazorServer.Pages.Search>($"modId {modId}",
+        new Dictionary<string, object>() { { "modId", modId } },
         new DialogOptions(){ Width = "700px", Height = "530px" }))" />
 
         @*<h3 style="margin-top: 20px;">Simple Dialog</h3>*@
@@ -26,38 +29,47 @@
     </div>
 </div>
 
-    @code {
+@code {
 
-        string orderID = "10248";
+    [Parameter]
+    public ModuleFieldInfo Field { get; set; }
 
-        Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
+    [Parameter]
+    public ModuleInfoModel ModuleInfo { get; set; }
 
-        protected override void OnInitialized()
-        {
-            dialogService.OnOpen += Open;
-            dialogService.OnClose += Close;
-        }
+    string modId = "03901";
 
-        void Open(string title, Type type, Dictionary<string, object> parameters, DialogOptions options)
-        {
-            events.Add(DateTime.Now, "Dialog opened");
-            StateHasChanged();
-        }
+    Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
 
-        void Close(dynamic result)
-        {
-            events.Add(DateTime.Now, "Dialog closed. Result: " + result);
-            StateHasChanged();
-        }
-
-        async Task ShowSimpleDialog() => await dialogService.OpenAsync("Simple Dialog", ds =>
-        @<RadzenCard Style="padding: 20px;">
-            <p Style="margin-bottom: 10px;">Confirm?</p>
-            <div class="row">
-                <div class="col-md-12">
-                    <RadzenButton Text="Ok" Click="()=> ds.Close(true)" Style="margin-bottom: 10px; width: 150px" />
-                    <RadzenButton Text="Cancel" Click="()=> ds.Close(false)" ButtonStyle="ButtonStyle.Secondary" Style="margin-bottom: 10px; width: 150px" />
-                </div>
-            </div>
-        </RadzenCard>);
+    protected override void OnInitialized()
+    {
+        dialogService.OnOpen += Open;
+        dialogService.OnClose += Close;
     }
+
+    void Open(string title, Type type, Dictionary<string, object> parameters, DialogOptions options)
+    {
+        modId = Field.ModuleID;
+
+        events.Add(DateTime.Now, "Dialog opened");
+        StateHasChanged();
+    }
+
+    void Close(dynamic result)
+    {
+        //events.Add(DateTime.Now, "Dialog closed. Result: " + result);
+        events.Add(DateTime.Now, result);
+        StateHasChanged();
+    }
+
+    async Task ShowSimpleDialog() => await dialogService.OpenAsync("Simple Dialog", ds =>
+    @<RadzenCard Style="padding: 20px;">
+        <p Style="margin-bottom: 10px;">Confirm?</p>
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenButton Text="Ok" Click="()=> ds.Close(true)" Style="margin-bottom: 10px; width: 150px" />
+                <RadzenButton Text="Cancel" Click="()=> ds.Close(false)" ButtonStyle="ButtonStyle.Secondary" Style="margin-bottom: 10px; width: 150px" />
+            </div>
+        </div>
+    </RadzenCard>);
+}

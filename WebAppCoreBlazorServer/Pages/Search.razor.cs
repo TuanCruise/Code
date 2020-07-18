@@ -22,6 +22,10 @@ namespace WebAppCoreBlazorServer.Pages
 {
     public partial class Search
     {
+        //Dongpv:look updata
+        //[Parameter]
+        //public Dictionary<string, object> mod { get; set; }
+
         private EditContext editContext;
         [Parameter]
         public string modId { get; set; } = "03901";
@@ -30,7 +34,10 @@ namespace WebAppCoreBlazorServer.Pages
         public string Title { get; set; } = "";
         private string Schema { get; set; } = "audit";
         public List<CheckBoxModel> CheckBoxModels { get; set; }
+        
+        [Parameter]
         public ModuleInfoModel moduleInfoModel { get; set; } = new ModuleInfoModel();
+        
         public ModuleInfoModel ModuleInfo { get; set; } = new ModuleInfoModel();
         public List<ModuleFieldInfo> moduleFieldInfo { get; set; } = new List<ModuleFieldInfo>();
         public List<ModuleFieldInfo> lstControl { get; set; } = new List<ModuleFieldInfo>();
