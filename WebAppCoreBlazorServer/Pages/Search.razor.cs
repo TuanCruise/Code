@@ -605,6 +605,7 @@ namespace WebAppCoreBlazorServer.Pages
                 {
                     NavManager.NavigateTo(String.Format("/Edit/{0}/{1}/{2}/{3}/{4}", callModId, modSearchId, fieldNameEdit, parram, pedit));
                 }
+
             }
         }
     }
