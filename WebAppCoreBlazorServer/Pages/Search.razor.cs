@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +25,9 @@ namespace WebAppCoreBlazorServer.Pages
     {
         //Dongpv:look updata
         //[Parameter]
-        //public Dictionary<string, object> mod { get; set; }
+        //public Dictionary<string, object> mod { get; set; }        
+        [Parameter] public string OrderID { get; set; }
+        //Dongpv:look updata
 
         private EditContext editContext;
         [Parameter]
@@ -87,6 +90,17 @@ namespace WebAppCoreBlazorServer.Pages
                 //    return RedirectToAction("Login", "Home");
                 //    NavigationManager.NavigateTo("PageToRedirect");
                 //}
+                //Dongpv:look updata
+                if (!string.IsNullOrEmpty(modId) && !string.IsNullOrEmpty(OrderID))
+                {
+                    ArrayList arrDetail = new ArrayList();                                        
+                    SysUtils.String2ArrayList(ref arrDetail, OrderID, "@", "=");
+                    modId = SysUtils.getValue(arrDetail, "MODID").ToString();
+                    //Fix
+                    modId = "03" + modId.Substring(2, 3);
+                }
+                //Dongpv:look updata
+
                 CheckBoxModels = new List<CheckBoxModel>();
                 lstControl = new List<ModuleFieldInfo>();
                 moduleFieldInfo = new List<ModuleFieldInfo>();

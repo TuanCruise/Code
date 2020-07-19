@@ -18,11 +18,19 @@
     <div class="col-md-6">
         @*<h3>Dialog</h3>*@
         @*<RadzenButton Text=@($"Show OrderID: {orderID} details") Click="@(args => dialogService.Open<WebAppCoreBlazorServer.Pages.Search>($"modId {orderID}",
-            new Dictionary<string, object>() { { "OrderID", orderID } },
-            new DialogOptions(){ Width = "700px", Height = "530px" }))" />*@
-        <RadzenButton Text="..." Click="@(args => dialogService.Open<WebAppCoreBlazorServer.Pages.Search>($"modId {modId}",
+        new Dictionary<string, object>() { { "OrderID", orderID } },
+        new DialogOptions(){ Width = "700px", Height = "530px" }))" />*@
+        @*<RadzenButton Text="..." Click="@(args => dialogService.Open<WebAppCoreBlazorServer.Pages.Search>($"modId {modId}",
         new Dictionary<string, object>() { { "modId", modId } },
-        new DialogOptions(){ Width = "700px", Height = "530px" }))" />
+        new DialogOptions(){ Width = "700px", Height = "530px" }))" />*@
+
+        @*<RadzenButton Text="..." Click="@(args => dialogService.Open<WebAppCoreBlazorServer.Pages.Search>($"Field {Field}",
+        new Dictionary<string, object>() { { "Field", Field } },
+        new DialogOptions(){ Width = "700px", Height = "530px" }))" />*@
+
+        <RadzenButton Text="..." Click="@(args => dialogService.Open<WebAppCoreBlazorServer.Pages.Search>($"OrderID {FieldName}",
+        new Dictionary<string, object>() { { "OrderID", FieldName } },
+        new DialogOptions(){ Width = "900px", Height = "800px" }))" />
 
         @*<h3 style="margin-top: 20px;">Simple Dialog</h3>*@
         <RadzenButton Text=@($"Tìm kiếm") Click="@ShowSimpleDialog" Visible="false" />
@@ -37,7 +45,8 @@
     [Parameter]
     public ModuleInfoModel ModuleInfo { get; set; }
 
-    string modId = "03901";
+    [Parameter]
+    public string FieldName { get; set; }
 
     Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
 
@@ -49,7 +58,7 @@
 
     void Open(string title, Type type, Dictionary<string, object> parameters, DialogOptions options)
     {
-        modId = Field.ModuleID;
+        //orderID = Field.ModuleID;
 
         events.Add(DateTime.Now, "Dialog opened");
         StateHasChanged();
