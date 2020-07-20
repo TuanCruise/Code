@@ -83,23 +83,22 @@ namespace WebAppCoreBlazorServer.Service
             try
             {
                 //Dongpv:20/07/2020
-                if (url == "Module/ExcuteStore2DataTable2")
+                if (url == "Module/ExcuteStore2DataTable")
                 {
+                    ParramModuleQuery query = (ParramModuleQuery)obj;
+
                     Message msg = new Message();
                     msg.ObjectName = Constants.OBJ_SEARCH;
                     msg.MsgType = Constants.MSG_MISC_TYPE;
                     msg.MsgAction = Constants.MSG_SEARCH;
 
-                    string entity = "";
-
                     msg.Body.Add("SearchObject");
-                    msg.Body.Add(entity);
-                    msg.Body.Add("Parm");
-                    msg.Body.Add(" WHERE 1=1");
+                    msg.Body.Add(query.Store);
+                    msg.Body.Add("Condition");
+                    msg.Body.Add(" WHERE 1=0");
                     msg.Body.Add("Page");
                     msg.Body.Add(0);
               
-
                     var json = JsonConvert.SerializeObject(msg);
 
                     var result = await SendMessage(json);
