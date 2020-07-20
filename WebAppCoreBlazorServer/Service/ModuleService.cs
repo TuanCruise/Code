@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using WB.MESSAGE;
+using WB.SYSTEM;
 using WebCore.Entities;
 using WebModelCore;
 using WebModelCore.CodeInfo;
@@ -152,9 +154,25 @@ namespace WebAppCoreBlazorServer.Service
         {
             try
             {
+                //Dongpv:20/07/2020
                 var url = string.Format("Module/LoadDefModByTypeValue");
                 var data = await PostApi(url, list);
                 var moduleds = JsonConvert.DeserializeObject<RestOutput<List<CodeInfoModel>>>(data);
+
+                //Message msg = new Message();
+                //msg.ObjectName = Constants.OBJ_SEARCH;
+                //msg.MsgType = Constants.MSG_MISC_TYPE;
+                //msg.MsgAction = Constants.MSG_SEARCH;
+
+                //msg.Body.Add("SearchObject");
+                //msg.Body.Add(list.First<CodeInfoParram>().ListSource);
+                //msg.Body.Add("Condition");
+                //msg.Body.Add(" WHERE 1=1");
+                //msg.Body.Add("Page");
+                //msg.Body.Add(0);
+                //var moduleds = await getQuery();
+
+                //Dongpv:20/07/2020
                 return moduleds;
             }
             catch (Exception ex)
@@ -186,7 +204,7 @@ namespace WebAppCoreBlazorServer.Service
         public async Task<DataTable> Store2DataTable(ParramModuleQuery query)
         {
             try
-            {
+            {                
                 var url = string.Format("Module/ExcuteStore2DataTable");
                 var data = await PostApi(url, query);
                 var dataQuery = JsonConvert.DeserializeObject<RestOutput<string>>(data);
@@ -194,6 +212,8 @@ namespace WebAppCoreBlazorServer.Service
                 {
                     return JsonConvert.DeserializeObject<DataTable>(dataQuery.Data);
                 }
+                
+
                 return null;
             }
             catch (Exception ex)
@@ -450,7 +470,7 @@ namespace WebAppCoreBlazorServer.Service
         //Dongpv
         Task<List<dynamic>> getQuery(Message msg);
         //Dongpv
-        Task<List<dynamic>> getDetail(List<ModuleFieldInfo> fieldEdits);
+        Task<List<dynamic>> getDetail(string modId, string modSearchId, List<ModuleFieldInfo> fieldEdits);
 
         //Task<RestOutput<string>> SaveEditModule(string modId, string store, string keyEdit, List<ModuleFieldInfo> fieldEdits);
         Task<RestOutput<string>> SaveData(string modId, string enity, string keyEdit, List<ModuleFieldInfo> fieldEdits);

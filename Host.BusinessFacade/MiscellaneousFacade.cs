@@ -71,7 +71,7 @@ namespace Host.BusinessFacade
                     string strStoreName = SysUtils.CString(SysUtils.getValue(arrModMaintain, "VIEWSELECTSTORE"));
 
                     //LOAD
-                    if (strStoreName.Substring(0, 3) != "SP_")
+                    if (!string.IsNullOrEmpty(strStoreName) && strStoreName.Substring(0, 3) != "SP_")
                     {
                         ent = new BusinessEntity();
                         ent.dbManager = dbManager;
@@ -91,22 +91,24 @@ namespace Host.BusinessFacade
                 }
                 else if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_SEARCH)
                 {
+                    //string entity = msg.getValue();
                     //if (msg.ModId != null)
                     //{
                     //    //1.call MODMAINTAIN
-                    //    BusinessEntity ent = new BusinessEntity();
-                    //    ent.dbManager = dbManager;
-                    //    ent.entityName = "MODMAINTAIN";
-                    //    ent.setProperty("MODID", msg.ModId);
-                    //    ent.setPK("MODID", msg.ModId);
-                    //    ent.Load();
-                    //    ArrayList arrModMaintain = ent.arrProperties; //GetSQLQuery("SELECT * FROM MODMAINTAIN WHERE MODID ='" + msg.ModId + "'");
-                    //    string strStoreName = SysUtils.CString(SysUtils.getValue(arrModMaintain, "EDITSELECTSTORE"));
+                    //    //BusinessEntity ent = new BusinessEntity();
+                    //    //ent.dbManager = dbManager;
+                    //    //ent.entityName = "MODMAINTAIN";
+                    //    //ent.setProperty("MODID", msg.ModId);
+                    //    //ent.setPK("MODID", msg.ModId);
+                    //    //ent.Load();
+                    //    //ArrayList arrModMaintain = ent.arrProperties; //GetSQLQuery("SELECT * FROM MODMAINTAIN WHERE MODID ='" + msg.ModId + "'");
+                    //    //string strStoreName = SysUtils.CString(SysUtils.getValue(arrModMaintain, "EDITSELECTSTORE"));
 
                     //    //2.Call store
-                    //    msg.Body = GetStoreQuery(msg.Body, strStoreName);
+                    //    msg.Body = GetStoreQuery(msg.Body, msg.ObjectName);
                     //}
-                    //else {
+                    //else
+                    //{
                     //    GetSearch(ref msg);
                     //}
 

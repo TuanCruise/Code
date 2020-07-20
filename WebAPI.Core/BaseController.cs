@@ -93,7 +93,6 @@ namespace Core.API
 
                 //Fix to test
                 var json = await Consume(jsonString);
-
                 return Ok(json);
 
             }
@@ -121,12 +120,12 @@ namespace Core.API
                 }
                 catch { }
 
-                //2. Get body                       
+                //2. Get body                      
                 try
-                {                    
+                {
                     List<ModuleFieldInfo> modfld = jsonObject.Body.ToObject<List<ModuleFieldInfo>>();
-                    foreach(ModuleFieldInfo moduleFieldInfo in modfld)
-                    {                        
+                    foreach (ModuleFieldInfo moduleFieldInfo in modfld)
+                    {
                         if (!string.IsNullOrEmpty(moduleFieldInfo.Value))
                         {
                             msg.Body.Add(moduleFieldInfo.FieldName);
@@ -135,9 +134,11 @@ namespace Core.API
                             if (msg.ModId == null) msg.ModId = moduleFieldInfo.ModuleID;
                         }
                     }
-                }
-                catch {}
 
+
+                }
+                catch { }
+                
                 if (msg.Body == null || msg.Body.Count == 0)
                 {
                     JObject obj = JObject.Parse(json);

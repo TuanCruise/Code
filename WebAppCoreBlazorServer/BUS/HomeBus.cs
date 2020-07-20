@@ -317,7 +317,7 @@ namespace WebAppCoreBlazorServer.BUS
                 //    Body = fields
                 //};
 
-                var dataMaintainInfo = (await _moduleService.getDetail(fields));
+                var dataMaintainInfo = (await _moduleService.getDetail(modId, modSearchId, fields));
 
                 //var dataMaintainInfo = (await _moduleService.getQuery(msg));
                 //Dongpv:Fix
