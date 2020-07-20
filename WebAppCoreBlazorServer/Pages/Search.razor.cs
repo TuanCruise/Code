@@ -586,6 +586,11 @@ namespace WebAppCoreBlazorServer.Pages
         }
         public async Task CallMod(string callModId, string modSearchId, string fieldNameEdit, string parram, string pedit)
         {
+            //Dongpv:look updata
+            //OrderID = parram;
+            dialogService.Close(parram);
+            //Dongpv:look updata
+
             HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
             var mod = await homeBus.GetModule(callModId);
             if (mod != null && mod.ModulesInfo.Any())
