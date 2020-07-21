@@ -188,10 +188,12 @@ namespace WebAppCoreBlazorServer.Service
                 var url = string.Format("Module/ExcuteStore2DataTable");
                 var data = await PostApi(url, query);
                 var dataQuery = JsonConvert.DeserializeObject<RestOutput<string>>(data);
+
                 if (!string.IsNullOrEmpty(dataQuery.Data))
                 {
                     return JsonConvert.DeserializeObject<List<dynamic>>(dataQuery.Data);
                 }
+
                 return null;
             }
             catch (Exception ex)
@@ -200,21 +202,48 @@ namespace WebAppCoreBlazorServer.Service
                 return null;
             }
         }
+
+        //Dongpv:20/07/20
+        //public async Task<DataTable> Store2DataTable(ParramModuleQuery query)
+        //{
+        //    try
+        //    {                
+        //        var url = string.Format("Module/ExcuteStore2DataTable");
+        //        var data = await PostApi(url, query);
+        //        var dataQuery = JsonConvert.DeserializeObject<RestOutput<string>>(data);
+                
+        //        if (!string.IsNullOrEmpty(dataQuery.Data))
+        //        {
+        //            return JsonConvert.DeserializeObject<DataTable>(dataQuery.Data);
+        //        }
+                
+
+        //        return null;
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        return null;
+        //    }
+        //}
 
         public async Task<DataTable> Store2DataTable(ParramModuleQuery query)
         {
             try
-            {                
-                var url = string.Format("Module/ExcuteStore2DataTable");
-                var data = await PostApi(url, query);
-                var dataQuery = JsonConvert.DeserializeObject<RestOutput<string>>(data);
-                if (!string.IsNullOrEmpty(dataQuery.Data))
-                {
-                    return JsonConvert.DeserializeObject<DataTable>(dataQuery.Data);
-                }
-                
+            {
+                //Dongpv:20/07/20                
+                //var url = string.Format("Module/ExcuteStore2DataTable");
+                //var data = await PostApi(url, query);
 
-                return null;
+                //var dataQuery = JsonConvert.DeserializeObject<RestOutput<string>>(data);               
+                //if (!string.IsNullOrEmpty(dataQuery.Data))
+                //{
+                //    return JsonConvert.DeserializeObject<DataTable>(dataQuery.Data);
+                //}
+
+                var data = await PostApi(query);
+
+                return data;
             }
             catch (Exception ex)
             {
@@ -222,7 +251,9 @@ namespace WebAppCoreBlazorServer.Service
                 return null;
             }
         }
-        //
+
+        //Dongpv:20/07/20
+       
 
         public async Task<List<MaintainModuleInfo>> LoadMaintainModuleInfo(string modId)
         {

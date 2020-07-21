@@ -95,8 +95,7 @@ namespace Host.BusinessFacade
                     
                     if (!string.IsNullOrEmpty(entity) && entity.Substring(0, 3).ToUpper() == "SP_")
                     {
-                        //2.Call store
-                        msg.Body = new ArrayList();
+                        //2.Call store                        
                         msg.Body.Add("BRID");
                         msg.Body.Add(msg.BranchID == null ? "000" : msg.BranchID);
 

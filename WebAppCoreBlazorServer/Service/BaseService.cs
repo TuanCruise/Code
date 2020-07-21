@@ -101,7 +101,7 @@ namespace WebAppCoreBlazorServer.Service
               
                     var json = JsonConvert.SerializeObject(msg);
 
-                    var result = await SendMessage(json);
+                    var result = await SendMessage(json);                    
 
                     return result;
                 }
@@ -139,6 +139,43 @@ namespace WebAppCoreBlazorServer.Service
             {
                 ErrorHandler.Process(ex);
             }
+            return null;
+        }
+
+        //Dongpv:20/07/2020
+        public async Task<DataTable> PostApi(object obj)
+        {
+            try
+            {
+                ParramModuleQuery query = (ParramModuleQuery)obj;
+
+                Message msg = new Message();
+                msg.ObjectName = Constants.OBJ_SEARCH;
+                msg.MsgType = Constants.MSG_MISC_TYPE;
+                msg.MsgAction = Constants.MSG_SEARCH;
+
+                msg.Body.Add("SearchObject");
+                msg.Body.Add(query.Store);
+                msg.Body.Add("Condition");
+                msg.Body.Add(" WHERE 1=0");
+                msg.Body.Add("Page");
+                msg.Body.Add(0);
+
+                var json = JsonConvert.SerializeObject(msg);
+
+                var result = await SendMessage(json);
+
+                DataTable tb = new DataTable();
+                if (!string.IsNullOrEmpty(result) && result != "null")
+                    tb = SysUtils.Json2Table(result);
+
+                return tb;
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.Process(ex);
+            }
+
             return null;
         }
 
