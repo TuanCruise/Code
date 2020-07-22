@@ -284,15 +284,26 @@ namespace Host.DataBaseAccessService
       
       private void AttachParameters(IDbCommand command, IDbDataParameter[]commandParameters)
       {
-          foreach (IDbDataParameter idbParameter in commandParameters)
-          {
+            string strLogSql = "";
+            foreach (IDbDataParameter idbParameter in commandParameters)
+            {
               if ((idbParameter.Direction == ParameterDirection.InputOutput) && (idbParameter.Value == null))
               {
                   idbParameter.Value = DBNull.Value;
               }
               command.Parameters.Add(idbParameter);
-          }
-      }
+
+                //Dongpv:22/04/2018
+                if (command.CommandType == CommandType.StoredProcedure)
+                    strLogSql += idbParameter.ParameterName + "='" + idbParameter.Value + "',";
+            }
+
+            if (!string.IsNullOrEmpty(strLogSql))
+            {
+                strLogSql = strLogSql.TrimEnd(',');
+                LogMessage.Trace("SET DATEFORMAT DMY  EXEC " + command.CommandText + " " + strLogSql + "\n", "TRANCE_SQL");
+            }
+        }
       
       private void PrepareCommand(IDbCommand command, IDbConnection connection, IDbTransaction transaction, CommandType commandType, string commandText, IDbDataParameter[]commandParameters)
       {
@@ -333,7 +344,11 @@ namespace Host.DataBaseAccessService
               {
                   AttachParameters(command, commandParameters);
               }
-
+              else
+              {
+                   //Dongpv:22/04/2018
+                   LogMessage.Trace(commandText + "\n", "TRANCE_SQL");
+              }
             }
           catch (Exception ex)
           {               
