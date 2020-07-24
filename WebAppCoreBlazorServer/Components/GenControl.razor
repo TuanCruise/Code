@@ -168,7 +168,7 @@
     //dongpv:lookup data
     else if (field.ControlType == EControlType.LV.ToString())
     {
-        <LookupData ModuleInfo="@ModuleInfo"  Field="@field" FieldName="@($"MODID={field.ModuleID}@FLDNAME={field.FieldName}")"  ></LookupData>
+        <LookupData ModuleInfo="@ModuleInfo"  Field="@field" FieldName="@($"MODID={field.CallModId}@FLDNAME={field.FieldName}")"   ></LookupData>
     }
     
 }

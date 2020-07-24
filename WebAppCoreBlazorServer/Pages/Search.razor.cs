@@ -97,7 +97,7 @@ namespace WebAppCoreBlazorServer.Pages
                     SysUtils.String2ArrayList(ref arrDetail, OrderID, "@", "=");
                     modId = SysUtils.getValue(arrDetail, "MODID").ToString();
                     //Fix
-                    modId = "03" + modId.Substring(2, 3);
+                    //modId = "03" + modId.Substring(2, 3);
                 }
                 //Dongpv:look updata
 
