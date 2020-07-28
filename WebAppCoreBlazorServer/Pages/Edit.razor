@@ -229,10 +229,11 @@
         <div class="col-sm-12 text-center">
             <div>
                 @*@if (edit)
-                {*@
-                    <button type="submit" class="btn btn-success save" @onclick="@(() =>  Save())"><i class="fa fa-save"></i> &nbsp; Lưu</button>
-                    <button type="button" class="btn call-realtime  d-none"><i class="fa fa-save"></i> &nbsp; CallRealtime</button>
+        {*@
+                <button type="submit" class="btn btn-success save" @onclick="@(() =>  Save())"><i class="fa fa-save"></i> &nbsp; Lưu</button>
+                <button type="button" class="btn call-realtime  d-none"><i class="fa fa-save"></i> &nbsp; CallRealtime</button>
                 @*}*@
+                <button type="submit" class="btn btn-outline-info" @onclick="@(() =>  Cancel())"><i class="fa fa-window-close"></i> &nbsp; Cancel</button>
             </div>
         </div>
 
