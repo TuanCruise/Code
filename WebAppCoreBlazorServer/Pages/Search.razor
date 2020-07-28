@@ -19,6 +19,9 @@
 @inject IConfiguration iConfiguration
 @inject IDistributedCache distributedCache
 @inject IModuleService moduleService
+@*dongpv:lookup data*@
+@inject Radzen.DialogService dialogService
+
 <input type="hidden" id="txtModId" name="ModId" value="@modId" />
 @{
     var fieldSearch = moduleFieldInfo == null ? new List<ModuleFieldInfo>() : moduleFieldInfo.Where(x => x.FieldGroup == FLDGROUP.SEARCH_CONDITION && x.HideWeb != "Y").ToList();
@@ -85,11 +88,11 @@
                                                 <button class="btn btn-info btn-search btn-flat" id="btn@(item.ButtonName)" name="@item.ButtonName" @onclick="@(()=>CallMod(item.CallModuleID,modId))"><i class="fa fa-plus"></i>@item.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)</button>
                                             }
                                             @*else if (item.ButtonName.ToUpper() == EDefModBtn.BTN_DELETE.ToString().ToUpper() && groupMods.Where(x => x.ModId == checkBtnDels.First().CallModuleID).Count() > 0)
-                                                {
-                                                    <button class="btn btn-default" id="btn@(item.ButtonName)" name="@item.ButtonName"><i class="fa fa-trash" title="Xóa"></i> @item.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)</button>
-                                                    <input type="hidden" value="@checkBtnDels.First().CallSubModule" id="txtSubModDel" />
-                                                    <input type="hidden" value="@checkBtnDels.First().CallModuleID" id="txtModDel" />
-                                                }*@
+                        {
+                            <button class="btn btn-default" id="btn@(item.ButtonName)" name="@item.ButtonName"><i class="fa fa-trash" title="Xóa"></i> @item.ButtonName.GetLanguageBtn(moduleInfoModel.LanguageInfo)</button>
+                            <input type="hidden" value="@checkBtnDels.First().CallSubModule" id="txtSubModDel" />
+                            <input type="hidden" value="@checkBtnDels.First().CallModuleID" id="txtModDel" />
+                        }*@
                                             else if (item.ButtonName.ToUpper() == EDefModBtn.BTN_EXPORT.ToString().ToUpper())
                                             {
                                                 <button class="btn btn-default" id="btn@(item.ButtonName)" name="@item.ButtonName" onclick="$('#btnExport').click()"><i class="fa fa-file-excel" title="Xuất Excel"></i>Xuất Excel</button>
@@ -111,6 +114,7 @@
                                     </div>
                                     // }
                                 }
+                               
                             }
                         </div>
                     }
@@ -129,7 +133,10 @@
                     <WebAppCoreBlazorServer.Components.ModSearchGridDefault btnInfos="btnInfos" codeInfos="codeInfos" DataSearch="DataSearch" ModuleFieldInfos="moduleFieldInfo" ModuleInfoModel="moduleInfoModel" Search="this" />
                 }
             }
-
+            @*<div class="col-md-12">
+                <RadzenButton Click="@((args) => dialogService.Close(OrderID))" Text="OK" Style="margin-bottom: 10px; width: 150px" />
+                <RadzenButton Click="@((args) => dialogService.Close(false))" ButtonStyle="ButtonStyle.Secondary" Text="Cancel" Style="margin-bottom: 10px; width: 150px" />
+            </div>*@
         </div>
     </div>
 </div>

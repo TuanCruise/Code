@@ -232,6 +232,7 @@ namespace WebApi.Controllers
             var outPut = new RestOutput<string>();
             try
             {
+
                 var m_Client = new CoreController(_configuration);
                 PostgresqlHelper postgresqlHelper = new PostgresqlHelper();
                 var param = m_Client.DiscoveryParameters(query.Store);

@@ -57,8 +57,8 @@ namespace Core.API
 
             await context.RespondAsync<Message>(new
             {
-                //Value = $"Received: {context.Message.Value}"               
-                Value = json
+                Value = $"Tra ve tu host"               
+                //Value = json
             });
 
         }

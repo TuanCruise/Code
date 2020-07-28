@@ -14,7 +14,7 @@ namespace Host.BusinessBase
 
     public class BusinessEntity 
     {
-        private string _listTableNameNoLog = "MSGJOURNAL/WSREG/SESSIONLOG/MSGDETAIL/";
+        private string _listTableNameNoLog = "MSGJOURNAL/WSREG/SESSIONLOG/MSGDETAIL/LANGUAGE/";
         private string _BranchID;
         private string _UserID;
         private ArrayList _arrProperties;

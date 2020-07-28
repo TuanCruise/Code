@@ -131,29 +131,26 @@
     }
     else if (field.ControlType == EControlType.TAB.ToString())
     {
-      
-            <TabControl>
-                @{
-                    if (field.FieldChilds != null)
+        <TabControl>
+            @{
+                if (field.FieldChilds != null)
+                {
+                    bool firstTab = true;
+                    foreach (var item in field.FieldChilds)
                     {
-                        bool firstTab = true;
-                        foreach (var item in field.FieldChilds)
-                        {
-                            @*<TabPage Text="@item.FieldName.GetLanguage(languageInfos,modName)">
-                                    <WebAppCoreBlazorServer.Pages.Edit modId="@item.ModuleID" modSearchId="03901" />
-                                </TabPage>*@
-                            <div class="nav nav-tabs">
-                            <TabPage Text="@item.FieldName.GetLanguage(languageInfos,modName)">
-                                <div>
-                                    <WebAppCoreBlazorServer.Pages.Edit modId="@item.CallModId" modSearchId="" />
-                                </div>
-                            </TabPage>
+                        @*<TabPage Text="@item.FieldName.GetLanguage(languageInfos,modName)">
+                                <WebAppCoreBlazorServer.Pages.Edit modId="@item.ModuleID" modSearchId="03901" />
+                            </TabPage>*@
+                        <TabPage Text="@item.FieldName.GetLanguage(languageInfos,modName)">
+                            <div>
+                                <WebAppCoreBlazorServer.Pages.Edit modId="@item.CallModId" modSearchId="" />
                             </div>
-                        }
+                        </TabPage>
                     }
                 }
-            </TabControl>
-     
+            }
+        </TabControl>
+
     }
     else if (field.ControlType == EControlType.SCL.ToString())
     {
@@ -163,4 +160,15 @@
     {
         <GridEditComponent DataComboBoxs="@dataComboBoxs" ModuleInfo="@ModuleInfo" Field="@field" Fields="@fields" LanguageInfos="languageInfos" ModName="@modName"></GridEditComponent>
     }
+    //dongpv:upload image
+    else if (field.ControlType == EControlType.UF.ToString())
+    {
+        <UploadFiles ModuleInfo="@ModuleInfo"  Field="@field"></UploadFiles>
+    }
+    //dongpv:lookup data
+    else if (field.ControlType == EControlType.LV.ToString())
+    {
+        <LookupData ModuleInfo="@ModuleInfo"  Field="@field" FieldName="@($"MODID={field.CallModId}@FLDNAME={field.FieldName}")"   ></LookupData>
+    }
+    
 }

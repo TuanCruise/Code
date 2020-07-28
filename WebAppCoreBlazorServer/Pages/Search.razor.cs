@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,12 @@ namespace WebAppCoreBlazorServer.Pages
 {
     public partial class Search
     {
+        //Dongpv:look updata
+        //[Parameter]
+        //public Dictionary<string, object> mod { get; set; }        
+        [Parameter] public string OrderID { get; set; }
+        //Dongpv:look updata
+
         private EditContext editContext;
         [Parameter]
         public string modId { get; set; } = "03901";
@@ -30,7 +37,10 @@ namespace WebAppCoreBlazorServer.Pages
         public string Title { get; set; } = "";
         private string Schema { get; set; } = "audit";
         public List<CheckBoxModel> CheckBoxModels { get; set; }
+        
+        [Parameter]
         public ModuleInfoModel moduleInfoModel { get; set; } = new ModuleInfoModel();
+        
         public ModuleInfoModel ModuleInfo { get; set; } = new ModuleInfoModel();
         public List<ModuleFieldInfo> moduleFieldInfo { get; set; } = new List<ModuleFieldInfo>();
         public List<ModuleFieldInfo> lstControl { get; set; } = new List<ModuleFieldInfo>();
@@ -80,6 +90,17 @@ namespace WebAppCoreBlazorServer.Pages
                 //    return RedirectToAction("Login", "Home");
                 //    NavigationManager.NavigateTo("PageToRedirect");
                 //}
+                //Dongpv:look updata
+                if (!string.IsNullOrEmpty(modId) && !string.IsNullOrEmpty(OrderID))
+                {
+                    ArrayList arrDetail = new ArrayList();                                        
+                    SysUtils.String2ArrayList(ref arrDetail, OrderID, "@", "=");
+                    modId = SysUtils.getValue(arrDetail, "MODID").ToString();
+                    //Fix
+                    //modId = "03" + modId.Substring(2, 3);
+                }
+                //Dongpv:look updata
+
                 CheckBoxModels = new List<CheckBoxModel>();
                 lstControl = new List<ModuleFieldInfo>();
                 moduleFieldInfo = new List<ModuleFieldInfo>();
@@ -448,8 +469,12 @@ namespace WebAppCoreBlazorServer.Pages
             var dataExcute = await homeBus.LoadExcuteModule(modId);
             if (dataExcute != null)
             {
-                var excute = (await moduleService.DeleteModule(dataExcute.ExecuteStore, fieldDels));
-                if (excute.Data != "success")
+                //Dongpv: 
+                //var excute = (await moduleService.DeleteModule(dataExcute.ExecuteStore, fieldDels));
+                var excute = (await moduleService.DeleteData(modId, dataExcute.ExecuteStore, "", keyDels));
+                //Dongpv:
+
+                if (excute.Data != "success" )
                 {
                     var err = excute.Data.GetError();
                     var errText = await homeBus.GetErrText(err);
@@ -561,6 +586,11 @@ namespace WebAppCoreBlazorServer.Pages
         }
         public async Task CallMod(string callModId, string modSearchId, string fieldNameEdit, string parram, string pedit)
         {
+            //Dongpv:look updata
+            //OrderID = parram;
+            dialogService.Close(parram);
+            //Dongpv:look updata
+
             HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
             var mod = await homeBus.GetModule(callModId);
             if (mod != null && mod.ModulesInfo.Any())
@@ -580,6 +610,7 @@ namespace WebAppCoreBlazorServer.Pages
                 {
                     NavManager.NavigateTo(String.Format("/Edit/{0}/{1}/{2}/{3}/{4}", callModId, modSearchId, fieldNameEdit, parram, pedit));
                 }
+
             }
         }
     }

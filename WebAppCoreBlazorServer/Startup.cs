@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 using Microsoft.AspNetCore.Components.Authorization;
 using WebAppCoreBlazorServer.Data;
+//dongpv:upload image
+using Radzen;
 
 namespace WebAppCoreBlazorServer
 {
@@ -49,6 +51,11 @@ namespace WebAppCoreBlazorServer
             services.AddScoped<HttpClient>();
             services.AddSingleton<HttpClient>();
 
+            //dongpv:upload image
+            services.AddScoped<DialogService>();
+            services.AddScoped<NotificationService>();
+            //dongpv:upload image
+
             //services.AddTransient<IValidator<Person>, PersonValidator>();
             //services.AddTransient<IValidator<ModuleFieldInfo>,Common.FluentValidation>();
             services.AddBlazoredSessionStorage();
@@ -83,6 +90,8 @@ namespace WebAppCoreBlazorServer
             app.UseRouting();
 
             app.UseEndpoints(endpoints => {
+                //dongpv:upload image
+                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });

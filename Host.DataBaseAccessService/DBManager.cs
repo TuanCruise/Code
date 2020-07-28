@@ -29,7 +29,8 @@ namespace Host.DataBaseAccessService
             //strConnectionString = UtilEncrypt.DePass(strConnectionString);
             string strProviderType = "SqlServer";
             //string strConnectionString = "Server=(local);UID=sa;PWD=sa;database=WFHOST;MultipleActiveResultSets=True";
-            string strConnectionString = "data source=113.190.16.55,1433;initial catalog=POSCORE;user id=audit;password=123456a@;MultipleActiveResultSets=true; Min Pool Size=10;Max Pool Size=1000;Pooling=true;";
+            //string strConnectionString = "data source=192.168.1.123,1433;initial catalog=POSCORE;user id=audit;password=123456a@;MultipleActiveResultSets=true; Min Pool Size=10;Max Pool Size=1000;Pooling=true;";
+            string strConnectionString = "data source=localhost;initial catalog=POSCORE;user id=audit;password=123456a@;MultipleActiveResultSets=true; Min Pool Size=10;Max Pool Size=1000;Pooling=true;";
 
             if (strProviderType == "SqlServer")
             {
@@ -283,15 +284,26 @@ namespace Host.DataBaseAccessService
       
       private void AttachParameters(IDbCommand command, IDbDataParameter[]commandParameters)
       {
-          foreach (IDbDataParameter idbParameter in commandParameters)
-          {
+            string strLogSql = "";
+            foreach (IDbDataParameter idbParameter in commandParameters)
+            {
               if ((idbParameter.Direction == ParameterDirection.InputOutput) && (idbParameter.Value == null))
               {
                   idbParameter.Value = DBNull.Value;
               }
               command.Parameters.Add(idbParameter);
-          }
-      }
+
+                //Dongpv:22/04/2018
+                if (command.CommandType == CommandType.StoredProcedure)
+                    strLogSql += idbParameter.ParameterName + "='" + idbParameter.Value + "',";
+            }
+
+            if (!string.IsNullOrEmpty(strLogSql))
+            {
+                strLogSql = strLogSql.TrimEnd(',');
+                LogMessage.Trace("SET DATEFORMAT DMY  EXEC " + command.CommandText + " " + strLogSql + "\n", "TRANCE_SQL");
+            }
+        }
       
       private void PrepareCommand(IDbCommand command, IDbConnection connection, IDbTransaction transaction, CommandType commandType, string commandText, IDbDataParameter[]commandParameters)
       {
@@ -332,7 +344,11 @@ namespace Host.DataBaseAccessService
               {
                   AttachParameters(command, commandParameters);
               }
-
+              else
+              {
+                   //Dongpv:22/04/2018
+                   LogMessage.Trace(commandText + "\n", "TRANCE_SQL");
+              }
             }
           catch (Exception ex)
           {               

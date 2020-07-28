@@ -122,6 +122,9 @@ namespace Host.BusinessFacade
                         }
                         else  //defaul: gen sql statement
                         {
+                            //CASE1: CALL PROCEDURE
+
+                            //CASE2: Auto gen SQL
                             BusinessEntity ent = new BusinessEntity();
                             ent.dbManager = dbManager;
                             //1.SAVE MASTER                           
@@ -228,14 +231,11 @@ namespace Host.BusinessFacade
                                         ent.Delete();
                                     }
                                 }
-                            }
-
-
-                           
+                            }                           
                         }
 
                         msg.Body = new ArrayList();
-                        ArrayList arrTemp = new ArrayList(); arrTemp.Add("CODE"); msg.Body.Add(arrTemp);
+                        ArrayList arrTemp = new ArrayList(); arrTemp.Add("Data"); msg.Body.Add(arrTemp);
                         arrTemp = new ArrayList(); arrTemp.Add("success"); msg.Body.Add(arrTemp);
                         
                         transaction.Complete();
@@ -248,14 +248,12 @@ namespace Host.BusinessFacade
                 }
 
             }
-            catch (ErrorMessage er)
-            {
-                               
-                ErrorHandler.ProcessErr(er);                
+            catch (ErrorMessage ex)
+            {              
+                ErrorHandler.ProcessErr(ex);                
             }
             catch (Exception ex)
-            {
-                            
+            {               
                 ErrorHandler.ProcessErr(ex, Constants.ERROR_TYPE_EBANK, ErrorHandler.EBANK_SYSTEM_ERROR);
             }
             finally

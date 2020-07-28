@@ -56,27 +56,58 @@ namespace Host.BusinessFacade
                 {
                     msg.Body = this.GetSQLQuery(msg.getValue("SQLQUERY").ToString());
                 }
+                else if (msg.ObjectName.ToUpper() == Constants.OBJ_DETAIL)
+                {
+                    BusinessEntity ent = new BusinessEntity();
+                    ent.dbManager = dbManager;
+
+                    ent.entityName = "MODMAINTAIN";
+                    ent.arrProperties = new ArrayList();
+                    ent.arrPK = new ArrayList();
+                    ent.setProperty("MODID", msg.ModId);
+                    ent.setPK("MODID", msg.ModId);
+                    ent.Load();
+                    ArrayList arrModMaintain = ent.arrProperties;
+                    string strStoreName = SysUtils.CString(SysUtils.getValue(arrModMaintain, "VIEWSELECTSTORE"));
+
+                    //LOAD
+                    if (!string.IsNullOrEmpty(strStoreName) && strStoreName.Substring(0, 3) != "SP_")
+                    {
+                        ent = new BusinessEntity();
+                        ent.dbManager = dbManager;
+                        ent.arrProperties = new ArrayList();
+                        ent.arrPK = new ArrayList();
+                        ent.entityName = strStoreName;
+                        ent.arrProperties = msg.Body;
+                        ent.arrPK = msg.Body;
+                        msg.Body = ent.Fetch("");
+                    }
+                    else
+                    {
+                        msg.ObjectName = strStoreName;
+                        //2.Call store
+                        msg.Body = GetStoreQuery(msg.Body, strStoreName);
+                    }
+                }
                 else if (msg.ObjectName.ToUpper() == WB.SYSTEM.Constants.OBJ_SEARCH)
                 {
-                    //if (msg.ModId != null)
-                    //{
-                    //    //1.call MODMAINTAIN
-                    //    BusinessEntity ent = new BusinessEntity();
-                    //    ent.dbManager = dbManager;
-                    //    ent.entityName = "MODMAINTAIN";
-                    //    ent.setProperty("MODID", msg.ModId);
-                    //    ent.setPK("MODID", msg.ModId);
-                    //    ent.Load();
-                    //    ArrayList arrModMaintain = ent.arrProperties; //GetSQLQuery("SELECT * FROM MODMAINTAIN WHERE MODID ='" + msg.ModId + "'");
-                    //    string strStoreName = SysUtils.CString(SysUtils.getValue(arrModMaintain, "EDITSELECTSTORE"));
+                    string entity = SysUtils.CString(msg.getValue("SearchObject"));
+                    
+                    if (!string.IsNullOrEmpty(entity) && entity.Substring(0, 3).ToUpper() == "SP_")
+                    {
+                        //2.Call store                        
+                        msg.Body.Add("BRID");
+                        msg.Body.Add(msg.BranchID == null ? "000" : msg.BranchID);
 
-                    //    //2.Call store
-                    //    msg.Body = GetStoreQuery(msg.Body, strStoreName);
-                    //}
-                    //else {
-                    //    GetSearch(ref msg);
-                    //}
-                    GetSearch(ref msg);
+                        msg.Body = GetStoreQuery(msg.Body, entity);
+                    }
+                    else
+                    {
+                        GetSearch(ref msg);
+                    }
+
+                    //GetSearch(ref msg);
+
                 }
                 else if (msg.ObjectName.ToUpper() == Constants.OBJ_PROCEDURE_PAGING)
                 {
@@ -448,22 +479,20 @@ namespace Host.BusinessFacade
                 IDataReader reader = this.dbManager.ExecuteReader(strProName, CommandType.StoredProcedure);
 
                 //3. GET RESULT
-                bool flag = true;
+                ArrayList arrTemp = new ArrayList();
+                num = 0;
+                while (num < reader.FieldCount)
+                {
+                    arrTemp.Add(reader.GetName(num).ToString());
+                    num++;
+                }
+                arrData.Add(arrTemp);
+                arrTemp = new ArrayList();
+
                 while (reader.Read())
                 {
-                    ArrayList arrTemp = new ArrayList();
-                    if (flag)
-                    {
-                        num = 0;
-                        while (num < reader.FieldCount)
-                        {
-                            arrTemp.Add(reader.GetName(num).ToString());
-                            num++;
-                        }
-                        arrData.Add(arrTemp);
-                        arrTemp = new ArrayList();
-                        flag = false;
-                    }
+                    arrTemp = new ArrayList();
+                    
                     for (num = 0; num < reader.FieldCount; num++)
                     {
                         arrTemp.Add(reader.GetValue(num).ToString());

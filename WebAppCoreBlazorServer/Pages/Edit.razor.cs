@@ -168,21 +168,30 @@ namespace WebAppCoreBlazorServer.Pages
 
             var modMaintain = await homeBus.LoadMaintainModuleInfo(modId);
             var store = "";
+
+            //Dongpv: 
+            var excute = new RestOutput<string>();
+
             if (string.IsNullOrEmpty(keyEdit))
             {
                 store = modMaintain.AddInsertStore;
+                //Dongpv: 
+                excute = (await moduleService.SaveData(modId, store, keyEdit, moduleFieldInfo));
             }
             else
             {
                 store = modMaintain.EditUpdateStore;
+                //Dongpv: 
+                excute = (await moduleService.UpdateData(modId, store, keyEdit, moduleFieldInfo));
+
             }
+
             //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, fieldEdits));
             //Dongpv:   
-            //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, moduleFieldInfo));
-            var excute = (await moduleService.SaveData(modId, store, keyEdit, moduleFieldInfo));
+            //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, moduleFieldInfo));            
             //Dongpv:
 
-            if (excute.Data != "success")
+            if (excute.Data != "success" && excute.ResultCode != 1)
             {
                 var err = excute.Data.GetError();
                 var redrectToSearch = string.IsNullOrEmpty(parram) ? modMaintain.AddRepeatInput : modMaintain.EditRepeatInput;
@@ -190,13 +199,12 @@ namespace WebAppCoreBlazorServer.Pages
             }
             else
             {
-                if (modMaintain.ShowSuccess == "Y")
+                if (modMaintain.ShowSuccess == "Y" || excute.ResultCode == 1)
                 {
                     var title = "Lưu dữ liệu thành công";
                     JSRuntime.InvokeAsync<string>("bb_alert", title, DotNetObjectReference.Create(this), "AlertCallBack");
                     //Modal.Show<Pages.Edit>(moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo), parameters);
                 }
-
             }
 
         }

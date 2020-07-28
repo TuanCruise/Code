@@ -1,0 +1,81 @@
+﻿@page "/edit"
+@using WebCore.Entities;
+@using WebModelCore;
+
+<div class="row">
+    <div class="col-md-6">
+        @*<h3>Single file upload</h3>
+            <RadzenUpload Url="upload/single" Style="margin-bottom: 20px;"
+                          Progress="@((args) => OnProgress(args, "Single file upload"))" />
+            <br />*@
+        @*<h3>Multiple files upload</h3>
+            <RadzenUpload Multiple="true" Url="upload/multiple" Style="margin-bottom: 20px;"
+                          Progress="@((args) => OnProgress(args, "Multiple files upload"))" />
+            <br />*@
+        @*<h6>Upload images only</h6>*@
+        <RadzenUpload Multiple="true" Accept="image/*" Url="upload/multiple" Style="margin-bottom: 20px;"
+                      Progress="@((args) => OnProgress(args, "Hoàn thành"))" />
+        <br />
+        @*<h3>Upload with additional parameter</h3>
+            <RadzenUpload Multiple="true" Accept="image/*" Url=@($"upload/{1}") Style="margin-bottom: 20px;"
+                          Progress="@((args) => OnProgress(args, "Upload with additional parameter"))" />
+            <br />*@
+        @*<h6>Manual Upload</h6>
+            <RadzenUpload @ref="upload" Auto="false" Url="upload/single" Style="margin-bottom: 20px;"
+                          Progress="@((args) => OnProgress(args, "Manual Upload"))" />
+            <RadzenButton Text="Upload" Click="@(args => upload.Upload())" />*@
+        <br />
+        @*<h3>Upload completed</h3>
+            <RadzenUpload Url="upload/single" Style="margin-bottom: 20px;"
+                          Complete="@Completed" />*@
+        <br />
+    </div>
+    <div class="col-md-6">
+        <h6>Danh sách tệp:</h6>
+        <RadzenCard style="overflow: auto;height:100px;">
+            <RadzenProgressBar Value="@progress" Unit="@info" Visible="@(progress > 0)" Style="margin-bottom: 5px" />
+            @foreach (var e in events.OrderByDescending(i => i.Key))
+            {
+                @e.Value
+                <br />
+            }
+        </RadzenCard>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public ModuleFieldInfo Field { get; set; }
+
+    [Parameter]
+    public ModuleInfoModel ModuleInfo { get; set; }
+
+
+    RadzenUpload upload;
+
+    int progress;
+    string info;
+    Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
+
+    void OnProgress(UploadProgressArgs args, string name)
+    {
+        this.info = $"% '{name}' / {args.Loaded} of {args.Total} bytes.";
+        this.progress = args.Progress;
+
+        if (args.Progress == 100)
+        {
+            events.Clear();
+            foreach (var file in args.Files)
+            {
+                //events.Add(DateTime.Now, $"Uploaded: {file.Name} / {file.Size} bytes");
+                events.Add(DateTime.Now, $"Uploaded: {file.Name} ");
+            }
+        }
+    }
+
+    void Completed(UploadCompleteEventArgs args)
+    {
+        events.Add(DateTime.Now, $"Server response: {args.RawResponse}");
+    }
+}
