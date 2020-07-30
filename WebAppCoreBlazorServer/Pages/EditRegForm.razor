@@ -1,0 +1,265 @@
+﻿@page "/EditRegForm/{modId}/{modSearchId}"
+@page "/EditRegForm/{modId}/{modSearchId}/{fieldNameEdit}/{parram}/{pedit}"
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavManager
+@using Newtonsoft.Json
+@using WebModelCore;
+@using WebModelCore.CodeInfo
+@using WebModelCore.Common
+@using WebAppCoreBlazorServer.Common
+@using WebAppCoreBlazorServer.Service
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.Extensions.Configuration
+@using WebAppCoreBlazorServer.BUS
+@using WebCore.Entities;
+@using Microsoft.Extensions.Caching.Distributed
+@inject NavigationManager NavigationManager
+@inject IConfiguration iConfiguration
+
+@inject IDistributedCache distributedCache
+@inject IModuleService moduleService
+@inject IModalService Modal
+<EditForm EditContext="@editContext">
+    <Blazored.FluentValidation.FluentValidationValidator DisableAssemblyScanning="@true" />
+    @*<ValidationSummary />*@
+    @{
+        if (ErrorValidate != null && ErrorValidate.Any())
+        {
+            <div class="text-danger">
+                @{
+                    foreach (var item in ErrorValidate)
+                    {
+                        <div class="col-6">
+                            <span class="text-danger">@item</span>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    }
+    @{
+        var lstFieldAdded = new List<string>();
+        var lstFieldNotAdd = new List<ModuleFieldInfo>();
+        if (moduleFieldInfo == null)
+        {
+            moduleFieldInfo = new List<ModuleFieldInfo>();
+        }
+        lstFieldNotAdd = moduleFieldInfo.ToList();
+        while (lstFieldNotAdd.Count != 0)
+        {
+            var field1 = lstFieldNotAdd[0];
+            ModuleFieldInfo field2 = null;
+            if (lstFieldNotAdd.Count() > 1)
+            {
+                field2 = lstFieldNotAdd[1];
+            }
+
+            var checkField1 = lstFieldAdded.Where(x => x == field1.Value);
+            if (!string.IsNullOrEmpty(field1.FieldsGroup))
+            {
+                var fieldGroups = lstFieldNotAdd.Where(x => x.FieldsGroup == field1.FieldsGroup);
+                var textGroupField = fieldGroups.First().GetGroupFieldTextBtn(moduleInfoModel.LanguageInfo);
+                if (string.IsNullOrEmpty(textGroupField))
+                {
+                    <div class="row">
+                        @{
+                            var countFieldGroups = fieldGroups.Count();
+                            foreach (var fieldGroup in fieldGroups.ToList())
+                            {
+                                <div class="col-sm-@(12 / countFieldGroups) form-group">
+                                    <label class="control-label">
+                                        @fieldGroup.GetLanguage(moduleInfoModel.LanguageInfo, moduleInfoModel.ModulesInfo.ModuleName)
+                                        @if (fieldGroup.Nullable == EYesNo.N.ToString())
+                                        {
+                                            <span class="text-danger">*</span>
+                                        }
+                                    </label>
+                                    <WebAppCoreBlazorServer.Components.GenControl field="@fieldGroup" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" ModuleInfo="@moduleInfoModel" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                                    @*@((MarkupString)(fieldGroup.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
+                                </div>
+                                lstFieldNotAdd.Remove(fieldGroup);
+                            }
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="panel-group" id="accordion@(moduleInfo.ModuleName + " -" + fieldGroups.First().FieldsGroup)" role="tablist" aria-multiselectable="true">
+                        <div class="card">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="card-header">
+                                    <span class="left">@textGroupField</span>
+
+                                    <a role="button" data-toggle="collapse" class="right" data-parent="#accordion@(moduleInfo.ModuleName + " -" + fieldGroups.First().FieldsGroup)" href="#@(moduleInfo.ModuleName + " -" + fieldGroups.First().FieldsGroup)" aria-expanded="true" aria-controls="collapseOne">
+                                        <i class="more-less ik ik-plus-circle"></i>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="@(moduleInfo.ModuleName + " -" + fieldGroups.First().FieldsGroup)" class="panel-collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="card-body">
+                                    <div class="row">
+                                        @{
+                                            var countFieldGroups = fieldGroups.Count();
+                                            foreach (var fieldGroup in fieldGroups.ToList())
+                                            {
+                                                <div class="col-sm-@(12 / countFieldGroups) form-group">
+                                                    <label class="control-label">
+                                                        @fieldGroup.GetLanguage(moduleInfoModel.LanguageInfo, moduleInfoModel.ModulesInfo.ModuleName)
+                                                        @if (fieldGroup.Nullable == EYesNo.N.ToString())
+                                                        {
+                                                            <span class="text-danger">*</span>
+                                                        }
+                                                    </label>
+                                                    <WebAppCoreBlazorServer.Components.GenControl field="@fieldGroup" ModuleInfo="@moduleInfoModel" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                                                    @*@((MarkupString)(fieldGroup.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
+                                                </div>
+                                                lstFieldNotAdd.Remove(fieldGroup);
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+                continue;
+            }
+            else
+            {
+                if (field2 != null && !string.IsNullOrEmpty(field2.FieldsGroup))
+                {
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label class="control-label">
+                                @field1.GetLanguage(moduleInfoModel.LanguageInfo, moduleInfoModel.ModulesInfo.ModuleName)
+                                @if (field1.Nullable == EYesNo.N.ToString())
+                                {
+                                    <span class="text-danger">*</span>
+                                }
+                            </label>
+                            @*@((MarkupString)(field1.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
+                            <WebAppCoreBlazorServer.Components.GenControl field="@field1" ModuleInfo="@moduleInfoModel" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label">
+                                @field2.GetLanguage(moduleInfoModel.LanguageInfo, moduleInfoModel.ModulesInfo.ModuleName)
+                                @if (field2.Nullable == EYesNo.N.ToString())
+                                {
+                                    <span class="text-danger">*</span>
+                                }
+                            </label>
+                            <WebAppCoreBlazorServer.Components.GenControl field="@field2" ModuleInfo="@moduleInfoModel" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                            @*@((MarkupString)(field1.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
+                        </div>
+                    </div>
+                    lstFieldNotAdd.Remove(field1);
+                    lstFieldNotAdd.Remove(field2);
+                    var fieldGroups = lstFieldNotAdd.Where(x => x.FieldsGroup == field2.FieldsGroup);
+                    <div class="row">
+                        @{
+                            var countFieldGroups = fieldGroups.Count();
+                            foreach (var fieldGroup in fieldGroups.ToList())
+                            {
+                                <div class="col-sm-@(12 / countFieldGroups) form-group">
+                                    <label class="control-label">
+                                        @fieldGroup.GetLanguage(moduleInfoModel.LanguageInfo, moduleInfoModel.ModulesInfo.ModuleName)
+                                        @if (fieldGroup.Nullable == EYesNo.N.ToString())
+                                        {
+                                            <span class="text-danger">*</span>
+                                        }
+                                    </label>
+                                    <WebAppCoreBlazorServer.Components.GenControl field="@fieldGroup" ModuleInfo="@moduleInfoModel" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                                    @*@((MarkupString)(fieldGroup.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
+                                </div>
+                                lstFieldNotAdd.Remove(fieldGroup);
+                            }
+                        }
+                    </div>
+                }
+                else if (field2 == null)
+                {
+                    <div class="row  col-sm-12">
+                        <div class="form-group col-sm-6">
+                            <label class="control-label">
+                                @field1.GetLanguage(moduleInfoModel.LanguageInfo, moduleInfoModel.ModulesInfo.ModuleName)
+                                @if (field1.Nullable == EYesNo.N.ToString())
+                                {
+                                    <span class="text-danger">*</span>
+                                }
+                            </label>
+                            <WebAppCoreBlazorServer.Components.GenControl field="@field1" ModuleInfo="@moduleInfoModel" dataComboBoxs="@codeInfos" dataEdit="@dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                            @*@((MarkupString)(field1.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
+                        </div>
+                    </div>
+                    lstFieldNotAdd.Remove(field1);
+                }
+                else if (string.IsNullOrEmpty(field2.FieldsGroup))
+                {
+                    <div class="row col-sm-12 ">
+                        <div class="form-group col-sm-6">
+                            <label class="control-label">
+                                @field1.GetLanguage(moduleInfoModel.LanguageInfo, moduleInfoModel.ModulesInfo.ModuleName)
+                                @if (field1.Nullable == EYesNo.N.ToString())
+                                {
+                                    <span class="text-danger">*</span>
+                                }
+                            </label>
+                            <WebAppCoreBlazorServer.Components.GenControl ModuleInfo="@moduleInfoModel" field="@field1" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                            @*@((MarkupString)(field1.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label class="control-label">
+                                @field2.GetLanguage(moduleInfoModel.LanguageInfo, moduleInfoModel.ModulesInfo.ModuleName)
+                                @if (field1.Nullable == EYesNo.N.ToString())
+                                {
+                                    <span class="text-danger">*</span>
+                                }
+                            </label>
+                            <WebAppCoreBlazorServer.Components.GenControl field="@field2" ModuleInfo="@moduleInfoModel" dataComboBoxs="@codeInfos" dataEdit="dataControl" keyEdit="@keyEdit" modName="@moduleInfoModel.ModulesInfo.ModuleName" languageInfos="@moduleInfoModel.LanguageInfo" />
+                            @*@((MarkupString)(field2.GetHtmlControl(codeInfos, moduleInfoModel.LanguageInfo, "", dataControl, moduleInfoModel.ModulesInfo.ModuleName, keyEdit)))*@
+                        </div>
+                    </div>
+                    lstFieldNotAdd.Remove(field1);
+                    lstFieldNotAdd.Remove(field2);
+                }
+            }
+        }
+
+        <div class="col-sm-12 text-center">
+            <div>
+                @*@if (edit)
+                    {*@
+                <button type="submit" class="btn btn-success save" @onclick="@(() =>  Save())"><i class="fa fa-save"></i> &nbsp; Lưu</button>
+                <button type="button" class="btn call-realtime  d-none"><i class="fa fa-save"></i> &nbsp; CallRealtime</button>
+                @*}*@
+                <button type="submit" class="btn btn-outline-info" @onclick="@(() =>  Cancel())"><i class="fa fa-window-close"></i> &nbsp; Cancel</button>
+            </div>
+        </div>
+
+    }
+</EditForm>
+
+@if (codeInfos != null && codeInfos.Any() && codeInfos.Where(x => x.ControlType == EControlType.SCL.ToString()).Any())
+{
+    var scls = codeInfos.Where(x => x.ControlType == EControlType.SCL.ToString());
+    foreach (var item in scls)
+    {
+        <input type="hidden" id="@(" calendar-schedule-" + item.Name)" value="@Newtonsoft.Json.JsonConvert.SerializeObject(item.ScheduleControls)" />
+    }
+    <div class="modal" tabindex="-1" role="dialog" id="modal-calendar-schedule">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="body-schedule">
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
