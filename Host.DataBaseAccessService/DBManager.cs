@@ -30,7 +30,8 @@ namespace Host.DataBaseAccessService
             string strProviderType = "SqlServer";
             //string strConnectionString = "Server=(local);UID=sa;PWD=sa;database=WFHOST;MultipleActiveResultSets=True";
             //string strConnectionString = "data source=192.168.1.123,1433;initial catalog=POSCORE;user id=audit;password=123456a@;MultipleActiveResultSets=true; Min Pool Size=10;Max Pool Size=1000;Pooling=true;";
-            string strConnectionString = "data source=localhost;initial catalog=POSCORE;user id=audit;password=123456a@;MultipleActiveResultSets=true; Min Pool Size=10;Max Pool Size=1000;Pooling=true;";
+            //string strConnectionString = "data source=localhost;initial catalog=POSCORE;user id=audit;password=123456a@;MultipleActiveResultSets=true; Min Pool Size=10;Max Pool Size=1000;Pooling=true;";
+            string strConnectionString = "data source=123.31.12.221\\Sql2019;initial catalog=WebCore;user id=sa;password=Admin@123;MultipleActiveResultSets=true; Min Pool Size=10;Max Pool Size=1000;Pooling=true;";
 
             if (strProviderType == "SqlServer")
             {
