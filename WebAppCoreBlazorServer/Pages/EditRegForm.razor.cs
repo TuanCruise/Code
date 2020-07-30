@@ -119,9 +119,11 @@ namespace WebAppCoreBlazorServer.Pages
             }
 
         }
+
         [CascadingParameter] Blazored.Modal.BlazoredModalInstance BlazoredModal { get; set; }
 
         void Close() => BlazoredModal.Close(Blazored.Modal.Services.ModalResult.Ok(true));
+        
         void Cancel()
         {
             if (moduleInfo.UIType == EUITYPE.P.ToString())
