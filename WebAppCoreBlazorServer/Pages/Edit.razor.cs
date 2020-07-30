@@ -103,7 +103,7 @@ namespace WebAppCoreBlazorServer.Pages
                 }
 
                 var lstSources = moduleFieldInfo.Where(x => !String.IsNullOrEmpty(x.ListSource) && x.ListSource.IndexOf("(") > 0 && x.ListSource.IndexOf("()") < 0).ToList();//Lấy các list source dạng store có truyền vào tên field
-                var fieldChild=moduleFieldInfo.Where(x => x.FieldChilds != null).Select(x => x.FieldChilds);
+                var fieldChild = moduleFieldInfo.Where(x => x.FieldChilds != null).Select(x => x.FieldChilds);
                 if (fieldChild.Any())
                 {
                     foreach (var child in fieldChild)
@@ -113,9 +113,9 @@ namespace WebAppCoreBlazorServer.Pages
                         {
                             lstSources.AddRange(sourceChild.ToList());
                         }
-                        
+
                     }
-                   
+
                 }
                 foreach (var item in lstSources)
                 {
@@ -139,7 +139,7 @@ namespace WebAppCoreBlazorServer.Pages
             }
             catch (Exception e)
             {
-                
+
             }
         }
         public async Task Save()
@@ -211,7 +211,14 @@ namespace WebAppCoreBlazorServer.Pages
         [CascadingParameter] Blazored.Modal.BlazoredModalInstance BlazoredModal { get; set; }
 
         void Close() => BlazoredModal.Close(Blazored.Modal.Services.ModalResult.Ok(true));
-        void Cancel() => BlazoredModal.Cancel();
+        void Cancel()
+        {
+            if (moduleInfo.UIType == EUITYPE.P.ToString())
+                BlazoredModal.Cancel();
+            else
+                NavManager.NavigateTo(String.Format("/Search/{0}",  modSearchId));
+
+        }
 
         [JSInvokableAttribute("AlertCallBack")]
         public void AlertCallBack(string redrectToSearch)

@@ -1,4 +1,17 @@
-﻿function Onload() {
+﻿function bb_confirm(message, instance, callback, modid, param) {
+    bootbox.confirm(message, function (result) { instance.invokeMethodAsync(callback, result, modid, param); });
+}
+function bb_alert(message, instance, callback, redrectToSearch) {
+    bootbox.alert(message, function () { instance.invokeMethodAsync(callback, redrectToSearch); });
+}
+function bb_alert(message) {
+    bootbox.alert(message);
+}
+function SetRightMod(modId) {
+    alert(modId);
+    DotNet.invokeMethodAsync('WebAppCoreBlazorServer', 'SetRightMod', "" + modId);
+}
+function Onload() {
     ! function (e, s, i) {
         "use strict";
         i(s).ready(function () {
@@ -223,6 +236,20 @@
         })
     }(window, document, jQuery);
     //CallDatePicker();
+
+    tgg();
+
+}
+function tgg() {
+    function toggleIcon(e) {
+        debugger;
+        $(e.target)
+            .prev('.collapse-expand')
+            .find(".more-less")
+            .toggleClass('ik-chevron-right ik-chevron-down');
+    }
+    $('.tgg').on('.ik', toggleIcon);
+    $('.tgg').on('.ik', toggleIcon);
 }
 function CallDatePicker() {
     $(".datepicker").datepicker({
@@ -233,19 +260,39 @@ function CallDatePicker() {
     });
 }
 function SetValueControl(id, value) {
-    $("#" + id).val(value);
+    if (id.indexOf(".") >= 0) {
+        var split = id.split(".");
+        if (split[1].toLowerCase() === "visible") {
+            if (value == "N") {
+                $("#" + split[0]).closest("div").hide();
+            }
+            else {
+                $("#" + split[0]).closest("div").show();
+            }
+        }
+    }
+    else {
+        var element = document.getElementById(id);
+        element.value = value === null ? "" : value;
+        element.dispatchEvent(new Event('change'));
+    }
+
 }
 function SetTitle(title) {
     document.title = title;
 }
 function ChangeValueFromJs(wrapper) {
-    debugger;
     DotNet.invokeMethodAsync("JavaScriptInterop", 'invokeFromJS')
         .then(data => {
             alert(data)
-        }) 
+        })
     //return wrapper.invokeMethodAsync("invokeFromJS")
     //    .then(_ => {
     //        console.log('state has changed');
     //    });
 }
+$("#collapse-expand").toggle(function () {
+    $(this).removeClass("ik ik-chevron-right");
+}, function () {
+    alert("Second handler for .toggle() called.");
+});
