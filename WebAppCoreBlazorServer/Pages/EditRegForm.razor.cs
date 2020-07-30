@@ -11,15 +11,17 @@ using WebModelCore;
 using WebModelCore.CodeInfo;
 using WebModelCore.Common;
 using WebAppCoreBlazorServer.Common;
+using WebAppCoreBlazorServer.Service;
+
 namespace WebAppCoreBlazorServer.Pages
 {
-    public partial class EditRegForm
+    public partial class EditRegForm 
     {
         [Parameter]
-        public string modId { get; set; } = "02906";
+        public string modId { get; set; } = "02501";
 
         [Parameter]
-        public string modSearchId { get; set; } = "";
+        public string modSearchId { get; set; } = "03501";
         [Parameter]
         public string fieldNameEdit { get; set; } = "";
         [Parameter]
@@ -40,6 +42,8 @@ namespace WebAppCoreBlazorServer.Pages
         private EditContext editContext;
         private bool formInvalid = true;
 
+        public User user { get; set; }
+
         private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
         {
             formInvalid = !editContext.Validate();
@@ -50,92 +54,7 @@ namespace WebAppCoreBlazorServer.Pages
         {
             try
             {
-                editContext = new EditContext(moduleFieldInfoValidate);
-                HomeBus homeBus = new HomeBus(moduleService, iConfiguration, distributedCache);
-                edit = pEdit == "1" ? true : false;
-                var data = Task.Run(() => homeBus.LoadViewBagEdit(modId, modSearchId, "", fieldNameEdit, parram, true, success)).Result;
-                if (data != null)
-                {
-                    moduleInfoModel = data.ModuleInfo == null ? new ModuleInfoModel() : data.ModuleInfo;
-                    moduleInfo = data.ModuleInfo == null ? new ModuleInfo() : data.ModuleInfo.ModulesInfo;
-                }
-                else
-                {
-                    moduleInfoModel = new ModuleInfoModel();
-                    moduleInfo = new ModuleInfo();
-                }
-                //ViewBag.Title = moduleInfoModel.ModulesInfo == null ? "" : moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo);
-                moduleFieldInfo = moduleInfoModel.FieldsInfo.Where(x => x.FieldGroup == FLDGROUP.COMMON.ToString()).Where(x => x.HideWeb != "Y").OrderBy(x => x.Order).ToList();
-                if (moduleFieldInfo == null)
-                    moduleFieldInfo = new List<ModuleFieldInfo>();
-                codeInfos = data.DataCombobox;
-                dataControl = data.DataControl;
-                //Set title
-                var arr = new string[1];
-                arr[0] = moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo); ;
-                Task.Run(() => JSRuntime.InvokeVoidAsync("SetTitle", arr));
-                //Hết SetTitle
-                foreach (var field in moduleFieldInfo)
-                {
-                    if (dataControl != null)
-                    {
-                        foreach (var item in dataControl)
-                        {
-                            var dataRows = ((Newtonsoft.Json.Linq.JContainer)item);
-
-                            foreach (var column in dataRows)
-                            {
-                                var columnName = ((Newtonsoft.Json.Linq.JProperty)column).Name;
-                                if (columnName.ToUpper() == field.FieldName.ToUpper())
-                                {
-                                    if (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value != null)
-                                    {
-                                        field.Value += (((Newtonsoft.Json.Linq.JValue)((Newtonsoft.Json.Linq.JProperty)column).Value).Value).ToString().Trim() + ",";
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if (field.Value != null)
-                    {
-                        field.Value = field.Value.Trim(',');
-                    }
-                }
-
-                var lstSources = moduleFieldInfo.Where(x => !String.IsNullOrEmpty(x.ListSource) && x.ListSource.IndexOf("(") > 0 && x.ListSource.IndexOf("()") < 0).ToList();//Lấy các list source dạng store có truyền vào tên field
-                var fieldChild = moduleFieldInfo.Where(x => x.FieldChilds != null).Select(x => x.FieldChilds);
-                if (fieldChild.Any())
-                {
-                    foreach (var child in fieldChild)
-                    {
-                        var sourceChild = child.Where(x => !String.IsNullOrEmpty(x.ListSource) && x.ListSource.IndexOf("(") > 0 && x.ListSource.IndexOf("()") < 0);
-                        if (sourceChild.Any())
-                        {
-                            lstSources.AddRange(sourceChild.ToList());
-                        }
-
-                    }
-
-                }
-                foreach (var item in lstSources)
-                {
-                    var sourceParr = item.ListSource.Substring(item.ListSource.IndexOf("(") + 1, item.ListSource.IndexOf(")") - item.ListSource.IndexOf("(") - 1).Split(",");
-                    foreach (var source in sourceParr)
-                    {
-                        var checkItems = moduleFieldInfo.Where(x => ":" + x.FieldID.ToUpper() == source.ToUpper());
-                        if (checkItems.Any())
-                        {
-                            item.ListSource = item.ListSource.Replace(source, checkItems.First().Value);
-                        }
-                    }
-                }
-                keyEdit = data.KeyEdit;
-                //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
-                //{
-                //    return RedirectToAction("Login", "Home");
-                //}
-                //await LoadViewBagEdit(modId, modSearchId, subModId, fieldNameEdit, parram, edit, success);
-                //codeInfos = DataCombobox;
+                user = new User();
             }
             catch (Exception e)
             {
@@ -174,22 +93,15 @@ namespace WebAppCoreBlazorServer.Pages
 
             if (string.IsNullOrEmpty(keyEdit))
             {
-                store = modMaintain.AddInsertStore;
-                //Dongpv: 
+                store = modMaintain.AddInsertStore;                
                 excute = (await moduleService.SaveData(modId, store, keyEdit, moduleFieldInfo));
             }
             else
             {
-                store = modMaintain.EditUpdateStore;
-                //Dongpv: 
+                store = modMaintain.EditUpdateStore;                
                 excute = (await moduleService.UpdateData(modId, store, keyEdit, moduleFieldInfo));
 
-            }
-
-            //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, fieldEdits));
-            //Dongpv:   
-            //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, moduleFieldInfo));            
-            //Dongpv:
+            }          
 
             if (excute.Data != "success" && excute.ResultCode != 1)
             {
@@ -202,8 +114,7 @@ namespace WebAppCoreBlazorServer.Pages
                 if (modMaintain.ShowSuccess == "Y" || excute.ResultCode == 1)
                 {
                     var title = "Lưu dữ liệu thành công";
-                    JSRuntime.InvokeAsync<string>("bb_alert", title, DotNetObjectReference.Create(this), "AlertCallBack");
-                    //Modal.Show<Pages.Edit>(moduleInfoModel.ModulesInfo.ModuleName.GetLanguageTitle(moduleInfoModel.LanguageInfo), parameters);
+                    JSRuntime.InvokeAsync<string>("bb_alert", title, DotNetObjectReference.Create(this), "AlertCallBack");                    
                 }
             }
 
