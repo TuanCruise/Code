@@ -183,8 +183,8 @@ namespace WebAppCoreBlazorServer.Pages
                 store = modMaintain.EditUpdateStore;
                 //Dongpv: 
                 excute = (await moduleService.UpdateData(modId, store, keyEdit, moduleFieldInfo));
-
             }
+
 
             //var excute = (await moduleService.SaveEditModule(modId, store, keyEdit, fieldEdits));
             //Dongpv:   

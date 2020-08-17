@@ -10,16 +10,16 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 
 namespace Host.BusinessBase
-{ 
+{
 
-    public class BusinessEntity 
+    public class BusinessEntity
     {
         private string _listTableNameNoLog = "MSGJOURNAL/WSREG/SESSIONLOG/MSGDETAIL/LANGUAGE/";
         private string _BranchID;
         private string _UserID;
         private ArrayList _arrProperties;
         private ArrayList _arrPK;
-        private string _entityName;        
+        private string _entityName;
         private string _retrieveDataQuery;
         private DBManager _dbManager;
         public bool isLoadOK = false;
@@ -27,33 +27,27 @@ namespace Host.BusinessBase
         public BusinessEntity()
         {
         }
-        public DBManager dbManager
-        {
+        public DBManager dbManager {
             get { return _dbManager; }
             set { _dbManager = value; }
         }
-        public string entityName
-        {
+        public string entityName {
             get { return _entityName; }
             set { _entityName = value; }
         }
-        public string BranchID
-        {
+        public string BranchID {
             get { return _BranchID; }
             set { _BranchID = value; }
         }
-        public ArrayList arrPK
-        {
+        public ArrayList arrPK {
             get { return _arrPK; }
             set { _arrPK = value; }
         }
-        public string retrieveDataQuery
-        {
+        public string retrieveDataQuery {
             get { return _retrieveDataQuery; }
             set { _retrieveDataQuery = value; }
         }
-        public ArrayList arrProperties
-        {
+        public ArrayList arrProperties {
             get { return _arrProperties; }
             set
             {
@@ -82,7 +76,7 @@ namespace Host.BusinessBase
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return null;
             }
             catch (Exception ex)
@@ -91,7 +85,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_GETPROPERTY;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return null;
             }
         }
@@ -109,7 +103,7 @@ namespace Host.BusinessBase
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return null;
             }
             catch (Exception ex)
@@ -118,7 +112,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_GETPK;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return null;
             }
         }
@@ -154,7 +148,7 @@ namespace Host.BusinessBase
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 //return null;
             }
             catch (Exception ex)
@@ -163,7 +157,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_SETPROPERTY;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
             }
         }
 
@@ -198,7 +192,7 @@ namespace Host.BusinessBase
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
             }
             catch (Exception ex)
             {
@@ -206,7 +200,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_SETPK;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
             }
         }
 
@@ -230,7 +224,7 @@ namespace Host.BusinessBase
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
             }
             catch (Exception ex)
             {
@@ -238,7 +232,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_UNLOAD;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
             }
         }
 
@@ -265,7 +259,7 @@ namespace Host.BusinessBase
                             pmi[i].Value = String.Empty;
                         else
                             pmi[i].Value = this.getProperty(rd.GetName(j));
-                        					
+
                         pmi[i] = dbManager.SetDBType(pmi[i], rd.GetDataTypeName(j).ToString());
                         i += 1;
                     }
@@ -300,17 +294,17 @@ namespace Host.BusinessBase
                         arr.Add(rd.GetValue(i));
                     }
                 }
-                rd.Dispose();            
+                rd.Dispose();
                 _arrProperties = arr;
             }
             catch (WB.SYSTEM.ErrorMessage ex)
-            {                
-                
+            {
+
                 ErrorHandler.Process(ex);
             }
             catch (Exception ex)
-            {                
-                
+            {
+
                 ErrorHandler.Process(ex);
             }
         }
@@ -370,7 +364,7 @@ namespace Host.BusinessBase
                 arrData.Add(arrHeader);
 
                 while (rd.Read())
-                {                  
+                {
                     isLoadOK = true;
                     ArrayList arrDetail = new ArrayList();
                     for (i = 0; i < rd.FieldCount; i++)
@@ -383,17 +377,17 @@ namespace Host.BusinessBase
                 }
                 rd.Dispose();
 
-                _arrProperties = arrData;                
+                _arrProperties = arrData;
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                
-                ErrorHandler.Process(ex);                
+
+                ErrorHandler.Process(ex);
             }
-            catch (Exception ex)    
+            catch (Exception ex)
             {
-                
-                ErrorHandler.Process(ex);                
+
+                ErrorHandler.Process(ex);
             }
         }
 
@@ -438,7 +432,7 @@ namespace Host.BusinessBase
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return null;
             }
             catch (Exception ex)
@@ -447,7 +441,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_FETCHNUMBERRECORD;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return null;
             }
         }
@@ -477,7 +471,7 @@ namespace Host.BusinessBase
                     }
 
                     //2.Gen sql
-                    sqlStr = "SELECT * FROM [" + _entityName + "] WITH (NOLOCK) WHERE 1=0";                    
+                    sqlStr = "SELECT * FROM [" + _entityName + "] WITH (NOLOCK) WHERE 1=0";
                     rd = dbManager.ExecuteReader(sqlStr, CommandType.Text);
 
                     //Count parameter=column
@@ -493,7 +487,7 @@ namespace Host.BusinessBase
                     string strVal = "";
                     int i = 0;
                     int j = 0;
-                    
+
                     string strValue = "";
                     string strSqlUpdate = "UPDATE  " + this._entityName + "  SET ";
                     string strSqlWhere = "";
@@ -512,7 +506,7 @@ namespace Host.BusinessBase
                                 pmi[i].Value = String.Empty;
                             }
                             else
-                            {                                
+                            {
                                 strValue = SysUtils.CString(this.getProperty(rd.GetName(j)));
                                 pmi[i].Value = strValue;
                             }
@@ -523,11 +517,11 @@ namespace Host.BusinessBase
                                 strVal += "[" + rd.GetName(j) + "]=@" + rd.GetName(j) + ",";
                             }
                             else
-                            {                                
+                            {
                                 strSqlWhere += "[" + pmi[i].ParameterName + "]=''" + strValue + "'' AND ";
                             }
                             strDebug += "<" + pmi[i].ParameterName + "=" + pmi[i].Value.ToString() + ">";
-                            
+
                             strSqlUpdate += rd.GetName(j) + "='" + strValue + "',";
 
                             i += 1;
@@ -535,7 +529,7 @@ namespace Host.BusinessBase
                         j += 1;
                     }
                     rd.Close();
-                    sqlStr += strVal.Substring(0, strVal.Length - 1) + " WHERE " + getCommandParam();                               
+                    sqlStr += strVal.Substring(0, strVal.Length - 1) + " WHERE " + getCommandParam();
                     strSqlUpdate = strSqlUpdate.TrimEnd(char.Parse(",")) + " WHERE " + strSqlWhere + "1=1 ";
 
                     //User log before execute
@@ -544,7 +538,7 @@ namespace Host.BusinessBase
 
                     dbManager.CreateParameters(pmi);
                     int num_row = dbManager.ExecuteNonQuery(CommandType.Text, sqlStr);
-                    
+
                     return num_row;
                 }
                 return -1;
@@ -560,10 +554,10 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_UPDATE;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return -1;
             }
-        }        
+        }
 
         public virtual int Sort(string storeName)
         {
@@ -585,7 +579,7 @@ namespace Host.BusinessBase
                 return num_row;
             }
             catch (ErrorMessage er)
-            {                
+            {
                 ErrorHandler.ThrowError(er);
                 return -1;
             }
@@ -595,7 +589,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_SORT;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return -1;
             }
         }
@@ -605,7 +599,7 @@ namespace Host.BusinessBase
             try
             {
                 //string ordered = "ORDER BY [" + orderBy + "]";
-                string ordered = "ORDER BY " + orderBy ;
+                string ordered = "ORDER BY " + orderBy;
                 string sqlStr = "";
 
                 if (isOrdered)
@@ -642,7 +636,7 @@ namespace Host.BusinessBase
             }
             catch (ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return null;
             }
             catch (Exception ex)
@@ -651,10 +645,10 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_FETCHALL;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return null;
             }
-        }     
+        }
 
         public virtual ArrayList FetchByField()
         {
@@ -696,7 +690,7 @@ namespace Host.BusinessBase
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return null;
             }
             catch (Exception ex)
@@ -705,7 +699,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_FETCHFIELD;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return null;
             }
         }
@@ -790,7 +784,7 @@ namespace Host.BusinessBase
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return null;
             }
             catch (Exception ex)
@@ -799,7 +793,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_FETCHFIELD;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return null;
             }
         }
@@ -866,12 +860,12 @@ namespace Host.BusinessBase
                 }
                 rd.Close();
                 rd.Dispose();
-                
+
                 return arrData;
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return null;
             }
             catch (Exception ex)
@@ -880,7 +874,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_FETCH;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return null;
             }
         }
@@ -889,7 +883,7 @@ namespace Host.BusinessBase
         {
             try
             {
-                string ordered = " ORDER BY " + orderBy ;
+                string ordered = " ORDER BY " + orderBy;
                 string sqlStr = "";
 
                 sqlStr = "SELECT * FROM [" + _entityName + "] WITH (NOLOCK) WHERE 1=0 ";
@@ -952,7 +946,7 @@ namespace Host.BusinessBase
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return null;
             }
             catch (Exception ex)
@@ -961,7 +955,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_FETCH;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return null;
             }
         }
@@ -1034,7 +1028,7 @@ namespace Host.BusinessBase
             }
             catch (ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return null;
             }
             catch (Exception ex)
@@ -1043,7 +1037,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_FETCH;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return null;
             }
         }
@@ -1114,7 +1108,7 @@ namespace Host.BusinessBase
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return null;
             }
             catch (Exception ex)
@@ -1123,7 +1117,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_SBFETCH;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return null;
             }
         }
@@ -1169,13 +1163,13 @@ namespace Host.BusinessBase
             }
             catch (ErrorMessage er)
             {
-                
+
                 ErrorHandler.ThrowError(er);
                 return null;
             }
             catch (Exception ex)
             {
-                
+
                 ErrorMessage objErr = new ErrorMessage();
                 objErr.ErrorCode = ErrorHandler.SRV_MAINTENANCE_PROCESS_ERR;
                 objErr.ErrorDesc = ex.Message;
@@ -1224,13 +1218,13 @@ namespace Host.BusinessBase
             }
             catch (ErrorMessage er)
             {
-                
+
                 ErrorHandler.ThrowError(er);
                 return null;
             }
             catch (Exception ex)
             {
-                
+
                 ErrorMessage objErr = new ErrorMessage();
                 objErr.ErrorCode = ErrorHandler.SRV_MAINTENANCE_PROCESS_ERR;
                 objErr.ErrorDesc = ex.Message;
@@ -1267,8 +1261,8 @@ namespace Host.BusinessBase
 
                     //2. Gen sql
                     sqlStr = "SELECT * FROM [" + _entityName + "] WITH (NOLOCK) WHERE 1=0";
-                   
-                    rd = dbManager.ExecuteReader(CommandType.Text, sqlStr);            
+
+                    rd = dbManager.ExecuteReader(CommandType.Text, sqlStr);
                     int i = 0;
                     int j = 0;
                     while (j < rd.FieldCount)
@@ -1285,7 +1279,7 @@ namespace Host.BusinessBase
                     string strVal = "";
                     i = 0;
                     j = 0;
-                    
+
                     string strValue = "";
                     string strSqlValue = "";
 
@@ -1298,17 +1292,17 @@ namespace Host.BusinessBase
                             pmi[i].SourceColumn = rd.GetName(j);
 
                             if ((this.getProperty(rd.GetName(j)) == null) && (pmi[j].DbType == DbType.String))
-                            {                                
+                            {
                                 strValue = "";
                                 pmi[i].Value = String.Empty;
                             }
                             else
-                            {                                
+                            {
                                 strValue = SysUtils.CString(this.getProperty(rd.GetName(j)));
                                 pmi[i].Value = strValue;
                             }
                             sqlStr += "[" + rd.GetName(j) + "], ";
-                            strVal += "@" + rd.GetName(j) + ", ";                            
+                            strVal += "@" + rd.GetName(j) + ", ";
                             strSqlValue += "'" + strValue + "',";
 
                             strDebug += "<" + pmi[i].ParameterName + "=" + pmi[i].Value.ToString() + ">";
@@ -1317,8 +1311,8 @@ namespace Host.BusinessBase
                         }
                         j += 1;
                     }
-                    
-                    strSqlValue = sqlStr.Substring(0, sqlStr.Length - 1) + ") VALUES (" + strSqlValue.Substring(0, strSqlValue.Length - 1) + ")";                    
+
+                    strSqlValue = sqlStr.Substring(0, sqlStr.Length - 1) + ") VALUES (" + strSqlValue.Substring(0, strSqlValue.Length - 1) + ")";
                     sqlStr = sqlStr.Substring(0, sqlStr.Length - 2) + ") VALUES(" + strVal.Substring(0, strVal.Length - 2) + ")";
                     rd.Close();
                     rd.Dispose();
@@ -1336,7 +1330,7 @@ namespace Host.BusinessBase
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return -1;
             }
             catch (Exception ex)
@@ -1345,7 +1339,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_ADD;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return -1;
             }
         }
@@ -1362,7 +1356,7 @@ namespace Host.BusinessBase
 
                 //3. LOG FIELDS DETAIL
                 //SystemLog(strAction, parm);
-                
+
                 //strSqlStatement = strSqlStatement.Replace("''", "'");
                 //LogMessage.Log(strSqlStatement + "\n", "TRANCE_SQL");
 
@@ -1393,7 +1387,7 @@ namespace Host.BusinessBase
                         while (rd.Read())
                         {
                             string key = rd[0].ToString().Trim();
-                            string Val = getProperty(key).ToString().Trim();                            
+                            string Val = getProperty(key).ToString().Trim();
                             setPK(key, Val);
                         }
                         rd.Close();
@@ -1401,7 +1395,7 @@ namespace Host.BusinessBase
 
                     //2.Gen sql
                     sqlStr = "SELECT * FROM [" + _entityName + "] WITH (NOLOCK) WHERE 1=0";
-                    
+
                     rd = dbManager.ExecuteReader(sqlStr, CommandType.Text);
                     ParamStruct[] pmi = new ParamStruct[arrPK.Count];
                     sqlStr = "DELETE FROM [" + _entityName + "] ";
@@ -1418,7 +1412,7 @@ namespace Host.BusinessBase
                             if ((this.getProperty(rd.GetName(j)) == null) && (pmi[j].DbType == DbType.String))
                                 pmi[i].Value = String.Empty;
                             else
-                                pmi[i].Value = this.getProperty(rd.GetName(j));                            					
+                                pmi[i].Value = this.getProperty(rd.GetName(j));
                             i += 1;
                         }
                         j += 1;
@@ -1429,14 +1423,14 @@ namespace Host.BusinessBase
 
                     dbManager.CreateParameters(pmi);
                     int num_rows = (int)dbManager.ExecuteNonQuery(CommandType.Text, sqlStr);
-                    
+
                     return num_rows;
                 }
                 return -1;
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 
+
                 ErrorHandler.ThrowError(ex);
                 return -1;
             }
@@ -1446,7 +1440,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_DELETE;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return -1;
             }
         }
@@ -1482,7 +1476,7 @@ namespace Host.BusinessBase
             }
             st += "1=1 ";
             return st;
-        }       
+        }
 
 
         public string getSearchLikeParam()
@@ -1496,7 +1490,7 @@ namespace Host.BusinessBase
             return st;
         }
 
-      
+
         public static ParamStruct SetDBType(ParamStruct pmi, string FieldType)
         {
 
@@ -1563,11 +1557,13 @@ namespace Host.BusinessBase
         {
             try
             {
+                ExecuteStoreProcedure(this.entityName + "_VALIDATE_UPDATE");
+
                 return true;
             }
             catch (ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return false;
             }
             catch (Exception ex)
@@ -1576,7 +1572,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_FETCH;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return false;
             }
         }
@@ -1584,11 +1580,13 @@ namespace Host.BusinessBase
         {
             try
             {
+                ExecuteStoreProcedure(this.entityName + "_VALIDATE_INSERT");
+
                 return true;
             }
             catch (ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return false;
             }
             catch (Exception ex)
@@ -1597,7 +1595,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_FETCH;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return false;
             }
         }
@@ -1605,11 +1603,13 @@ namespace Host.BusinessBase
         {
             try
             {
+                ExecuteStoreProcedure(this.entityName + "_VALIDATE_DELETE");
+
                 return true;
             }
             catch (ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return false;
             }
             catch (Exception ex)
@@ -1618,16 +1618,28 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_FETCH;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return false;
             }
         }
 
         //public static List<T> ExecuteProcedure<T>(ref WB.MESSAGE.Message msg)       
-        public ArrayList ExecuteStoreProcedure(ArrayList arrListParms)
+        public ArrayList ExecuteStoreProcedure(string strObjName)
         {
             try
-            {                            
+            {
+                //05/08/2020
+                //1.GET PARAMS of store  
+                ArrayList arrListParms = new ArrayList();
+                try
+                {
+                    _retrieveDataQuery = "SELECT PARAMETER_NAME ,DATA_TYPE ,CHARACTER_MAXIMUM_LENGTH , PARAMETER_MODE, ORDINAL_POSITION FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_NAME = '" + strObjName + "'";
+                    arrListParms = LoadByQuery();
+                }
+                catch { }
+
+                if (arrListParms == null || arrListParms.Count == 1) return null;
+
                 //2.QUIRY  DATA
                 int num;
                 ArrayList arrResult = new ArrayList();
@@ -1695,13 +1707,13 @@ namespace Host.BusinessBase
                 //Case:DataSet
                 DataSet ds = dbManager.ExecuteDataSet(CommandType.StoredProcedure, this.entityName);
                 arrResult = SysUtils.DataSet2ArrayList(ds, 0);
-                            
+
                 //3. GET RESULT             
                 //msg.effectRows = dbManager.result;
 
                 //if have any error throw exception 
                 if (arrResult.Count > 1)
-                {                    
+                {
                     string strErr_code = SysUtils.getProperty(arrResult, "ERR_CODE");
                     if (!string.IsNullOrEmpty(strErr_code))
                     {
@@ -1729,7 +1741,7 @@ namespace Host.BusinessBase
                 throw ex;
             }
             finally
-            {                
+            {
             }
         }
 
@@ -1791,13 +1803,13 @@ namespace Host.BusinessBase
             }
             catch (ErrorMessage er)
             {
-                
+
                 ErrorHandler.ThrowError(er);
                 return null;
             }
             catch (Exception ex)
             {
-                
+
                 ErrorMessage objErr = new ErrorMessage();
                 objErr.ErrorCode = "ExeStoreProcedure";
                 objErr.ErrorDesc = ex.Message;
@@ -1867,13 +1879,13 @@ namespace Host.BusinessBase
             }
             catch (ErrorMessage er)
             {
-                
+
                 ErrorHandler.ThrowError(er);
                 return null;
             }
             catch (Exception ex)
             {
-                
+
                 ErrorMessage objErr = new ErrorMessage();
                 objErr.ErrorCode = ErrorHandler.SRV_MAINTENANCE_PROCESS_ERR;
                 objErr.ErrorDesc = ex.Message;
@@ -1937,17 +1949,17 @@ namespace Host.BusinessBase
                     dbManager.CreateParameters(pmi);
                 }
                 strSql = $"select case when exists ({strSql}) then 1 else 0 end";
-                int iRowCount =Convert.ToInt32(dbManager.ExecuteScalar(CommandType.Text,strSql));
-                
+                int iRowCount = Convert.ToInt32(dbManager.ExecuteScalar(CommandType.Text, strSql));
+
                 arrData.Add("isExist");
                 arrData.Add(iRowCount);
-               
+
                 //dbManager.Close();
                 return arrData;
             }
             catch (WB.SYSTEM.ErrorMessage ex)
             {
-                 ErrorHandler.ThrowError(ex);
+                ErrorHandler.ThrowError(ex);
                 return null;
             }
             catch (Exception ex)
@@ -1956,7 +1968,7 @@ namespace Host.BusinessBase
                 objErr.ErrorCode = ErrorHandler.BUSSINESS_ENTITY_FETCHFIELD;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
-                 ErrorHandler.ThrowError(objErr);
+                ErrorHandler.ThrowError(objErr);
                 return null;
             }
         }

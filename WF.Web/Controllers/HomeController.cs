@@ -14,6 +14,7 @@ using MassTransit;
 using System.Collections;
 using WB.MESSAGE;
 using WB.SYSTEM;
+using Microsoft.JSInterop;
 
 namespace WFToolsTestAPI.Controllers
 {
@@ -41,14 +42,15 @@ namespace WFToolsTestAPI.Controllers
 
                 //2. GEN MESSAGE                
                 Message msg = new Message();
-                msg.ObjectName = Constants.OBJ_SEARCH;
-                msg.MsgType = Constants.MSG_MISC_TYPE;
+                msg.MsgType = Constants.MSG_MISC_TYPE;//MESSAGE TYPE: INQ, MAINTAIN, TXN, REPORT
+                msg.ObjectName = Constants.OBJ_SEARCH;                
                 msg.MsgAction = Constants.MSG_SEARCH;
+                msg.ModId = "03510";
 
                 msg.Body.Add("SearchObject");
                 msg.Body.Add("CUSTOMER"); ///Entity or Procedure name
                 msg.Body.Add("Condition");
-                msg.Body.Add(" WHERE 1=0"); //Condition
+                msg.Body.Add(" WHERE 1=1"); //Condition
                 msg.Body.Add("Page");
                 msg.Body.Add(0); //Current page
 
@@ -58,14 +60,18 @@ namespace WFToolsTestAPI.Controllers
                 //4.WAIT ALL TASK TO COMPLETE
                 await Task.WhenAll(tasks.ToArray());
 
-                //5. Result
+                //5. Result                
+                Reservation reservation = new Reservation();
                 foreach (Task<string> task in tasks.Cast<Task<string>>())
                 {
-                    //reservation = task.Result;
-                    Console.WriteLine(task.Result);
+                    reservation.value = task.Result;
+                    //Console.WriteLine(task.Result);  
+                    ViewBag.Title = task.Result;
                 }
+                
+                
+                return View(reservation);
 
-                return View();
             }
             catch (Exception ex)
             {
@@ -81,8 +87,8 @@ namespace WFToolsTestAPI.Controllers
             {                
                 var json = JsonConvert.SerializeObject(msg);                
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
-
-                var responseMessage = await _client.PostAsync($"https://localhost:5001/product", data);
+                
+                var responseMessage = await _client.PostAsync($"http://localhost:12345", data);
 
                 responseMessage.EnsureSuccessStatusCode();
 
@@ -95,7 +101,9 @@ namespace WFToolsTestAPI.Controllers
                     try
                     {
                         //receivedReservation = JsonConvert.DeserializeObject<Reservation>(apiResponse);
-                        json = JsonConvert.DeserializeObject<string>(apiResponse);                        
+                        //json = JsonConvert.DeserializeObject<string>(apiResponse);                        
+                        //JSRuntime.InvokeAsync<string>("bb_alert", json, DotNetObjectReference.Create(this), "AlertCallBack");
+                        json = result;
                     }
                     catch (Exception ex)
                     {
@@ -153,47 +161,7 @@ namespace WFToolsTestAPI.Controllers
             return View(receivedReservation);
         }
 
-        public async Task<IActionResult> Index_bk()
-        {
-            object reservation = new
-            {
-                //MID = "SYS002",
-                //CPUID = "123456",
-                //UserID = "00001"
-                Id = "111",
-                CustomerNumber = $"CUSTOMER"
-            };
-
-
-            Reservation receivedReservation = new Reservation();
-
-            using (var httpClient = new HttpClient())
-            {
-
-                //httpClient.DefaultRequestHeaders.Add("Key", "Secret@123");
-                StringContent content = new StringContent(JsonConvert.SerializeObject(reservation), Encoding.UTF8, "application/json");
-
-                //using (var response = await httpClient.PostAsync("http://localhost:4000/users/Process", content))
-                //using (var response = await httpClient.PostAsync("https://localhost:5001/product/Process", content))
-                using (var response = await httpClient.PostAsync("https://localhost:5001/product", content))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    try
-                    {
-                        receivedReservation = JsonConvert.DeserializeObject<Reservation>(apiResponse);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        ViewBag.Result = apiResponse;
-                        return View();
-                    }
-                }
-            }
-            return View(receivedReservation);
-        }
-
-
+      
         public IActionResult Privacy()
         {
             return View();
