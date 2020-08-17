@@ -343,7 +343,6 @@ namespace WebAppCoreBlazorServer.Service
                 if (!string.IsNullOrEmpty(result) && result != "null")
                     tb = SysUtils.Json2Table(result);
 
-
                 var outPut = new RestOutput<string>();
                 outPut.Data = JsonConvert.SerializeObject(tb, Formatting.Indented, new JsonSerializerSettings { Converters = new[] { new DataSetConverter() } });
                 //string json = JsonConvert.SerializeObject(dataSet, Formatting.Indented, new JsonSerializerSettings { Converters = new[] { new Newtonsoft.Json.Converters.DataSetConverter() } });

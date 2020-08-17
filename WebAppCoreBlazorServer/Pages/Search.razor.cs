@@ -181,8 +181,8 @@ namespace WebAppCoreBlazorServer.Pages
                     if (modSearch.GroupModule == "004")
                     {
                         Message msg = new Message();
-                        msg.ObjectName = Constants.OBJ_SEARCH;
-                        msg.MsgType = Constants.MSG_MISC_TYPE;
+                        msg.MsgType = Constants.MSG_MISC_TYPE; //MESSAGE TYPE: INQ, MAINTAIN, TXN, REPORT
+                        msg.ObjectName = Constants.OBJ_SEARCH;                      
                         msg.MsgAction = Constants.MSG_SEARCH;
 
                         msg.Body.Add("SearchObject");

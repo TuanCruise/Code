@@ -134,8 +134,6 @@ namespace Core.API
                             if (msg.ModId == null) msg.ModId = moduleFieldInfo.ModuleID;
                         }
                     }
-
-
                 }
                 catch { }
                 

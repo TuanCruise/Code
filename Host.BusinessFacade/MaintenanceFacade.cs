@@ -21,24 +21,23 @@ using Newtonsoft.Json;
 
 namespace Host.BusinessFacade
 {
-	public class MaintenanceFacade
-	{
+    public class MaintenanceFacade
+    {
         private DBManager _dbManager;
 
-        public DBManager dbManager
-        {
+        public DBManager dbManager {
             get { return _dbManager; }
             set { _dbManager = value; }
         }
 
         public MaintenanceFacade()
-		{
+        {
             ErrorMessage objErr = new ErrorMessage();
             try
-            {              
+            {
             }
             catch (Exception ex)
-            {                
+            {
                 objErr.ErrorCode = ErrorHandler.SRV_CONNECT_ERR;
                 objErr.ErrorDesc = ex.Message;
                 objErr.ErrorSource = ex.Source;
@@ -56,10 +55,10 @@ namespace Host.BusinessFacade
             ErrorMessage objErr = new ErrorMessage();
             dbManager = new DBManager();
             try
-            {                
+            {
                 //var appSettingsSection = IConfiguration.GetSection("AppSettings");
                 TransactionOptions transactionOptions = new TransactionOptions();
-                transactionOptions.IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted; 
+                transactionOptions.IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted;
                 transactionOptions.Timeout = new TimeSpan(10, 0, 0);
 
                 using (TransactionScope transaction = new TransactionScope(TransactionScopeOption.Required, transactionOptions))
@@ -86,7 +85,7 @@ namespace Host.BusinessFacade
                             ArrayList arrData = new ArrayList();
 
                             string strObjName = "";
-                            
+
                             for (int i = 0; i < arrObj.Count; i += 2)
                             {
                                 strObjName = arrObj[i].ToString();
@@ -101,12 +100,8 @@ namespace Host.BusinessFacade
                                     ent.arrProperties = SysUtils.Property2Value(arrDetail, arrHeader);
                                     ent.entityName = strObjName;
 
-                                    //1.GET PARAMS of store                                                               
-                                    ent.retrieveDataQuery = "SELECT PARAMETER_NAME ,DATA_TYPE ,CHARACTER_MAXIMUM_LENGTH , PARAMETER_MODE, ORDINAL_POSITION FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_NAME = '" + strObjName + "'";
-                                    ArrayList arrListParms = ent.LoadByQuery();
-
                                     //Execute
-                                    arrDetail = ent.ExecuteStoreProcedure(arrListParms);
+                                    arrDetail = ent.ExecuteStoreProcedure(strObjName);
 
                                     if (ent.arrPK == null)
                                         ent.arrPK = arrDetail;
@@ -120,128 +115,134 @@ namespace Host.BusinessFacade
                             msg.Body = arrayLists;
 
                         }
-                        else  //defaul: gen sql statement
+                        else  //Defaul: gen sql statement
                         {
-                            //CASE1: CALL PROCEDURE
-
-                            //CASE2: Auto gen SQL
                             BusinessEntity ent = new BusinessEntity();
                             ent.dbManager = dbManager;
-                            //1.SAVE MASTER                           
                             ent.arrProperties = msg.Body;
                             ent.entityName = msg.ObjectName;
 
-                            if (msg.MsgAction == WB.SYSTEM.Constants.MSG_ADD_ACTION)
+                            //CASE1: CALL PROCEDURE
+                            if (msg.ObjectName.ToUpper().Substring(0, 3) == "SP_")
                             {
-                                ent.Add();
+                                msg.Body = ent.ExecuteStoreProcedure(msg.ObjectName);
                             }
-                            if (msg.MsgAction == WB.SYSTEM.Constants.MSG_UPDATE_ACTION)
+                            else
                             {
-                                ent.Update();
-                            }
-                            if (msg.MsgAction == WB.SYSTEM.Constants.MSG_DELETE_ACTION)
-                            {
-                                ent.Delete();
-                            }
-
-                            //SAVE PKey for Master to insert properties of Detail
-                            ArrayList arrMasterPkey = ent.arrPK;
-                            ArrayList arrMasterProperties = ent.arrProperties;
-
-                            //2.UPDATE DETAIL
-                            //2.1LOAD ALL CTRLTYPE =GE -->Grid
-                            ent.arrProperties = new ArrayList();
-                            ent.arrProperties.Add("MODID");
-                            ent.arrProperties.Add(msg.ModId);
-                            ent.arrProperties.Add("CTRLTYPE");
-                            ent.arrProperties.Add("GE");
-                            ent.entityName = "DEFMODFLD";
-                            ent.arrPK = ent.arrProperties;                            
-                            ArrayList arrDefModFld = ent.Fetch("");
-
-                            ArrayList arrHeader = new ArrayList();
-                            ArrayList arrDetail = new ArrayList();
-
-                            //2.2 SAVE DETAIL                           
-                            if (arrDefModFld.Count > 0)
-                            {                                
-                                arrHeader = (ArrayList)arrDefModFld[0];
-                                arrDetail = new ArrayList();
-
-                                for (int i = 1; i < arrDefModFld.Count; i++)
+                                //CASE2: Auto gen SQL       
+                                //1.SAVE MASTER  
+                                if (msg.MsgAction == WB.SYSTEM.Constants.MSG_ADD_ACTION)
                                 {
-                                    arrDetail = (ArrayList)arrDefModFld[i];
-                                    string entity = SysUtils.getProperty(arrHeader, arrDetail, "ENTITY");
-                                    ent.entityName = entity;
+                                    ent.Add();
+                                }
+                                if (msg.MsgAction == WB.SYSTEM.Constants.MSG_UPDATE_ACTION)
+                                {
+                                    ent.Update();
+                                }
+                                if (msg.MsgAction == WB.SYSTEM.Constants.MSG_DELETE_ACTION)
+                                {
+                                    ent.Delete();
+                                }
 
-                                    string fldName = SysUtils.getProperty(arrHeader, arrDetail, "FLDNAME");                                   
-                                    string jsonValue = SysUtils.CString(SysUtils.getValue(msg.Body, fldName));
-                                    if (string.IsNullOrEmpty(jsonValue)) break;
+                                //SAVE PKey for Master to insert properties of Detail
+                                ArrayList arrMasterPkey = ent.arrPK;
+                                ArrayList arrMasterProperties = ent.arrProperties;
 
-                                    //2.2.1 Convert jsonValue to Table or List<Model>
-                                    //JArray arrBody = JArray.Parse(jsonValue);
-                                    var table = JsonConvert.DeserializeObject<DataTable>(jsonValue);
-                                    ArrayList arrData = SysUtils.DataTable2ArrayList(table);
-                                 
-                                    if (msg.MsgAction == WB.SYSTEM.Constants.MSG_ADD_ACTION)
+                                //2.UPDATE DETAIL
+                                //2.1LOAD ALL CTRLTYPE =GE -->Grid
+                                ent.arrProperties = new ArrayList();
+                                ent.arrProperties.Add("MODID");
+                                ent.arrProperties.Add(msg.ModId);
+                                ent.arrProperties.Add("CTRLTYPE");
+                                ent.arrProperties.Add("GE");
+                                ent.entityName = "DEFMODFLD";
+                                ent.arrPK = ent.arrProperties;
+                                ArrayList arrDefModFld = ent.Fetch("");
+
+                                ArrayList arrHeader = new ArrayList();
+                                ArrayList arrDetail = new ArrayList();
+
+                                //2.2 SAVE DETAIL                           
+                                if (arrDefModFld.Count > 0)
+                                {
+                                    arrHeader = (ArrayList)arrDefModFld[0];
+                                    arrDetail = new ArrayList();
+
+                                    for (int i = 1; i < arrDefModFld.Count; i++)
                                     {
-                                        //2.2.2 Save
-                                        for (int j = 1; j < arrData.Count; j++)
-                                        {
-                                            ent.arrProperties = SysUtils.Property2Value( (ArrayList)arrData[j], (ArrayList)arrData[0]);
-                                            ent.arrPK = new ArrayList();
+                                        arrDetail = (ArrayList)arrDefModFld[i];
+                                        string entity = SysUtils.getProperty(arrHeader, arrDetail, "ENTITY");
+                                        ent.entityName = entity;
 
-                                            //2.2.2.1 Update FKey from Pkey of Master
-                                            for (int k =0; k < arrMasterPkey.Count; k++ )
+                                        string fldName = SysUtils.getProperty(arrHeader, arrDetail, "FLDNAME");
+                                        string jsonValue = SysUtils.CString(SysUtils.getValue(msg.Body, fldName));
+                                        if (string.IsNullOrEmpty(jsonValue)) break;
+
+                                        //2.2.1 Convert jsonValue to Table or List<Model>
+                                        //JArray arrBody = JArray.Parse(jsonValue);
+                                        var table = JsonConvert.DeserializeObject<DataTable>(jsonValue);
+                                        ArrayList arrData = SysUtils.DataTable2ArrayList(table);
+
+                                        if (msg.MsgAction == WB.SYSTEM.Constants.MSG_ADD_ACTION)
+                                        {
+                                            //2.2.2 Save
+                                            for (int j = 1; j < arrData.Count; j++)
                                             {
-                                                string strPkey = arrMasterPkey[k].ToString();
-                                                ent.setProperty(strPkey, SysUtils.getValue(arrMasterProperties, strPkey));                                                
+                                                ent.arrProperties = SysUtils.Property2Value((ArrayList)arrData[j], (ArrayList)arrData[0]);
+                                                ent.arrPK = new ArrayList();
+
+                                                //2.2.2.1 Update FKey from Pkey of Master
+                                                for (int k = 0; k < arrMasterPkey.Count; k++)
+                                                {
+                                                    string strPkey = arrMasterPkey[k].ToString();
+                                                    ent.setProperty(strPkey, SysUtils.getValue(arrMasterProperties, strPkey));
+                                                }
+
+                                                ent.Add();
+                                            }
+                                        }
+                                        if (msg.MsgAction == WB.SYSTEM.Constants.MSG_UPDATE_ACTION)
+                                        {
+                                            //2.2.2.1 Delete by FKey
+                                            ent.arrProperties = arrMasterProperties;
+                                            ent.arrPK = arrMasterPkey;
+                                            ent.Delete();
+
+                                            //2.2.2.2 Update
+                                            for (int j = 1; j < arrData.Count; j++)
+                                            {
+                                                ent.arrProperties = SysUtils.Property2Value((ArrayList)arrData[0], (ArrayList)arrData[j]);
+                                                //2.2.2.1 Update FKey from Pkey of Master
+                                                for (int k = 0; k < arrMasterPkey.Count; k++)
+                                                {
+                                                    string strPkey = arrMasterPkey[k].ToString();
+                                                    ent.setProperty(strPkey, ent.getProperty(strPkey));
+                                                }
+
+                                                ent.Update();
                                             }
 
-                                            ent.Add();
                                         }
-                                    }
-                                    if (msg.MsgAction == WB.SYSTEM.Constants.MSG_UPDATE_ACTION)
-                                    {
-                                        //2.2.2.1 Delete by FKey
-                                        ent.arrProperties = arrMasterProperties;
-                                        ent.arrPK = arrMasterPkey;
-                                        ent.Delete();
-
-                                        //2.2.2.2 Update
-                                        for (int j = 1; j < arrData.Count; j++)
+                                        if (msg.MsgAction == WB.SYSTEM.Constants.MSG_DELETE_ACTION)
                                         {
-                                            ent.arrProperties = SysUtils.Property2Value((ArrayList)arrData[0], (ArrayList)arrData[j]);
-                                            //2.2.2.1 Update FKey from Pkey of Master
-                                            for (int k = 0; k < arrMasterPkey.Count; k++)
-                                            {
-                                                string strPkey = arrMasterPkey[k].ToString();
-                                                ent.setProperty(strPkey, ent.getProperty(strPkey));
-                                            }
-
-                                            ent.Update();
+                                            //2.2.2.1 Delete by FKey
+                                            ent.arrProperties = arrMasterProperties;
+                                            ent.arrPK = arrMasterPkey;
+                                            ent.Delete();
                                         }
-
-                                    }
-                                    if (msg.MsgAction == WB.SYSTEM.Constants.MSG_DELETE_ACTION)
-                                    {
-                                        //2.2.2.1 Delete by FKey
-                                        ent.arrProperties = arrMasterProperties;
-                                        ent.arrPK = arrMasterPkey;
-                                        ent.Delete();
                                     }
                                 }
-                            }                           
+                            }
                         }
 
                         msg.Body = new ArrayList();
                         ArrayList arrTemp = new ArrayList(); arrTemp.Add("Data"); msg.Body.Add(arrTemp);
                         arrTemp = new ArrayList(); arrTemp.Add("success"); msg.Body.Add(arrTemp);
-                        
+
                         transaction.Complete();
                     }
                     catch (Exception ex)
-                    {                      
+                    {
                         transaction.Dispose();
                         throw ex;
                     }
@@ -249,11 +250,11 @@ namespace Host.BusinessFacade
 
             }
             catch (ErrorMessage ex)
-            {              
-                ErrorHandler.ProcessErr(ex);                
+            {
+                ErrorHandler.ProcessErr(ex);
             }
             catch (Exception ex)
-            {               
+            {
                 ErrorHandler.ProcessErr(ex, Constants.ERROR_TYPE_EBANK, ErrorHandler.EBANK_SYSTEM_ERROR);
             }
             finally
@@ -269,7 +270,7 @@ namespace Host.BusinessFacade
                 objErr.Dispose();
             }
         }
-        
+
 
     }
 }
