@@ -1,89 +1,100 @@
 ﻿@page "/Contract"
 @inject IModalService Modal
+@using WebAppCoreBlazorServer.Service
+@inject IModuleService moduleService
 
 <h1>QUẢN LÝ HỢP ĐỒNG - Tạo mới hợp đồng</h1>
-<div class="mb-3 col-12 row">
-    <div class="card col-9 m-0 p-0">
-        <div class="col-12 m-0">
-            <div class="card-header">
-                <p>Thông tin tài sản</p>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <th>Stt</th>
-                    <th>Loại tài sản</th>
-                    <th>Tên tài sản</th>
-                    <th>Giá thẩm định</th>
-                    <th>Giá cho vay</th>
-                    <th>Ghi chú</th>
-                    <tbody>
-                        <tr><td colspan="6">Không có dữ liệu</td></tr>
-                    </tbody>
-                </table>
-                <div class="col-12">
-                    <div><button class="btn btn-success float-right"><i class="ik ik-plus"></i>Thêm mới tài sản</button></div>
+<EditForm EditContext="@editContext">
+    <Blazored.FluentValidation.FluentValidationValidator DisableAssemblyScanning="@true" />
+    <div class="mb-3 col-12 row">
+        <div class="card col-9 m-0 p-0">
+            <div class="col-12 m-0">
+                <div class="card-header">
+                    <p>Thông tin tài sản</p>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="card col-3 m-0 p-0">
-        <div class="row">
-            <div class="col-6"></div>
-            <div class="col-6"><button class="btn btn-success float-right"><i class="ik ik-upload"></i>Đăng ảnh</button></div>
-        </div>
-    </div>
-</div>
-
-<div class="mb-3 col-12 row">
-    <div class="card col-12">
-        <div class="card-header">
-            <p>Thông tin khoản vay</p>
-        </div>
-        <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-3">
-                    <label>Mã hợp đồng</label>
-                    <input type="text" class="form-control" value="HD-00001" disabled="disabled" />
-                </div>
-                <div class="col-3">
-                    <label class="col-4">Ngày vay</label>
-                    <input type="text" class="form-control" value="20-02-2020" disabled="disabled" />
-                </div>
-                <div class="col-3">
-                    <label class="col-4">Số ngày vay</label>
-                    <input type="text" class="form-control" value="30" disabled="disabled" />
-                </div>
-                <div class="col-3">
-                    <label class="col-4">Ngày tạo</label>
-                    <input type="text" class="form-control" value="20-02-2020" disabled="disabled" />
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-3">
-                    <label>Giá thẩm định cửa hàng đề xuất</label>
-                    <input type="text" class="form-control" value="HD-00001" disabled="disabled" />
-                </div>
-                <div class="col-3">
-                    <label class="col-4">Số tiền cầm</label>
-                    <div class="form-group row">
-                        <input type="text" class="form-control col-7" placeholder="<=0" /><button class="btn btn-facebook col-5"><i class="fa fa-calendar"></i>Tính lãi và chi phí</button>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <th>Stt</th>
+                        <th>Loại tài sản</th>
+                        <th>Tên tài sản</th>
+                        <th>Giá thẩm định</th>
+                        <th>Giá cho vay</th>
+                        <th>Ghi chú</th>
+                        <tbody>
+                            <tr><td colspan="6">Không có dữ liệu</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="col-12">
+                        <div><button class="btn btn-success float-right"><i class="ik ik-plus"></i>Thêm mới tài sản</button></div>
                     </div>
                 </div>
-                <div class="col-3">
-                    <label class="col-4">Lãi và chi phí</label>
-                    <input type="text" class="form-control" disabled="disabled" />
-                </div>
-                <div class="col-3">
-                    <label>Chương trình khuyến mãi</label>
-                    <select type="text" class="form-control" />
-                </div>
-
+            </div>
+        </div>
+        <div class="card col-3 m-0 p-0">
+            <div class="row">
+                <div class="col-6"></div>
+                <div class="col-6"><button class="btn btn-success float-right"><i class="ik ik-upload"></i>Đăng ảnh</button></div>
             </div>
         </div>
     </div>
-</div>
 
+    <div class="mb-3 col-12 row">
+        <div class="card col-12">
+            <div class="card-header">
+                <p>Thông tin khoản vay</p>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <label>Mã hợp đồng</label>
+                        <InputText type="text" class="form-control" disabled="disabled" @bind-Value="@ContractModel.LoanAmount.ContractNo" />
+                    </div>
+                    <div class="col-3">
+                        <label class="col-4">Ngày vay</label>
+                        <InputDate class="form-control" @bind-Value='@ContractModel.LoanAmount.LoanDate' data-date-format="dd/MM/yyyy"></InputDate>
+                    </div>
+                    <div class="col-3">
+                        <label class="col-4">Số ngày vay</label>
+                        <InputNumber type="text" class="form-control" disabled="disabled" @bind-Value="@ContractModel.LoanAmount.LoanDay" />
+                    </div>
+                    <div class="col-3">
+                        <label class="col-4">Ngày tạo</label>
+                        <InputDate class="form-control" @bind-Value='@ContractModel.LoanAmount.CreatedDate' data-date-format="dd/MM/yyyy"></InputDate>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <label>Giá thẩm định cửa hàng đề xuất</label>
+                        <InputNumber class="form-control" @bind-Value='@ContractModel.LoanAmount.PriceOffer' disabled="disabled" />
+                    </div>
+                    <div class="col-3">
+                        <label class="col-4">Số tiền cầm</label>
+                        <div class="form-group row">
+                            <InputNumber class="form-control col-7" placeholder="<=0" @bind-Value="@ContractModel.LoanAmount.Amount" /><button class="btn btn-facebook col-5"><i class="fa fa-calendar"></i>Tính lãi và chi phí</button>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <label class="col-4">Lãi và chi phí</label>
+                        <InputNumber @bind-Value="@ContractModel.LoanAmount.InterestRateAndFee" class="form-control" disabled="disabled" />
+                    </div>
+                    <div class="col-3">
+                        <label>Chương trình khuyến mãi</label>
+                        <select type="text" class="form-control" @bind="ContractModel.LoanAmount.Promotion" />
+                    </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 text-center">
+        <div>
+            <button type="submit" class="btn btn-success save" @onclick="@(() =>  Save())"><i class="fa fa-save"></i> &nbsp; Lưu</button>
+            <button type="button" class="btn call-realtime  d-none"><i class="fa fa-save"></i> &nbsp; CallRealtime</button>
+            @*<button type="submit" class="btn btn-outline-info" @onclick="@(() =>  Cancel())"><i class="fa fa-window-close"></i> &nbsp; Cancel</button>*@
+        </div>
+    </div>
+</EditForm>
+<div></div>
 @code {
     void ShowModal() => Modal.Show<Confirm>("Welcome to Blazored Modal");
 
